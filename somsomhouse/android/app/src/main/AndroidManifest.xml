@@ -4,6 +4,11 @@
         android:label="somsomhouse"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <!-- TODO: Add your Google Maps API key here -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyAMkn5vjtcgM3y7VCjlKhv4ITsCgkttOiY"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
