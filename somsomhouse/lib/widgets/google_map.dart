@@ -1,4 +1,4 @@
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GoogleMapWidget extends StatefulWidget {
@@ -23,7 +23,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(
         target: _center,
-        zoom: 1,
+        zoom: 14,
       ),
       myLocationButtonEnabled: false,
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:somsomhouse/widgets/google_map.dart';
 
 class Map extends StatelessWidget {
