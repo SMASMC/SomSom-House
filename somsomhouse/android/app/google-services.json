@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "831823701566",
+    "project_id": "somsomhouse-35f10",
+    "storage_bucket": "somsomhouse-35f10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831823701566:android:fe036aac2cb1ea6f22936f",
+        "android_client_info": {
+          "package_name": "com.example.somsomhouse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831823701566-2k8bb2ei2m3ijbflg6em7cf2br2kklnp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXptM8vPduZkK1do3fr3VxvzU3OuVqiu8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "831823701566-2k8bb2ei2m3ijbflg6em7cf2br2kklnp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "831823701566-kshneeptrnvbdkc4m5eb1h49968gmc9q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.somsomhouse"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
