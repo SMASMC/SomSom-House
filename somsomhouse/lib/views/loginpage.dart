@@ -1,56 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:somsomhouse/view_models/model_auth.dart';
-import 'package:somsomhouse/view_models/model_login.dart';
+import 'package:somsomhouse/view_models/final_view_models.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (_) => LoginModel(),
-        child: Scaffold(
-          backgroundColor: const Color.fromARGB(255, 177, 178, 223),
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 177, 178, 223),
-            title: const Text(
-              '로그인',
-              style: TextStyle(
-                fontSize: 35,
-                color: Colors.black,
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 177, 178, 223),
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 177, 178, 223),
+        title: const Text(
+          '로그인',
+          style: TextStyle(
+            fontSize: 35,
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+            EmailInput(),
+            PasswordInput(),
+            LoginButton(),
+            const Padding(
+              padding: EdgeInsets.all(10),
+              child: Divider(
+                thickness: 1,
               ),
             ),
-            centerTitle: true,
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: [
-                EmailInput(),
-                PasswordInput(),
-                LoginButton(),
-                const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Divider(
-                    thickness: 1,
-                  ),
-                ),
-                RegisterButton(),
-              ],
-            ),
-          ),
-        ));
+            RegisterButton(),
+          ],
+        ),
+      ),
+    );
   }
 }
 
 class EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final login = Provider.of<LoginModel>(context, listen: false);
+    final login = Provider.of<FinalViewModel>(context, listen: false);
     return Container(
       padding: const EdgeInsets.all(10),
       child: TextField(
         onChanged: (email) {
-          login.setEmail(email);
+          login.setloginEmail(email);
         },
         keyboardType: TextInputType.emailAddress,
         decoration: const InputDecoration(
@@ -65,12 +62,12 @@ class EmailInput extends StatelessWidget {
 class PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final login = Provider.of<LoginModel>(context, listen: false);
+    final login = Provider.of<FinalViewModel>(context, listen: false);
     return Container(
       padding: const EdgeInsets.all(10),
       child: TextField(
         onChanged: (password) {
-          login.setPassword(password);
+          login.setloginPassword(password);
         },
         obscureText: true,
         decoration: const InputDecoration(
@@ -85,9 +82,8 @@ class PasswordInput extends StatelessWidget {
 class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final authClient =
-        Provider.of<FirebaseAuthProvider>(context, listen: false);
-    final login = Provider.of<LoginModel>(context, listen: false);
+    final authClient = Provider.of<FinalViewModel>(context, listen: false);
+    final login = Provider.of<FinalViewModel>(context, listen: false);
 
     return Container(
       width: MediaQuery.of(context).size.width * 0.7,
@@ -101,7 +97,7 @@ class LoginButton extends StatelessWidget {
         ),
         onPressed: () async {
           await authClient
-              .loginWithEmail(login.email, login.password)
+              .loginWithEmail(login.loginEmail, login.loginPassword)
               .then((loginStatus) {
             if (loginStatus == AuthStatus.loginSuccess) {
               //models에 저장되어있는 AuthStatus값을 가져옴
