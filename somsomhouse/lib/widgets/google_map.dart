@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:somsomhouse/models/apartment.dart' as locations;
 import 'package:somsomhouse/view_models/final_view_models.dart';
+import 'package:somsomhouse/views/chartpage.dart';
 import 'package:somsomhouse/views/next_page.dart';
 
 class GoogleMapWidget extends StatefulWidget {
@@ -119,7 +120,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const NextPage(),
+                  builder: (context) => const ChartPage(),
                 ));
           },
         );
