@@ -1,5 +1,6 @@
 package com.somsomhouse.backend.service;
 
+import java.io.Console;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -21,12 +22,14 @@ public class ApartmentInfoServiceImpl implements ApartmentInfoService {
 	@Override
 	public JSONObject getLocation(HttpServletRequest request) throws Exception {
 		
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 		double lat = Double.parseDouble(request.getParameter("lat"));
 		double lng = Double.parseDouble(request.getParameter("lng"));
+		double zoomLevel = Double.parseDouble(request.getParameter("zoomlevel"));
+		double km = (40000/Math.pow(2,zoomLevel))*2;
 		
-		List<ApartmentInfoDto> myBatisList = apartmentInfoDao.getLocation(lat , lng);
+		
+		List<ApartmentInfoDto> myBatisList = apartmentInfoDao.getLocation(lat , lng , km);
 		
 		JSONObject jsonList = new JSONObject();
 	    JSONArray itemList = new JSONArray();

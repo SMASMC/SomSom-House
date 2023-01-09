@@ -23,30 +23,86 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<FinalViewModel>(context);
-    return GoogleMap(
-      onMapCreated: (controller) {
-        _onMapCreated(controller);
-        addMarker(
-            context, vm.currentLocation.latitude, vm.currentLocation.longitude);
-      },
-      initialCameraPosition: const CameraPosition(
-        target: LatLng(37.570789, 126.916165),
-        zoom: 17,
-      ),
-      myLocationButtonEnabled: false,
-      zoomControlsEnabled: false,
-      zoomGesturesEnabled: false,
-      markers: _markers.values.toSet(),
-      onCameraMove: (position) {
-        addMarker(context, position.target.latitude, position.target.longitude);
-      },
+    return Stack(
+      children: [
+        GoogleMap(
+          onMapCreated: (controller) {
+            _onMapCreated(controller);
+            addMarker(context, vm.currentLocation.latitude,
+                vm.currentLocation.longitude, vm.zoomLevel);
+          },
+          initialCameraPosition: CameraPosition(
+            target: vm.currentLocation,
+            zoom: vm.zoomLevel,
+          ),
+          myLocationButtonEnabled: false,
+          zoomControlsEnabled: false,
+          zoomGesturesEnabled: true,
+          markers: _markers.values.toSet(),
+          onCameraMove: (position) {
+            vm.changeCurrentLocation(position.target);
+            addMarker(context, vm.currentLocation.latitude,
+                vm.currentLocation.longitude, vm.zoomLevel);
+          },
+        ),
+        Positioned(
+          top: 580,
+          left: 330,
+          child: Column(
+            children: [
+              MaterialButton(
+                onPressed: () async {
+                  var zoomLevel = await mapController.getZoomLevel();
+                  vm.changeZoomLevel(zoomLevel + 1);
+                  mapController.animateCamera(
+                    CameraUpdate.newCameraPosition(
+                      CameraPosition(
+                        target: vm.currentLocation,
+                        zoom: vm.zoomLevel,
+                      ),
+                    ),
+                  );
+                },
+                color: Colors.blue,
+                child: Icon(Icons.add),
+                textColor: Colors.white,
+                padding: EdgeInsets.all(16),
+                shape: CircleBorder(),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              MaterialButton(
+                onPressed: () async {
+                  var zoomLevel = await mapController.getZoomLevel();
+                  vm.changeZoomLevel(zoomLevel - 1);
+                  mapController.animateCamera(
+                    CameraUpdate.newCameraPosition(
+                      CameraPosition(
+                        target: vm.currentLocation,
+                        zoom: vm.zoomLevel,
+                      ),
+                    ),
+                  );
+                },
+                color: Colors.blue,
+                child: Icon(Icons.remove),
+                textColor: Colors.white,
+                padding: EdgeInsets.all(16),
+                shape: CircleBorder(),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
   // ------------------------------------------------------------------------------------------
   // marker 추가 함수
-  addMarker(BuildContext context, double lat, double lng) async {
-    final apartments = await locations.getApartments(lat, lng);
+  addMarker(
+      BuildContext context, double lat, double lng, double zoomLevel) async {
+    final apartments = await locations.getApartments(lat, lng, zoomLevel);
 
     setState(() {
       _markers.clear();

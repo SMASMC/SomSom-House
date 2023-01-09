@@ -8,9 +8,20 @@ enum AuthStatus { registerSuccess, registerFail, loginSuccess, loginFail }
 class FinalViewModel extends ChangeNotifier {
   LatLng currentLocation = const LatLng(37.570789, 126.916165);
   String apartName = "";
+  double zoomLevel = 17;
 
   changeApartName(String name) {
     apartName = name;
+    ChangeNotifier();
+  }
+
+  changeZoomLevel(double zoomLevel) {
+    this.zoomLevel = zoomLevel;
+    ChangeNotifier();
+  }
+
+  changeCurrentLocation(LatLng location) {
+    currentLocation = location;
     ChangeNotifier();
   }
 
