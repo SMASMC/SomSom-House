@@ -1,31 +1,17 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 //화면 처음 나오는거
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
-  _SplashScreenState createState() {
-    return _SplashScreenState();
-  }
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Future<bool> checkLogin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isLogin = prefs.getBool('isLogin') ?? false;
-    String uid = prefs.getString('uid') ?? '';
-    return isLogin;
-  }
-
   void moveScreen() async {
-    await checkLogin().then((isLogin) {
-      if (isLogin) {
-        Navigator.of(context).pushReplacementNamed('/home');
-      } else {
-        Navigator.of(context).pushReplacementNamed('/login');
-      }
-    });
+    Navigator.pushNamed(context, '/home');
   }
 
   @override

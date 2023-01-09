@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:somsomhouse/models/apartment.dart' as locations;
-import 'package:somsomhouse/view_models/final_view_models.dart';
+import 'package:somsomhouse/models/apartments_model.dart';
+import 'package:somsomhouse/models/chart_model.dart';
+import 'package:somsomhouse/models/map_model.dart';
+import 'package:somsomhouse/services/dbservices.dart';
 import 'package:somsomhouse/views/chartpage.dart';
-import 'package:somsomhouse/views/next_page.dart';
 
 class GoogleMapWidget extends StatefulWidget {
   const GoogleMapWidget({super.key});
@@ -23,27 +23,36 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<FinalViewModel>(context);
     return Stack(
       children: [
         GoogleMap(
-          onMapCreated: (controller) {
+          onMapCreated: (controller) async {
             _onMapCreated(controller);
-            addMarker(context, vm.currentLocation.latitude,
-                vm.currentLocation.longitude, vm.zoomLevel);
+            await addMarker(
+              context,
+              GoogleMapModel.currentLocation.latitude,
+              GoogleMapModel.currentLocation.longitude,
+              GoogleMapModel.zoomLevel,
+            );
           },
           initialCameraPosition: CameraPosition(
-            target: vm.currentLocation,
-            zoom: vm.zoomLevel,
+            target: GoogleMapModel.currentLocation,
+            zoom: GoogleMapModel.zoomLevel,
           ),
           myLocationButtonEnabled: false,
           zoomControlsEnabled: false,
           zoomGesturesEnabled: true,
           markers: _markers.values.toSet(),
           onCameraMove: (position) {
-            vm.changeCurrentLocation(position.target);
-            addMarker(context, vm.currentLocation.latitude,
-                vm.currentLocation.longitude, vm.zoomLevel);
+            setState(() {
+              GoogleMapModel.currentLocation = position.target;
+            });
+            addMarker(
+              context,
+              GoogleMapModel.currentLocation.latitude,
+              GoogleMapModel.currentLocation.longitude,
+              GoogleMapModel.zoomLevel,
+            );
           },
         ),
         Positioned(
@@ -54,12 +63,14 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
               MaterialButton(
                 onPressed: () async {
                   var zoomLevel = await mapController.getZoomLevel();
-                  vm.changeZoomLevel(zoomLevel + 1);
+                  setState(() {
+                    GoogleMapModel.zoomLevel = zoomLevel + 1;
+                  });
                   mapController.animateCamera(
                     CameraUpdate.newCameraPosition(
                       CameraPosition(
-                        target: vm.currentLocation,
-                        zoom: vm.zoomLevel,
+                        target: GoogleMapModel.currentLocation,
+                        zoom: GoogleMapModel.zoomLevel,
                       ),
                     ),
                   );
@@ -76,12 +87,14 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
               MaterialButton(
                 onPressed: () async {
                   var zoomLevel = await mapController.getZoomLevel();
-                  vm.changeZoomLevel(zoomLevel - 1);
+                  setState(() {
+                    GoogleMapModel.zoomLevel = zoomLevel - 1;
+                  });
                   mapController.animateCamera(
                     CameraUpdate.newCameraPosition(
                       CameraPosition(
-                        target: vm.currentLocation,
-                        zoom: vm.zoomLevel,
+                        target: GoogleMapModel.currentLocation,
+                        zoom: GoogleMapModel.zoomLevel,
                       ),
                     ),
                   );
@@ -103,8 +116,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   // marker 추가 함수
   addMarker(
       BuildContext context, double lat, double lng, double zoomLevel) async {
-    final apartments = await locations.getApartments(lat, lng, zoomLevel);
-
+    final apartments = await getApartments();
     setState(() {
       _markers.clear();
       for (final apartment in apartments.apartments) {
@@ -115,8 +127,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
             title: apartment.name,
           ),
           onTap: () {
-            final vm = Provider.of<FinalViewModel>(context, listen: false);
-            vm.changeApartName(apartment.name);
+            ChartModel.apartName = apartment.name;
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -127,5 +138,16 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
         _markers[apartment.name] = marker;
       }
     });
+  }
+
+  Future<Locations> getApartments() async {
+    DBServices dbServices = DBServices();
+    Locations locations = await dbServices.getApartments(
+      GoogleMapModel.currentLocation.latitude,
+      GoogleMapModel.currentLocation.longitude,
+      GoogleMapModel.zoomLevel,
+    );
+
+    return locations;
   }
 }
