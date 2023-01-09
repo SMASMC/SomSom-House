@@ -16,6 +16,7 @@ public class SelectController {
 	@Autowired
 	ApartmentInfoService apartmentInfoService;
 	
+	@Autowired
 	ApartmentDealLengthService apartmentDealLengthService;
 	
 	@RequestMapping("/get_location")
