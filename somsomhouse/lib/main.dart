@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:somsomhouse/firebase_options.dart';
 import 'package:somsomhouse/view_models/final_view_models.dart';
-import 'package:somsomhouse/view_models/model_auth.dart';
 import 'package:somsomhouse/views/home.dart';
 import 'package:somsomhouse/views/loginpage.dart';
 import 'package:somsomhouse/views/signuppage.dart';
@@ -24,13 +23,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => FirebaseAuthProvider()),
-        ChangeNotifierProvider(
-          create: (context) => FinalViewModel(),
-        ),
-      ],
+    return ChangeNotifierProvider(
+      create: (context) => FinalViewModel(),
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,

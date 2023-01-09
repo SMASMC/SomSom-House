@@ -44,9 +44,10 @@ class Locations {
       };
 }
 
-Future<Locations> getApartments(double lat, double lng) async {
+Future<Locations> getApartments(
+    double lat, double lng, double zoomLevel) async {
   String googleLocationsURL =
-      'http://10.0.2.2:8080/get_location?lat=${lat}&lng=${lng}';
+      'http://localhost:8080/get_location?lat=${lat}&lng=${lng}';
 
   final response = await http.get(Uri.parse(googleLocationsURL));
   var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));

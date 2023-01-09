@@ -13,7 +13,7 @@ public class ApartmentInfoDaoImpl implements ApartmentInfoDao {
 	public static String nameSpace = "com.somsomhouse.backend.dao.ApartmentInfoDao";
 
 	@Override
-	public List<ApartmentInfoDto> getLocation(double lat, double lng) throws Exception {
+	public List<ApartmentInfoDto> getLocation(double lat, double lng , double km) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(nameSpace + ".getLocation");
 	}

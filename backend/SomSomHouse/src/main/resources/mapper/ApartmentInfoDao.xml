@@ -9,9 +9,8 @@
 	<select id="getLocation" resultType="com.somsomhouse.backend.dto.ApartmentInfoDto">
 		select name, lat, lng from apartment_info 
 		<![CDATA[where 
-		(lat <= (#{lat} + 0.0091*0.6103515625) and lat >= (#{lat} - 0.0091*0.6103515625)) and 
-		(lng <= (#{lng} + 0.0113*0.6103515625) and lng >= (#{lng} - 0.0113*0.6103515625))]]>
-		
+		(lat <= (${lat} + 0.0091* ${km}) and lat >= (${lat} - 0.0091 * ${km})) and 
+		(lng <= (${lng} + 0.0113* ${km}) and lng >= (${lng} - 0.0113 * ${km}))]]>
 	</select>
 			
 </mapper>
