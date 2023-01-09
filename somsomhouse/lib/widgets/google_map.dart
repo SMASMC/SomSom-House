@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:somsomhouse/models/apartments_model.dart';
 import 'package:somsomhouse/models/chart_model.dart';
 import 'package:somsomhouse/models/map_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
@@ -76,12 +75,12 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
                   );
                 },
                 color: Colors.blue,
-                child: Icon(Icons.add),
                 textColor: Colors.white,
-                padding: EdgeInsets.all(16),
-                shape: CircleBorder(),
+                padding: const EdgeInsets.all(16),
+                shape: const CircleBorder(),
+                child: const Icon(Icons.add),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               MaterialButton(
@@ -100,10 +99,10 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
                   );
                 },
                 color: Colors.blue,
-                child: Icon(Icons.remove),
                 textColor: Colors.white,
-                padding: EdgeInsets.all(16),
-                shape: CircleBorder(),
+                padding: const EdgeInsets.all(16),
+                shape: const CircleBorder(),
+                child: const Icon(Icons.remove),
               ),
             ],
           ),
@@ -140,9 +139,10 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
     });
   }
 
-  Future<Locations> getApartments() async {
+  // 마커 찍을
+  Future<GoogleMapModel> getApartments() async {
     DBServices dbServices = DBServices();
-    Locations locations = await dbServices.getApartments(
+    GoogleMapModel locations = await dbServices.getApartments(
       GoogleMapModel.currentLocation.latitude,
       GoogleMapModel.currentLocation.longitude,
       GoogleMapModel.zoomLevel,
