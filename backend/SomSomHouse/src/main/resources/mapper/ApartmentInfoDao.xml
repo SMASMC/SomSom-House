@@ -13,4 +13,8 @@
 		(lng <= (${lng} + 0.0113* ${km}) and lng >= (${lng} - 0.0113 * ${km}))]]>
 	</select>
 			
+	<select id="apartmentInfo" resultType="com.somsomhouse.backend.dto.ApartmentInfoDto">
+		select name,gu,dong, heating, household,parking from apartment_info where name=#{name}
+	</select>		
+			
 </mapper>
