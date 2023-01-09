@@ -27,11 +27,11 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => FirebaseAuthProvider()),
+        ChangeNotifierProvider(
+          create: (context) => FinalViewModel(),
+        ),
       ],
       child: MaterialApp(
-        // return ChangeNotifierProvider(
-        //   create: (context) => FinalViewModel(),
-        //   child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
