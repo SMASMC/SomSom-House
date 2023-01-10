@@ -27,10 +27,9 @@ class _ApartLineChartState extends State<ApartLineChart> {
   late double min;
   late bool changeType;
   late double range;
-
   List<Color> gradientColors = [
-    Color.fromARGB(255, 22, 189, 245),
-    const Color.fromARGB(255, 254, 254, 254),
+    Color.fromARGB(255, 181, 145, 255),
+    Color.fromARGB(255, 255, 255, 255),
   ];
 
   @override
@@ -60,13 +59,13 @@ class _ApartLineChartState extends State<ApartLineChart> {
           selectedArea = keys[0];
           changeType = false;
         }
-        changeChartList();
+        await changeChartList();
         return true;
       }),
       builder: (context, snapshot) {
         if (snapshot.hasData == false) {
           return const SizedBox(
-            height: 600,
+            height: 376,
             child: SpinKitThreeBounce(
               color: Colors.lightBlue,
             ),
@@ -193,6 +192,7 @@ class _ApartLineChartState extends State<ApartLineChart> {
                             ),
                           ),
                           barWidth: 2.8,
+                          color: Color.fromARGB(255, 143, 131, 255),
                         ),
                       ],
                       gridData: FlGridData(
@@ -329,5 +329,4 @@ class _ApartLineChartState extends State<ApartLineChart> {
       );
 }
 
-/// 보증금 전세는 억대로 나누고 / 월세는 만원 대로 나누기
 /// tool tip 넣기

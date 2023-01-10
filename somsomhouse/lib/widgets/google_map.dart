@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:somsomhouse/models/apartinfo_model.dart';
 import 'package:somsomhouse/models/chart_model.dart';
 import 'package:somsomhouse/models/map_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
@@ -46,8 +45,8 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
           },
         ),
         Positioned(
-          top: 580,
-          left: 330,
+          top: MediaQuery.of(context).size.height * 0.6,
+          left: MediaQuery.of(context).size.width * 0.76,
           child: Column(
             children: [
               MaterialButton(
