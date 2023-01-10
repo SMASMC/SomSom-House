@@ -8,4 +8,5 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface ApartmentInfoService {
 	public JSONObject getLocation(HttpServletRequest request)throws Exception;
 	public JSONObject apartmentInfo(HttpServletRequest request)throws Exception;
+	public JSONObject getApartName(HttpServletRequest request)throws Exception;
 }

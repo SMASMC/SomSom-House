@@ -1,10 +1,29 @@
-import 'dart:convert';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:somsomhouse/models/apartname_list_model.dart';
+import 'package:somsomhouse/models/apartname_predict_model.dart';
 
-class Geumcheon extends StatelessWidget {
+import 'package:somsomhouse/models/dongname_model.dart';
+import 'package:somsomhouse/services/dbservices.dart';
+import 'package:somsomhouse/views/test.dart';
+
+class Geumcheon extends StatefulWidget {
   const Geumcheon({super.key});
+
+  @override
+  State<Geumcheon> createState() => _GeumcheonState();
+}
+
+class _GeumcheonState extends State<Geumcheon> {
+  late List<Widget> widgetList;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    widgetList = [];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,28 +45,74 @@ class Geumcheon extends StatelessWidget {
   }
 
   //-----function-------
-  _handleTapDown(BuildContext context, var dx, var dy) {
-    // final vm = Provider.of<FinalViewModel>(context, listen: false);
+  _handleTapDown(BuildContext context, var dx, var dy) async {
     if ((dx > 171 && dx < 208 && dy > 171 && dy < 297) ||
         (dx > 215 && dx < 263 && dy > 120 && dy < 294) ||
         (dx > 272 && dx < 332 && dy > 176 && dy < 261)) {
-      // vm.changeDongName('시흥동');
-      Navigator.pop(context);
+      DongModel.dongName = '시흥동';
     }
+    widgetList = await selectApartName();
+    showPicker(context, widgetList);
   }
 
-// 이클립스 완성해서 클릭한 동에 해당되는 아파트 이름들 불러오기
-//provider 고치기
+  /// 아래쪽 스낵바에 선택한 동의 아파트 이름을 가져오기 위해서 DB 서비스와 연결하는 함수
+  /// 만든 날짜 : 2023.1.10
+  /// 만든이 : 노현석
+  Future<List<Widget>> selectApartName() async {
+    DBServices dbServices = DBServices();
+    ApartNameListModel apartNameListModel =
+        await dbServices.callapartName(DongModel.dongName);
 
-  Future<Locations> getApartments(
-      double lat, double lng, double zoomLevel) async {
-    String googleLocationsURL =
-        'http://10.0.2.2:8080/get_location?lat=${lat}&lng=${lng}&zoomlevel=${zoomLevel}';
+    List<Widget> widgetList = [];
 
-    final response = await http.get(Uri.parse(googleLocationsURL));
+    for (var apartNameModel in apartNameListModel.apartNameListModel) {
+      widgetList.add(Text(apartNameModel.apartName));
+    }
 
-    var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+    return widgetList;
+  }
 
-    return Locations.fromJson(dataConvertedJSON);
+  //모달팝업창을 뜨게 하고 버튼을 누르면 다음 페이지로 이동한다.
+  showPicker(BuildContext context, List<Widget> widgetList) {
+    showCupertinoModalPopup(
+        context: context,
+        builder: (context) => Container(
+              height: 300,
+              color: Colors.white,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 200,
+                    child: CupertinoPicker(
+                      backgroundColor: Colors.white,
+                      itemExtent: 50,
+                      scrollController: FixedExtentScrollController(
+                        initialItem: 1,
+                      ),
+                      children: widgetList,
+                      onSelectedItemChanged: (value) {
+                        setState(() {
+                          ApartNamePredict.apartNamePredict =
+                              widgetList[value].toString();
+                          //CupertinoPicker에서 선택한 아파트 이름을 static에 저장해준다.
+                        });
+                      },
+                    ),
+                  ),
+                  CupertinoButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      print(ApartNamePredict.apartNamePredict);
+                      Navigator.of(context).pop();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) =>
+                                  const Test()))); // 테스트니까 나중에 꼭 바꾸기
+                    },
+                  ),
+                ],
+              ),
+            ));
   }
 }//end

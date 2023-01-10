@@ -41,4 +41,15 @@ public class SelectController {
 		return jsonList;
 		
 	}
+	
+	@RequestMapping("/getApartName")
+	public JSONObject getApartName(HttpServletRequest request) throws Exception{
+		JSONObject jsonList = apartmentInfoService.getApartName(request);
+		
+		return jsonList;
+	}
 }
+
+
+
+

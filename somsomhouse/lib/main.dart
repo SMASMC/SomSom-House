@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/views/home.dart';
 import 'package:somsomhouse/views/splash.dart';
-import 'package:somsomhouse/views/test.dart';
 
 void main() async {
   runApp(const MyApp());
