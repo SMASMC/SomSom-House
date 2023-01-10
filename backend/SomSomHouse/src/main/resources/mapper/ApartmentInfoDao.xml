@@ -17,4 +17,10 @@
 		select name,gu, dong, heating, household,parking from apartment_info where name=#{name}
 	</select>		
 			
+	
+	<select id="getApartName" resultType="com.somsomhouse.backend.dto.ApartmentInfoDto">
+	select name from apartment_info where dong = #{dong}
+	
+	
+	</select>		
 </mapper>

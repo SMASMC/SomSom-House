@@ -23,5 +23,11 @@ public class ApartmentInfoDaoImpl implements ApartmentInfoDao {
 		// TODO Auto-generated method stub
 		return (ApartmentInfoDto) sqlSession.selectList(nameSpace + ".apartmentInfo");
 	}
+	
+	@Override
+	public List<ApartmentInfoDto> getApartName(String dong) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".getApartName");
+	}
 
 }
