@@ -3,6 +3,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:somsomhouse/models/chart_model.dart';
 import 'package:somsomhouse/services/apiservices.dart';
 import 'package:somsomhouse/services/dbservices.dart';
@@ -56,7 +57,12 @@ class _ApartLineChartState extends State<ApartLineChart> {
       }),
       builder: (context, snapshot) {
         if (snapshot.hasData == false) {
-          return const CircularProgressIndicator();
+          return const SizedBox(
+            height: 600,
+            child: SpinKitThreeBounce(
+              color: Colors.lightBlue,
+            ),
+          );
         } else if (snapshot.hasError) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -208,8 +214,8 @@ class _ApartLineChartState extends State<ApartLineChart> {
     }
 
     if (min > 1000) {
-      min = min - 3000;
-      max = max + 3000;
+      min = min - 5000;
+      max = max + 5000;
     } else {
       min = min - 10;
       max = max + 20;
@@ -218,7 +224,5 @@ class _ApartLineChartState extends State<ApartLineChart> {
     chartList = List.from(chartList.reversed);
 
     length = double.parse(chartList.length.toString());
-
-    setState(() {});
   }
 }
