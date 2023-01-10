@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:somsomhouse/view_models/final_view_models.dart';
 
 class Qwangjin extends StatelessWidget {
   const Qwangjin({super.key});
@@ -26,11 +24,11 @@ class Qwangjin extends StatelessWidget {
 
   //-----function-------
   _handleTapDown(BuildContext context, var dx, var dy) {
-    final vm = Provider.of<FinalViewModel>(context, listen: false);
+    // final vm = Provider.of<FinalViewModel>(context, listen: false);
     if ((dx > 200 && dx < 285 && dy > 197 && dy < 229) ||
         (dx > 224 && dx < 296 && dy > 151 && dy < 188) ||
         (dx > 255 && dx < 306 && dy > 102 && dy < 153)) {
-      vm.changeDongName('광장동');
+      // vm.changeDongName('광장동');
       Navigator.pop(context);
     }
   }

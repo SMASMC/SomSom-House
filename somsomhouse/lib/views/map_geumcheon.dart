@@ -1,9 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:somsomhouse/models/apartment.dart';
-import 'package:somsomhouse/view_models/final_view_models.dart';
 import 'package:http/http.dart' as http;
 
 class Geumcheon extends StatelessWidget {
@@ -30,11 +27,11 @@ class Geumcheon extends StatelessWidget {
 
   //-----function-------
   _handleTapDown(BuildContext context, var dx, var dy) {
-    final vm = Provider.of<FinalViewModel>(context, listen: false);
+    // final vm = Provider.of<FinalViewModel>(context, listen: false);
     if ((dx > 171 && dx < 208 && dy > 171 && dy < 297) ||
         (dx > 215 && dx < 263 && dy > 120 && dy < 294) ||
         (dx > 272 && dx < 332 && dy > 176 && dy < 261)) {
-      vm.changeDongName('시흥동');
+      // vm.changeDongName('시흥동');
       Navigator.pop(context);
     }
   }

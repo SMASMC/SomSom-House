@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:somsomhouse/view_models/final_view_models.dart';
 
 class Yeongdeungpo extends StatelessWidget {
   const Yeongdeungpo({super.key});
@@ -30,10 +28,10 @@ class Yeongdeungpo extends StatelessWidget {
 
 //-----function-------
   _handleTapDown(BuildContext context, var dx, var dy) {
-    final vm = Provider.of<FinalViewModel>(context, listen: false);
+    // final vm = Provider.of<FinalViewModel>(context, listen: false);
     if ((dx > 115 && dx < 153 && dy > 201 && dy < 234) ||
         (dx > 155 && dx < 194 && dy > 197 && dy < 214)) {
-      vm.changeDongName('도림동');
+      // vm.changeDongName('도림동');
       Navigator.pop(context);
     }
   }

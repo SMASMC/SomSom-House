@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:somsomhouse/view_models/final_view_models.dart';
 
 class Yangcheon extends StatelessWidget {
   const Yangcheon({super.key});
@@ -26,11 +24,11 @@ class Yangcheon extends StatelessWidget {
 
   //-----function-------
   _handleTapDown(BuildContext context, var dx, var dy) {
-    final vm = Provider.of<FinalViewModel>(context, listen: false);
+    // final vm = Provider.of<FinalViewModel>(context, listen: false);
     if ((dx > 116 && dx < 196 && dy > 176 && dy < 233) ||
         (dx > 199 && dx < 254 && dy > 116 && dy < 209) ||
         (dx > 265 && dx < 315 && dy > 140 && dy < 230)) {
-      vm.changeDongName('신정동');
+      // vm.changeDongName('신정동');
       Navigator.pop(context);
     }
   }
