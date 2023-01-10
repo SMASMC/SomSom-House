@@ -14,7 +14,7 @@
 	</select>
 			
 	<select id="apartmentInfo" resultType="com.somsomhouse.backend.dto.ApartmentInfoDto">
-		select name,gu,dong, heating, household,parking from apartment_info where name=#{name}
+		select name,gu, dong, heating, household,parking from apartment_info where name=#{name}
 	</select>		
 			
 </mapper>

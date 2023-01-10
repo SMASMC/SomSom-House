@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:somsomhouse/models/apartinfo_model.dart';
 import 'package:somsomhouse/models/chart_model.dart';
 import 'package:somsomhouse/models/map_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';

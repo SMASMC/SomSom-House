@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:somsomhouse/models/chart_model.dart';
+import 'package:somsomhouse/widgets/apart_info.dart';
 import 'package:somsomhouse/widgets/line_chart.dart';
 
 class ChartPage extends StatelessWidget {
@@ -8,10 +10,14 @@ class ChartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('chart'),
+        centerTitle: true,
+        title: Text(ChartModel.apartName),
       ),
       body: ListView(
         children: const [
+          Card(
+            child: ApartInfo(),
+          ),
           Card(
             child: ApartLineChart(),
           ),

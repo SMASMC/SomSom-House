@@ -47,4 +47,31 @@ public class ApartmentInfoServiceImpl implements ApartmentInfoService {
 		
 		return jsonList;
 	}
+
+	@Override
+	public JSONObject apartmentInfo(HttpServletRequest request) throws Exception {
+		// TODO Auto-generated method stub
+		String name = (request.getParameter("name"));
+		
+		
+		JSONObject jsonList = new JSONObject();
+	    JSONArray itemList = new JSONArray();
+		
+		ApartmentInfoDto myBatis= apartmentInfoDao.apartmentInfo(name);
+			JSONObject tempJson = new JSONObject();
+			tempJson.put("name", myBatis.getName());
+            tempJson.put("gu", myBatis.getGu());
+            tempJson.put("dong", myBatis.getDong());
+            tempJson.put("heating", myBatis.getHeating());
+            tempJson.put("household", myBatis.getHousehold());
+            tempJson.put("parking", myBatis.getParking());
+            
+            itemList.add(tempJson);
+            
+		
+		
+		jsonList.put("results",itemList);
+		
+		return jsonList;
+	}
 }
