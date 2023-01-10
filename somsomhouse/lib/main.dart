@@ -7,6 +7,7 @@ import 'package:somsomhouse/views/home.dart';
 import 'package:somsomhouse/views/loginpage.dart';
 import 'package:somsomhouse/views/signuppage.dart';
 import 'package:somsomhouse/views/splash.dart';
+import 'package:somsomhouse/views/test.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
