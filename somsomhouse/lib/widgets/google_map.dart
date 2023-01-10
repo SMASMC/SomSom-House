@@ -28,12 +28,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
         GoogleMap(
           onMapCreated: (controller) async {
             _onMapCreated(controller);
-            await addMarker(
-              context,
-              GoogleMapModel.currentLocation.latitude,
-              GoogleMapModel.currentLocation.longitude,
-              GoogleMapModel.zoomLevel,
-            );
+            await addMarker(context);
           },
           initialCameraPosition: CameraPosition(
             target: GoogleMapModel.currentLocation,
@@ -47,12 +42,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
             setState(() {
               GoogleMapModel.currentLocation = position.target;
             });
-            addMarker(
-              context,
-              GoogleMapModel.currentLocation.latitude,
-              GoogleMapModel.currentLocation.longitude,
-              GoogleMapModel.zoomLevel,
-            );
+            addMarker(context);
           },
         ),
         Positioned(
@@ -113,9 +103,10 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   }
 
   // ------------------------------------------------------------------------------------------
-  // marker 추가 함수
-  addMarker(
-      BuildContext context, double lat, double lng, double zoomLevel) async {
+  /// 좌표를 이용해서 marker 추가 함수
+  /// 만든 날짜 : 2023.1.9
+  /// 만든이 : 권순형
+  addMarker(BuildContext context) async {
     final apartments = await getApartments();
     setState(() {
       _markers.clear();
@@ -140,7 +131,9 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
     });
   }
 
-  // 마커 찍을
+  /// 마커 찍을 좌표 DB에서 가져오기
+  /// 만든 날짜 : 2023.1.9
+  /// 만든이 : 권순형
   Future<GoogleMapModel> getApartments() async {
     DBServices dbServices = DBServices();
     GoogleMapModel locations = await dbServices.getApartments(

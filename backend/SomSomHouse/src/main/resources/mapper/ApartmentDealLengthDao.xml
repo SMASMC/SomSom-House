@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTO 3.0//EN"
+						"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+						
+<mapper namespace="com.somsomhouse.backend.dao.ApartmentDealLengthDao">
+
+	
+	<select id="getEndIndex" resultType="com.somsomhouse.backend.dto.ApartmentDealLengthDto">
+		select name , wall_sae_freq, geon_sae_freq from apartment_deal_length where name = #{name}
+	</select>
+			
+</mapper>
