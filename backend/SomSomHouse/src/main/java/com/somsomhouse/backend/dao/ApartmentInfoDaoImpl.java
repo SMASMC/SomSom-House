@@ -18,4 +18,10 @@ public class ApartmentInfoDaoImpl implements ApartmentInfoDao {
 		return sqlSession.selectList(nameSpace + ".getLocation");
 	}
 
+	@Override
+	public List<ApartmentInfoDto> getApartName(String dong) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(nameSpace + ".getApartName");
+	}
+
 }

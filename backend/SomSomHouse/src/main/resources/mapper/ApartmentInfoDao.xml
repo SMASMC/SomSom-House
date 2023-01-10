@@ -12,5 +12,12 @@
 		(lat <= (${lat} + 0.0091* ${km}) and lat >= (${lat} - 0.0091 * ${km})) and 
 		(lng <= (${lng} + 0.0113* ${km}) and lng >= (${lng} - 0.0113 * ${km}))]]>
 	</select>
-			
+	
+	
+	
+	<select id="getApartName" resultType="com.somsomhouse.backend.dto.ApartmentInfoDto">
+	select name from apartment_info where dong = #{dong}
+	
+	
+	</select>		
 </mapper>
