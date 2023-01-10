@@ -39,15 +39,15 @@ class Geumcheon extends StatelessWidget {
 // 이클립스 완성해서 클릭한 동에 해당되는 아파트 이름들 불러오기
 //provider 고치기
 
-  Future<Locations> getApartments(
-      double lat, double lng, double zoomLevel) async {
-    String googleLocationsURL =
-        'http://10.0.2.2:8080/get_location?lat=${lat}&lng=${lng}&zoomlevel=${zoomLevel}';
+  // Future<Locations> getApartments(
+  //     double lat, double lng, double zoomLevel) async {
+  //   String googleLocationsURL =
+  //       'http://10.0.2.2:8080/get_location?lat=${lat}&lng=${lng}&zoomlevel=${zoomLevel}';
 
-    final response = await http.get(Uri.parse(googleLocationsURL));
+  //   final response = await http.get(Uri.parse(googleLocationsURL));
 
-    var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
+  //   var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
 
-    return Locations.fromJson(dataConvertedJSON);
-  }
+  //   return Locations.fromJson(dataConvertedJSON);
+  // }
 }//end

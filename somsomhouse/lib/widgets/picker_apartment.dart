@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../views/test.dart';
+import '../views/charter_value_prediction.dart';
 
 class Picker extends StatefulWidget {
   const Picker({super.key});
@@ -39,7 +39,9 @@ class _PickerState extends State<Picker> {
     );
   }
 
-  // ---- Functions
+  /// 동 선택 후 해당되는 아파트 보여주고 선택하기 위한 함수
+  /// 만든날짜 : 2023.1.9
+  /// 만든이 : 임은빈
   showPicker(BuildContext context) {
     
     showCupertinoModalPopup(
@@ -64,7 +66,7 @@ class _PickerState extends State<Picker> {
               CupertinoButton(child: Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(builder: ((context) => const Test()))); // 테스트니까 나중에 꼭 바꾸기
+                Navigator.push(context, MaterialPageRoute(builder: ((context) => CharterPrediction()))); // 테스트니까 나중에 꼭 바꾸기
                 
               },),
           ],
