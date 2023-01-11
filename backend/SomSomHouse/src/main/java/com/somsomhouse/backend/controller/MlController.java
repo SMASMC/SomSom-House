@@ -273,17 +273,6 @@ public class MlController {
 		
 					
 		RConnection conn = new RConnection();
-		
-
-
-		conn.voidEval("scaleAreaMat <- scale("+area+",center= 32.76,scale = 131.49 -32.76");
-		
-		conn.voidEval("scaleArea<- scaleAreaMat[1,1]");
-		
-		conn.voidEval("scaleFloorMat <- scale("+floor+",center= 1,scale = 22 - 1");
-		
-		conn.voidEval("scaleFloor<- scaleFloorMat[1,1]");
-		
 
 		conn.voidEval("library(randomForest)");
 		
@@ -301,8 +290,8 @@ public class MlController {
 				
 				
 				
-				+ ", v2=" + conn.eval("scaleArea").asDouble() + ","
-		+ "v1=" + conn.eval("scaleFloor").asDouble()
+				+ ", 층=" + floor + ","
+		+ "임대면적=" + area
 		+ ", 봄=" + WeatherOneHot.get(0)
 		+ ", 여름=" + WeatherOneHot.get(1)
 		+ ", 가을=" + WeatherOneHot.get(2)
@@ -355,7 +344,7 @@ public class MlController {
 
 
 		
-		conn.voidEval("library(randonForest)");
+		conn.voidEval("library(randomForest)");
 		
 		
 		
@@ -368,8 +357,8 @@ public class MlController {
 				+ "한신코아=" + nameOneHot.get(2)
 				
 				
-				+ ", v2=" + area + ","
-		+ "v1=" + floor 
+				+ ", 임대면적=" + area + ","
+		+ "층=" + floor 
 		+ ", 봄=" + WeatherOneHot.get(0)
 		+ ", 여름=" + WeatherOneHot.get(1)
 		+ ", 가을=" + WeatherOneHot.get(2)
@@ -421,32 +410,22 @@ public class MlController {
 		RConnection conn = new RConnection();
 		
 
-
-		conn.voidEval("scaleAreaMat <- scale("+area+",center= 25.32,scale = 180.52 -25.32");
-		
-		conn.voidEval("scaleArea<- scaleAreaMat[1,1]");
-		
-		conn.voidEval("scaleFloorMat <- scale("+floor+",center= 1,scale = 22 - 1");
-		
-		conn.voidEval("scaleFloor<- scaleFloorMat[1,1]");
-		
-
-		conn.voidEval("library(nnet)");
+		conn.voidEval("library(randomForest)");
 		
 		
 		
-		conn.voidEval("model.nnet <- readRDS(url('http://localhost:8080/show_rds?name=ml_garakdong.rds','rb'))");
+		conn.voidEval("rf <- readRDS(url('http://localhost:8080/show_rds?name=ml_garakdong.rds','rb'))");
 
 		
-		conn.voidEval("result <- as.character(predict(model.nnet, (list("
+		conn.voidEval("result <- as.character(predict(rf, (list("
 				+ "가락미륭아파트=" + nameOneHot.get(0) 
 				+ "롯데캐슬=" + nameOneHot.get(1) 
 				+ "한화오벨리스크=" + nameOneHot.get(2) 
 				
 				
 				
-				+ ", v2=" + conn.eval("scaleArea").asDouble() + ","
-		+ "v1=" + conn.eval("scaleFloor").asDouble() 
+				+ ", 층=" + floor + ","
+		+ "임대면적=" + area
 		+ ", 봄=" + WeatherOneHot.get(0)
 		+ ", 여름=" + WeatherOneHot.get(1)
 		+ ", 가을=" + WeatherOneHot.get(2)
@@ -590,14 +569,14 @@ public class MlController {
 		conn.voidEval("scaleFloor<- scaleFloorMat[1,1]");
 		
 
-		conn.voidEval("library(nnet)");
+		conn.voidEval("library(randomForest)");
 		
 		
 		
-		conn.voidEval("model.nnet <- readRDS(url('http://localhost:8080/show_rds?name=ml_poongnapdong.rds','rb'))");
+		conn.voidEval("rf <- readRDS(url('http://localhost:8080/show_rds?name=ml_poongnapdong.rds','rb'))");
 
 		
-		conn.voidEval("result <- as.character(predict(model.nnet, (list("
+		conn.voidEval("result <- as.character(predict(rf, (list("
 				+ "송파현대힐스테이트=" + nameOneHot.get(0)
 				+ "신동아파밀리에=" + nameOneHot.get(1)
 				+ "잠실올림픽공원아이파크=" + nameOneHot.get(2)
