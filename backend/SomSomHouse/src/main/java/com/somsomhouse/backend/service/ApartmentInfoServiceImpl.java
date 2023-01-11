@@ -79,9 +79,10 @@ public class ApartmentInfoServiceImpl implements ApartmentInfoService {
 		// TODO Auto-generated method stub
 		
 		String dong = (request.getParameter("dong"));
+		String gu = (request.getParameter("gu"));
 		
 		
-		List<ApartmentInfoDto> myBatisList = apartmentInfoDao.getApartName(dong);
+		List<ApartmentInfoDto> myBatisList = apartmentInfoDao.getApartName(dong,gu);
 		
 		JSONObject jsonList = new JSONObject();
 	    JSONArray itemList = new JSONArray();
