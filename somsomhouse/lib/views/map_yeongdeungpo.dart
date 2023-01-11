@@ -43,7 +43,7 @@ class _YeongdeungpoState extends State<Yeongdeungpo> {
               child: Image.asset(
                 'images/영등포구.png',
                 height: 350,
-                width: 500,
+                width: 300,
               ),
             ),
           ),
@@ -54,12 +54,12 @@ class _YeongdeungpoState extends State<Yeongdeungpo> {
 
 //-----function-------
   _handleTapDown(BuildContext context, var dx, var dy) async {
-    if ((dx > 115 && dx < 153 && dy > 201 && dy < 234) ||
-        (dx > 155 && dx < 194 && dy > 197 && dy < 214)) {
+    if ((dx > 70 && dx < 107 && dy > 205 && dy < 230) ||
+        (dx > 107 && dx < 148 && dy > 197 && dy < 220)) {
       DongModel.dongName = '도림동';
+      widgetList = await selectApartName();
+      showPicker(context, widgetList);
     }
-    widgetList = await selectApartName();
-    showPicker(context, widgetList);
   }
 
   /// 아래쪽 스낵바에 선택한 동의 아파트 이름을 가져오기 위해서 DB 서비스와 연결하는 함수

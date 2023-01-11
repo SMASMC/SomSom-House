@@ -17,7 +17,12 @@ class Predict extends StatelessWidget {
       body: Center(
         child: InkWell(
           splashColor: Colors.orange,
-          child: Image.asset('images/서울시.png'),
+          mouseCursor: MaterialStateMouseCursor.clickable,
+          child: Image.asset(
+            'images/서울시.png',
+            width: 400,
+            height: 300,
+          ),
           onTapDown: (TapDownDetails details) {
             _handleTapDown(
                 context, details.localPosition.dx, details.localPosition.dy);
