@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/chart_model.dart';
+import 'package:somsomhouse/widgets/avg_table.dart';
+import 'package:somsomhouse/widgets/chart.dart';
 import 'package:somsomhouse/widgets/apart_info.dart';
-import 'package:somsomhouse/widgets/line_chart.dart';
 
 class ChartPage extends StatelessWidget {
   const ChartPage({super.key});
@@ -19,8 +20,14 @@ class ChartPage extends StatelessWidget {
             child: ApartInfo(),
           ),
           Card(
-            child: ApartLineChart(),
+            child: Chart(),
           ),
+          Card(
+            child: AvgTable(),
+          ),
+          SizedBox(
+            height: 100,
+          )
         ],
       ),
     );

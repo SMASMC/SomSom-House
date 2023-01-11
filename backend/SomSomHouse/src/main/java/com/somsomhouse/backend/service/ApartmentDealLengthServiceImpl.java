@@ -19,7 +19,7 @@ public class ApartmentDealLengthServiceImpl implements ApartmentDealLengthServic
 
 	@Override
 	public JSONObject getEndIndex(HttpServletRequest request) throws Exception {
-		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
 		String name = request.getParameter("name");
 		
 		ApartmentDealLengthDto myBatis = apartmentDealLengthDao.getEndIndex(name);

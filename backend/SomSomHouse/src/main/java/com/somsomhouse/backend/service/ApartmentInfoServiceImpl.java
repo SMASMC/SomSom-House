@@ -1,6 +1,5 @@
 package com.somsomhouse.backend.service;
 
-import java.io.Console;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -21,8 +20,7 @@ public class ApartmentInfoServiceImpl implements ApartmentInfoService {
 	
 	@Override
 	public JSONObject getLocation(HttpServletRequest request) throws Exception {
-		
-		// TODO Auto-generated method stub		
+		request.setCharacterEncoding("utf-8");
 		double lat = Double.parseDouble(request.getParameter("lat"));
 		double lng = Double.parseDouble(request.getParameter("lng"));
 		double zoomLevel = Double.parseDouble(request.getParameter("zoomlevel"));
@@ -51,6 +49,7 @@ public class ApartmentInfoServiceImpl implements ApartmentInfoService {
 	@Override
 	public JSONObject apartmentInfo(HttpServletRequest request) throws Exception {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
 		String name = (request.getParameter("name"));
 		
 		

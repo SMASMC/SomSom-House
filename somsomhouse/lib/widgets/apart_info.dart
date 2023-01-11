@@ -29,8 +29,10 @@ class _ApartInfoState extends State<ApartInfo> {
                       children: [
                         Text(
                           snapshot.data!.apartinfoname,
+                          textScaleFactor: 1.6,
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 25),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),

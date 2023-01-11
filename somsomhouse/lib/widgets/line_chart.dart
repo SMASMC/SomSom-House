@@ -26,6 +26,11 @@ class _ApartLineChartState extends State<ApartLineChart> {
   late double max;
   late double min;
   late bool changeType;
+  late double range;
+  List<Color> gradientColors = [
+    Color.fromARGB(255, 181, 145, 255),
+    Color.fromARGB(255, 255, 255, 255),
+  ];
 
   @override
   void initState() {
@@ -40,6 +45,7 @@ class _ApartLineChartState extends State<ApartLineChart> {
     max = 0;
     min = 0;
     changeType = false;
+    range = 5000;
   }
 
   @override
@@ -48,17 +54,18 @@ class _ApartLineChartState extends State<ApartLineChart> {
       future: selectEndIndex().then((value) async {
         full = await selectEstateData(value);
         keys = full[chartType].keys.toList();
+        keys.sort();
         if (selectedArea == "" || changeType) {
           selectedArea = keys[0];
           changeType = false;
         }
-        changeChartList();
+        await changeChartList();
         return true;
       }),
       builder: (context, snapshot) {
         if (snapshot.hasData == false) {
           return const SizedBox(
-            height: 600,
+            height: 376,
             child: SpinKitThreeBounce(
               color: Colors.lightBlue,
             ),
@@ -89,6 +96,11 @@ class _ApartLineChartState extends State<ApartLineChart> {
                         setState(() {
                           chartType = value;
                           changeType = true;
+                          if (chartType == '전세') {
+                            range = 5000;
+                          } else {
+                            range = 100;
+                          }
                         });
                       },
                       decoration: BoxDecoration(
@@ -152,18 +164,52 @@ class _ApartLineChartState extends State<ApartLineChart> {
                 ],
               ),
               SizedBox(
-                height: 500,
-                child: LineChart(
-                  LineChartData(
-                    minX: 0,
-                    maxX: length,
-                    minY: min,
-                    maxY: max,
-                    lineBarsData: [
-                      LineChartBarData(
-                        spots: chartList,
+                height: 300,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: LineChart(
+                    LineChartData(
+                      minX: 0,
+                      maxX: length,
+                      minY: min,
+                      maxY: max,
+                      lineBarsData: [
+                        LineChartBarData(
+                          spots: chartList,
+                          // 점 찍히는 거 지우기
+                          dotData: FlDotData(
+                            show: false,
+                          ),
+                          isCurved: true,
+                          belowBarData: BarAreaData(
+                            show: true,
+                            gradient: LinearGradient(
+                              colors: gradientColors
+                                  .map((color) => color.withOpacity(0.3))
+                                  .toList(),
+                              begin: const Alignment(0, -1),
+                              end: const Alignment(0.0, 1),
+                            ),
+                          ),
+                          barWidth: 2.8,
+                          color: Color.fromARGB(255, 143, 131, 255),
+                        ),
+                      ],
+                      gridData: FlGridData(
+                        drawVerticalLine: false,
+                        horizontalInterval: range,
                       ),
-                    ],
+                      borderData: FlBorderData(border: const Border()),
+                      titlesData: FlTitlesData(
+                        bottomTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
+                        leftTitles: AxisTitles(sideTitles: _leftTitles),
+                        topTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
+                        rightTitles: AxisTitles(
+                            sideTitles: SideTitles(showTitles: false)),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -202,27 +248,85 @@ class _ApartLineChartState extends State<ApartLineChart> {
     chartList = [];
     max = 0;
     List numList = full[chartType][selectedArea];
-    int x = 0;
-    for (var num in numList) {
-      if (x == 0) {
-        min = double.parse(num);
+    int x = 1;
+    if (numList.length > 1) {
+      for (var num in numList) {
+        if (x == 1) {
+          min = double.parse(num);
+        }
+        max = max < double.parse(num) ? double.parse(num) : max;
+        min = min > double.parse(num) ? double.parse(num) : min;
+        chartList.add(FlSpot(double.parse(x.toString()), double.parse(num)));
+        x++;
       }
-      max = max < double.parse(num) ? double.parse(num) : max;
-      min = min > double.parse(num) ? double.parse(num) : min;
-      chartList.add(FlSpot(double.parse(x.toString()), double.parse(num)));
-      x++;
-    }
+      if (min > 1000) {
+        min = (min ~/ 10000) * 10000;
+        max = (max ~/ 10000 + 1) * 10000;
+        min = min - 5000;
+        max = max + 5000;
+      } else {
+        min = (min ~/ 100) * 100;
+        max = (max ~/ 100 + 1) * 100;
+        min = min - 50;
+        max = max + 50;
+      }
+      // list 역순으로 바꾸기
+      chartList = List.from(chartList.reversed);
 
-    if (min > 1000) {
-      min = min - 5000;
-      max = max + 5000;
+      length = double.parse(chartList.length.toString()) + 1;
     } else {
-      min = min - 10;
-      max = max + 20;
-    }
-    // list 역순으로 바꾸기
-    chartList = List.from(chartList.reversed);
+      chartList.add(FlSpot(0.5, double.parse(numList[0])));
+      chartList.add(FlSpot(1, double.parse(numList[0])));
+      chartList.add(FlSpot(2, double.parse(numList[0])));
+      chartList.add(FlSpot(2.5, double.parse(numList[0])));
 
-    length = double.parse(chartList.length.toString());
+      if (min > 1000) {
+        min = (double.parse(numList[0]) ~/ 10000) * 10000;
+        max = (double.parse(numList[0]) ~/ 10000 + 1) * 10000;
+        min = min - 5000;
+        max = max + 5000;
+      } else {
+        min = (double.parse(numList[0]) ~/ 100) * 100;
+        max = (double.parse(numList[0]) ~/ 100 + 1) * 100;
+        min = min - 50;
+        max = max + 50;
+      }
+
+      length = 3;
+    }
   }
+
+  /// y축 좌표값 찍기
+  /// 만든날짜 : 2023.1.10
+  /// 만든이 : 권순형
+  SideTitles get _leftTitles => SideTitles(
+        showTitles: true,
+        reservedSize: 50,
+        getTitlesWidget: (value, meta) {
+          String text = '';
+          if (chartType == '전세') {
+            for (var i = min + 5000; i <= max - 5000; i = i + 5000) {
+              if (value.toInt() == i) {
+                text = '${i / 10000}억';
+              }
+            }
+            return Text(
+              text,
+              style: const TextStyle(fontSize: 13),
+            );
+          } else {
+            for (var i = 0; i <= max; i = i + 100) {
+              if (value.toInt() == i) {
+                text = '${i.round()}만원';
+              }
+            }
+            return Text(
+              text,
+              style: const TextStyle(fontSize: 13),
+            );
+          }
+        },
+      );
 }
+
+/// tool tip 넣기
