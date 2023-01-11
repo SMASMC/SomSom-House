@@ -9,5 +9,5 @@ public interface ApartmentInfoDao {
 
 	public ApartmentInfoDto apartmentInfo(String name)throws Exception;
 
-	public List<ApartmentInfoDto> getApartName(String dong) throws Exception;
+	public List<ApartmentInfoDto> getApartName(String dong, String gu) throws Exception;
 }

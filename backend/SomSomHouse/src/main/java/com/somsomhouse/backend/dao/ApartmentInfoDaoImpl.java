@@ -25,7 +25,7 @@ public class ApartmentInfoDaoImpl implements ApartmentInfoDao {
 	}
 	
 	@Override
-	public List<ApartmentInfoDto> getApartName(String dong) throws Exception {
+	public List<ApartmentInfoDto> getApartName(String dong, String gu) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(nameSpace + ".getApartName");
 	}

@@ -69,7 +69,7 @@ class _QwangjinState extends State<Qwangjin> {
   Future<List<Widget>> selectApartName() async {
     DBServices dbServices = DBServices();
     ApartNameListModel apartNameListModel =
-        await dbServices.callapartName(DongModel.dongName);
+        await dbServices.callapartName(DongModel.dongName, DongModel.guName);
 
     List<Widget> widgetList = [];
 
@@ -106,9 +106,8 @@ class _QwangjinState extends State<Qwangjin> {
                     ),
                   ),
                   CupertinoButton(
-                    child: Text('OK'),
+                    child: const Text('OK'),
                     onPressed: () {
-                      print(ApartNamePredict.apartNamePredict);
                       Navigator.of(context).pop();
                       Navigator.push(
                           context,
