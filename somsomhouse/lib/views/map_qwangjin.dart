@@ -4,7 +4,7 @@ import 'package:somsomhouse/models/apartname_list_model.dart';
 import 'package:somsomhouse/models/apartname_predict_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-import 'package:somsomhouse/views/test.dart';
+import 'package:somsomhouse/views/charter_value_prediction.dart';
 
 class Qwangjin extends StatefulWidget {
   const Qwangjin({super.key});
@@ -110,7 +110,7 @@ class _QwangjinState extends State<Qwangjin> {
                           context,
                           MaterialPageRoute(
                               builder: ((context) =>
-                                  const Test()))); // 테스트니까 나중에 꼭 바꾸기
+                                  const CharterPrediction()))); // 테스트니까 나중에 꼭 바꾸기
                     },
                   ),
                 ],

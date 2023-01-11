@@ -13,7 +13,7 @@ class DBServices {
   Future<GoogleMapModel> getApartments(
       double lat, double lng, double zoomLevel) async {
     String googleLocationsURL =
-        'http://10.0.2.2:8080/get_location?lat=$lat&lng=$lng&zoomlevel=$zoomLevel';
+        'http://localhost:8080/get_location?lat=$lat&lng=$lng&zoomlevel=$zoomLevel';
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -35,7 +35,7 @@ class DBServices {
   }
 
   Future<ApartInfoModel> callapartInfo(String apartinfoName) async {
-    String url = 'http://10.0.2.2:8080/apartment_info?name=${apartinfoName}';
+    String url = 'http://localhost:8080/apartment_info?name=${apartinfoName}';
 
     final response = await http.get(Uri.parse(url));
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
