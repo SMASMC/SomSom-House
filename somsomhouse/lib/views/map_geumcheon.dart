@@ -6,7 +6,6 @@ import 'package:somsomhouse/models/apartname_predict_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
 import 'package:somsomhouse/views/charter_value_prediction.dart';
-import 'package:somsomhouse/views/chartpage.dart';
 
 class Geumcheon extends StatefulWidget {
   const Geumcheon({super.key});
