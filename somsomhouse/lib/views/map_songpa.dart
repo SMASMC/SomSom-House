@@ -37,7 +37,11 @@ class _SongpaState extends State<Songpa> {
             _handleTapDown(
                 context, details.localPosition.dx, details.localPosition.dy);
           },
-          child: Image.asset('images/송파구.png'),
+          child: Image.asset(
+            'images/송파구.png',
+            width: 400,
+            height: 300,
+          ),
         ),
       ),
     );
@@ -45,22 +49,28 @@ class _SongpaState extends State<Songpa> {
 
   //-----function-------
   _handleTapDown(BuildContext context, var dx, var dy) async {
-    if ((dx > 167 && dx < 213 && dy > 13 && dy < 54) ||
-        (dx > 174 && dx < 199 && dy > 28 && dy < 54)) {
+    if ((dx > 187 && dx < 211 && dy > 62 && dy < 98) ||
+        (dx > 172 && dx < 208 && dy > 80 && dy < 101)) {
       DongModel.dongName = '풍납동';
-    } else if ((dx > 153 && dx < 165 && dy > 47 && dy < 85) ||
-        (dx > 174 && dx < 198 && dy > 61 && dy < 85)) {
+      widgetList = await selectApartName();
+      showPicker(context, widgetList);
+    } else if ((dx > 161 && dx < 197 && dy > 110 && dy < 132) ||
+        (dx > 151 && dx < 167 && dy > 99 && dy < 129)) {
       DongModel.dongName = '신천동';
-    } else if ((dx > 218 && dx < 247 && dy > 91 && dy < 110) ||
-        (dx > 238 && dx < 249 && dy > 97 && dy < 118)) {
+      widgetList = await selectApartName();
+      showPicker(context, widgetList);
+    } else if ((dx > 236 && dx < 251 && dy > 143 && dy < 161) ||
+        (dx > 219 && dx < 237 && dy > 140 && dy < 158)) {
       DongModel.dongName = '오금동';
-    } else if ((dx > 169 && dx < 222 && dy > 121 && dy < 136) ||
-        (dx > 225 && dx < 239 && dy > 117 && dy < 132) ||
-        (dx > 205 && dx < 224 && dy > 115 && dy < 136)) {
+      widgetList = await selectApartName();
+      showPicker(context, widgetList);
+    } else if ((dx > 166 && dx < 195 && dy > 167 && dy < 182) ||
+        (dx > 198 && dx < 224 && dy > 160 && dy < 179) ||
+        (dx > 208 && dx < 236 && dy > 170 && dy < 179)) {
       DongModel.dongName = '가락동';
+      widgetList = await selectApartName();
+      showPicker(context, widgetList);
     }
-    widgetList = await selectApartName();
-    showPicker(context, widgetList);
   }
 
   /// 아래쪽 스낵바에 선택한 동의 아파트 이름을 가져오기 위해서 DB 서비스와 연결하는 함수
