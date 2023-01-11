@@ -11,7 +11,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   void moveScreen() async {
-    Navigator.pushNamed(context, '/home');
+    Navigator.pushNamed(context, '/login'); //로그인이 안됐을 시에
+    // Navigator.pushNamed(context, '/home');
   }
 
   @override

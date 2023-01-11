@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/chart_model.dart';
+import 'package:somsomhouse/views/comment.dart';
 import 'package:somsomhouse/widgets/apart_info.dart';
 import 'package:somsomhouse/widgets/line_chart.dart';
 
@@ -20,6 +21,9 @@ class ChartPage extends StatelessWidget {
           ),
           Card(
             child: ApartLineChart(),
+          ),
+          Card(
+            child: Comment(),
           ),
         ],
       ),

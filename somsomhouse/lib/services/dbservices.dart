@@ -23,7 +23,7 @@ class DBServices {
   /// 만든 날짜 : 2023.1.9
   /// 만든이 : 권순형
   Future<bool> selectEndIndex(String apartName) async {
-    String url = 'http://localhost:8080/get_end_index?name=$apartName';
+    String url = 'http://10.0.2.2:8080/get_end_index?name=$apartName';
 
     final response = await http.get(Uri.parse(url));
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
