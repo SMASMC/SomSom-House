@@ -23,8 +23,6 @@ public class RdsController {
     // [로직 : 서버 로컬 pc에 저장 된 rds 확인 >> 저장된 이미지 파일이 존재하는 경우 >> 그 파일을 다운로드]
     @RequestMapping("/show_rds")
     public ResponseEntity<Object> showImage(@RequestParam Map<String, String> param){
-        
-
         // rds가 저장된 폴더 경로 변수 선언
         String rdsRoot = System.getProperty("user.dir") + "/src/main/resources/webapp/rds/";
         	
