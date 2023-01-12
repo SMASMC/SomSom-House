@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_predict_model.dart';
+import 'package:somsomhouse/services/rservcies.dart';
 
 class SinjungdongPrediction extends StatefulWidget {
   const SinjungdongPrediction({super.key});
@@ -52,10 +53,10 @@ class _SinjungdongPredictionState extends State<SinjungdongPrediction> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(bottom: 50),
+                    padding: const EdgeInsets.only(bottom: 50),
                     child: Text(
-                      '아파트이름',
-                      style: TextStyle(
+                      ApartNamePredict.apartNamePredict,
+                      style: const TextStyle(
                         fontSize: 50,
                         color: Colors.transparent,
                         shadows: [
@@ -68,6 +69,7 @@ class _SinjungdongPredictionState extends State<SinjungdongPrediction> {
                     ),
                   ),
                   TextFormField(
+                    controller: apartRentalController,
                     focusNode: rentalFocusNode,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
@@ -92,6 +94,7 @@ class _SinjungdongPredictionState extends State<SinjungdongPrediction> {
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0),
                     child: TextFormField(
+                      controller: apartFloorController,
                       focusNode: floorFocusNode,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
@@ -128,7 +131,6 @@ class _SinjungdongPredictionState extends State<SinjungdongPrediction> {
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton2(
-                          // icon: Icon(Icons.park),
                           hint: const Text('계절'),
                           isExpanded: true,
                           value:
@@ -155,9 +157,10 @@ class _SinjungdongPredictionState extends State<SinjungdongPrediction> {
                   Padding(
                     padding: const EdgeInsets.all(25.0),
                     child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            _showDialog(context);
+                            String result = await connectR();
+                            _showDialog(context, result);
                           }
                         },
                         child: const Text('시세 예측해 보기')),
@@ -174,14 +177,14 @@ class _SinjungdongPredictionState extends State<SinjungdongPrediction> {
   // 입련된 내용을 바탕으로 예측화면 보여주기 위한 함수
   // 만든 날짜 : 2022.01.11
   // 만든 사람 : 임은빈
-  _showDialog(BuildContext context) {
+  _showDialog(BuildContext context, String result) {
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext ctx) {
           return AlertDialog(
             title: const Text('예측 결과'),
-            content: Text('전세값은 ?입니다.\n \n데이터 분석을 통한 예측값으로 실제와 다를 수 있습니다.'),
+            content: Text('전세값은 $result입니다.\n \n데이터 분석을 통한 예측값으로 실제와 다를 수 있습니다.'),
             actions: [
               ElevatedButton(
                   onPressed: () => Navigator.of(ctx).pop(),
@@ -189,5 +192,19 @@ class _SinjungdongPredictionState extends State<SinjungdongPrediction> {
             ],
           );
         });
+  }
+
+  /// R과 연결하기 위해서 만든 함수 (기본틀 만들기)
+  /// 만든날짜 : 2023.1.12
+  /// 만든이 : 권순형
+  Future<String> connectR() async {
+    RServices rservices = RServices();
+    String result = await rservices.connectDorimdong(
+        ApartNamePredict.apartNamePredict,
+        apartRentalController.text.trim(),
+        apartFloorController.text.trim(),
+        selectedDropdown!.trim());
+
+    return result;
   }
 }
