@@ -17,6 +17,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       FirebaseAuth.instance; //firebaseauth로 firebase에 값을 저장하는 역할을 함.
   bool isLoginScreen = true;
   final _formKey = GlobalKey<FormState>();
+  static String passwordcheck = '';
 //전체적으로 form안에 있는 값을 넘겨주는 역할을 함.
   String userName = '';
   String userEmail = '';
@@ -297,6 +298,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   TextFormField(
                                     key: ValueKey(4), //key값을 가져옴.
                                     obscureText: true, //비밀번호 표시를 위한 선언
+                                    validator: (value) {
+                                      if (value != userPassword) {
+                                        return '비밀번호가 서로 다릅니다!';
+                                      }
+                                      return null;
+                                    },
                                     onSaved: (newValue) {
                                       userPasswordCheck = newValue!;
                                     },
@@ -414,9 +421,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AnimatedPositioned(
-                duration: Duration(milliseconds: 1000),
-                curve: Curves.easeIn, //애니메이션 효과
+              Positioned(
                 child: Center(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -463,14 +468,27 @@ class _LoginWidgetState extends State<LoginWidget> {
                               password: userPassword,
                             );
                           } catch (e) {
-                            print(e);
-                            if (mounted) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text('정보 입력을 확인해 주세요!'),
-                                backgroundColor: Colors.grey,
-                              ));
-                            }
+                            print('object');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Hello world'),
+                                backgroundColor: Colors.teal,
+                                duration: Duration(milliseconds: 1000),
+                                behavior: SnackBarBehavior.floating,
+                                action: SnackBarAction(
+                                  label: 'Undo',
+                                  textColor: Colors.white,
+                                  onPressed: () => print('Pressed'),
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                  side: BorderSide(
+                                    color: Colors.red,
+                                    width: 2,
+                                  ),
+                                ),
+                              ),
+                            );
                           }
                         }
                       },
@@ -507,12 +525,16 @@ class _LoginWidgetState extends State<LoginWidget> {
               ),
             ],
           ),
+          //값을 넘겨주는 버튼
         ],
       ),
     );
   }
 
-//-------------------function 2023-01-11
+  // ----------------------------------------------------------------
+  /// form 키의 value값을 가져온 뒤에 save해주는 함수
+  /// 만든 날짜 : 2023.1.11
+  /// 만든이 : 송명철
   void _tryValidation() {
     final isValid = _formKey.currentState!
         .validate(); //이 method로 인해 폼필드 validator를 작동시킬 수 있다.

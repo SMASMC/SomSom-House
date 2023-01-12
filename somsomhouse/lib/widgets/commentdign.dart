@@ -1,16 +1,9 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:somsomhouse/models/comment_model.dart';
 
 class CommentDign extends StatelessWidget {
-  const CommentDign(this.comment, this.yesme, this.username, this.userTime,
-      {super.key}); //받은 값을 바인드해줌.
-//model느낌으로 사용하면서 model로 받아낸 값들을 바로 build에 적용시키는 흐름을 지닌 page이다.
-  final String comment;
-  final bool yesme;
-  final String username;
-  final Timestamp userTime;
+  const CommentDign({super.key}); //받은 값을 바인드해줌.
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +25,7 @@ class CommentDign extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          username,
+                          CommentModel.username,
                           textScaleFactor: 1.5, //기기마다 폰트 사이즈 맞춰주는 역할을 함.
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -40,7 +33,7 @@ class CommentDign extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '${userTime.toDate().year}년 ${userTime.toDate().month}월 ${userTime.toDate().day}일 ${userTime.toDate().hour}시 ${userTime.toDate().minute}분',
+                          '${CommentModel.userTime.toDate().year}년 ${CommentModel.userTime.toDate().month}월 ${CommentModel.userTime.toDate().day}일 ${CommentModel.userTime.toDate().hour + 9}시 ${CommentModel.userTime.toDate().minute}분',
                           textScaleFactor: 1, //기기마다 폰트 사이즈 맞춰주는 역할을 함.
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -55,7 +48,7 @@ class CommentDign extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          comment,
+                          CommentModel.comment,
                           textScaleFactor: 1, //기기마다 폰트 사이즈 맞춰주는 역할을 함.
                           style: TextStyle(
                             color: Colors.black,
