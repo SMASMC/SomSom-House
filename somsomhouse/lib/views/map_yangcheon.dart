@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_list_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-import 'package:somsomhouse/views/sinchundong_prediction.dart';
+import 'package:somsomhouse/views/sincheondong_prediction.dart';
 
 class Yangcheon extends StatefulWidget {
   const Yangcheon({super.key});
@@ -116,7 +116,7 @@ class _YangcheonState extends State<Yangcheon> {
                           context,
                           MaterialPageRoute(
                               builder: ((context) =>
-                                  const SinchundongPrediction()))); // 테스트니까 나중에 꼭 바꾸기
+                                  const SincheondongPrediction()))); // 테스트니까 나중에 꼭 바꾸기
                     },
                   ),
                 ],

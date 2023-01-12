@@ -9,7 +9,7 @@ import 'package:somsomhouse/views/gwangjangdong_prediction.dart';
 import 'package:somsomhouse/views/ohgeumdong_prediction.dart';
 import 'package:somsomhouse/views/pungnabdong_prediction.dart';
 import 'package:somsomhouse/views/siheungdong_prediction.dart';
-import 'package:somsomhouse/views/sinchundong_prediction.dart';
+import 'package:somsomhouse/views/sincheondong_prediction.dart';
 import 'package:somsomhouse/views/sinjungdong_prediction.dart';
 
 class Yeongdeungpo extends StatefulWidget {
@@ -171,7 +171,7 @@ class _YeongdeungpoState extends State<Yeongdeungpo> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const SinchundongPrediction(),
+            builder: (context) => const SincheondongPrediction(),
           ));
     } else if (DongModel.dongName == '신정동') {
       Navigator.push(

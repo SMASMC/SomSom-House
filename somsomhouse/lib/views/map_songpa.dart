@@ -9,7 +9,7 @@ import 'package:somsomhouse/views/gwangjangdong_prediction.dart';
 import 'package:somsomhouse/views/ohgeumdong_prediction.dart';
 import 'package:somsomhouse/views/pungnabdong_prediction.dart';
 import 'package:somsomhouse/views/siheungdong_prediction.dart';
-import 'package:somsomhouse/views/sinchundong_prediction.dart';
+import 'package:somsomhouse/views/sincheondong_prediction.dart';
 import 'package:somsomhouse/views/sinjungdong_prediction.dart';
 
 class Songpa extends StatefulWidget {
@@ -176,7 +176,7 @@ class _SongpaState extends State<Songpa> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const SinchundongPrediction(),
+            builder: (context) => const SincheondongPrediction(),
           ));
     } else if (DongModel.dongName == '신정동') {
       Navigator.push(

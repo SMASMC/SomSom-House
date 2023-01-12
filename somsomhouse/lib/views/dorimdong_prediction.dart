@@ -1,6 +1,5 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:somsomhouse/models/apartname_predict_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/rservcies.dart';
 
@@ -42,8 +41,8 @@ class _DorimdongPredictionState extends State<DorimdongPrediction> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 121, 119, 166),
           title: const Text('전세값 예측해 보기'),
-          backgroundColor: Color.fromARGB(255, 121, 119, 166),
         ),
         body: Center(
           child: Form(
