@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_predict_model.dart';
+import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/rservcies.dart';
 
 class DorimdongPrediction extends StatefulWidget {
@@ -42,6 +43,7 @@ class _DorimdongPredictionState extends State<DorimdongPrediction> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('전세값 예측해 보기'),
+          backgroundColor: Color.fromARGB(255, 121, 119, 166),
         ),
         body: Center(
           child: Form(
@@ -54,7 +56,7 @@ class _DorimdongPredictionState extends State<DorimdongPrediction> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 50),
                     child: Text(
-                      ApartNamePredict.apartNamePredict,
+                      DongModel.apartNamePredict,
                       style: const TextStyle(
                         fontSize: 50,
                         color: Colors.transparent,
@@ -203,7 +205,7 @@ class _DorimdongPredictionState extends State<DorimdongPrediction> {
   Future<String> connectR() async {
     RServices rservices = RServices();
     String result = await rservices.connectDorimdong(
-        ApartNamePredict.apartNamePredict,
+        DongModel.apartNamePredict,
         apartRentalController.text.trim(),
         apartFloorController.text.trim(),
         selectedDropdown!.trim());

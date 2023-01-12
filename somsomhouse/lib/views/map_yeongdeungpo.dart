@@ -1,11 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_list_model.dart';
-import 'package:somsomhouse/models/apartname_predict_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-import 'package:somsomhouse/views/charter_value_prediction.dart';
 import 'package:somsomhouse/views/dorimdong_prediction.dart';
+import 'package:somsomhouse/views/garakdong_prediction.dart';
+import 'package:somsomhouse/views/gwangjangdong_prediction.dart';
+import 'package:somsomhouse/views/ohgeumdong_prediction.dart';
+import 'package:somsomhouse/views/pungnabdong_prediction.dart';
+import 'package:somsomhouse/views/siheungdong_prediction.dart';
+import 'package:somsomhouse/views/sinchundong_prediction.dart';
+import 'package:somsomhouse/views/sinjungdong_prediction.dart';
 
 class Yeongdeungpo extends StatefulWidget {
   const Yeongdeungpo({super.key});
@@ -16,6 +21,7 @@ class Yeongdeungpo extends StatefulWidget {
 
 class _YeongdeungpoState extends State<Yeongdeungpo> {
   late List<Widget> widgetList;
+  late List<String> nameList;
 
   @override
   void initState() {
@@ -23,6 +29,7 @@ class _YeongdeungpoState extends State<Yeongdeungpo> {
     super.initState();
 
     widgetList = [];
+    nameList = [];
   }
 
   @override
@@ -60,7 +67,7 @@ class _YeongdeungpoState extends State<Yeongdeungpo> {
         (dx > 107 && dx < 148 && dy > 197 && dy < 220)) {
       DongModel.dongName = '도림동';
       widgetList = await selectApartName();
-      showPicker(context, widgetList);
+      showPicker(widgetList);
     }
   }
 
@@ -76,13 +83,14 @@ class _YeongdeungpoState extends State<Yeongdeungpo> {
 
     for (var apartNameModel in apartNameListModel.apartNameListModel) {
       widgetList.add(Text(apartNameModel.apartName));
+      nameList.add(apartNameModel.apartName);
     }
 
     return widgetList;
   }
 
   //모달팝업창을 뜨게 하고 버튼을 누르면 다음 페이지로 이동한다.
-  showPicker(BuildContext context, List<Widget> widgetList) {
+  showPicker(List<Widget> widgetList) {
     showCupertinoModalPopup(
         context: context,
         builder: (context) => Container(
@@ -100,9 +108,10 @@ class _YeongdeungpoState extends State<Yeongdeungpo> {
                       ),
                       children: widgetList,
                       onSelectedItemChanged: (value) {
-                        ApartNamePredict.apartNamePredict =
-                            widgetList[value].toString();
-                        //CupertinoPicker에서 선택한 아파트 이름을 static에 저장해준다.
+                        setState(() {
+                          DongModel.apartNamePredict = nameList[value];
+                          //CupertinoPicker에서 선택한 아파트 이름을 static에 저장해준다.
+                        });
                       },
                     ),
                   ),
@@ -110,15 +119,66 @@ class _YeongdeungpoState extends State<Yeongdeungpo> {
                     child: const Text('OK'),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) =>
-                                  const DorimdongPrediction()))); // 테스트니까 나중에 꼭 바꾸기
+                      goDongPage();
                     },
                   ),
                 ],
               ),
             ));
+  }
+
+  //선택된 아파트에 해당되는 동으로 각각 다른 예측페이지로 이동하게 함
+  //만든날짜 : 2023.01.12
+  //만든이 : 노현석
+  goDongPage() {
+    if (DongModel.dongName == '도림동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const DorimdongPrediction(),
+          ));
+    } else if (DongModel.dongName == '가락동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const GarakdongPrediction(),
+          ));
+    } else if (DongModel.dongName == '광장동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const GwangjangdongPrediction(),
+          ));
+    } else if (DongModel.dongName == '오금동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const OgmdongPrediction(),
+          ));
+    } else if (DongModel.dongName == '풍납동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const PunabdongPrediction(),
+          ));
+    } else if (DongModel.dongName == '시흥동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SiheungdongPrediction(),
+          ));
+    } else if (DongModel.dongName == '신천동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SinchundongPrediction(),
+          ));
+    } else if (DongModel.dongName == '신정동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SinjungdongPrediction(),
+          ));
+    }
   }
 }//end

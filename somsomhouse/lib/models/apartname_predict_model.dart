@@ -1,3 +1,1 @@
-class ApartNamePredict {
-  static String apartNamePredict = '';
-}
+class ApartNamePredict {}

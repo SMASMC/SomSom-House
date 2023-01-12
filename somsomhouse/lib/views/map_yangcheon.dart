@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_list_model.dart';
-import 'package:somsomhouse/models/apartname_predict_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-import 'package:somsomhouse/views/charter_value_prediction.dart';
+import 'package:somsomhouse/views/sinchundong_prediction.dart';
 
 class Yangcheon extends StatefulWidget {
   const Yangcheon({super.key});
@@ -15,6 +14,7 @@ class Yangcheon extends StatefulWidget {
 
 class _YangcheonState extends State<Yangcheon> {
   late List<Widget> widgetList;
+  late List<String> nameList;
 
   @override
   void initState() {
@@ -22,6 +22,7 @@ class _YangcheonState extends State<Yangcheon> {
     super.initState();
 
     widgetList = [];
+    nameList = [];
   }
 
   @override
@@ -61,7 +62,7 @@ class _YangcheonState extends State<Yangcheon> {
       DongModel.dongName = '신정동';
 
       widgetList = await selectApartName();
-      showPicker(context, widgetList);
+      showPicker(widgetList);
     }
   }
 
@@ -77,13 +78,14 @@ class _YangcheonState extends State<Yangcheon> {
 
     for (var apartNameModel in apartNameListModel.apartNameListModel) {
       widgetList.add(Text(apartNameModel.apartName));
+      nameList.add(apartNameModel.apartName);
     }
 
     return widgetList;
   }
 
   //모달팝업창을 뜨게 하고 버튼을 누르면 다음 페이지로 이동한다.
-  showPicker(BuildContext context, List<Widget> widgetList) {
+  showPicker(List<Widget> widgetList) {
     showCupertinoModalPopup(
         context: context,
         builder: (context) => Container(
@@ -101,8 +103,7 @@ class _YangcheonState extends State<Yangcheon> {
                       ),
                       children: widgetList,
                       onSelectedItemChanged: (value) {
-                        ApartNamePredict.apartNamePredict =
-                            widgetList[value].toString();
+                        DongModel.apartNamePredict = nameList[value];
                         //CupertinoPicker에서 선택한 아파트 이름을 static에 저장해준다.
                       },
                     ),
@@ -115,7 +116,7 @@ class _YangcheonState extends State<Yangcheon> {
                           context,
                           MaterialPageRoute(
                               builder: ((context) =>
-                                  const CharterPrediction()))); // 테스트니까 나중에 꼭 바꾸기
+                                  const SinchundongPrediction()))); // 테스트니까 나중에 꼭 바꾸기
                     },
                   ),
                 ],

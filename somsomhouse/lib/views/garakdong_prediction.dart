@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_predict_model.dart';
+import 'package:somsomhouse/models/dongname_model.dart';
 
 class GarakdongPrediction extends StatefulWidget {
   const GarakdongPrediction({super.key});
@@ -54,7 +55,7 @@ class _GarakdongPredictionState extends State<GarakdongPrediction> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 50),
                     child: Text(
-                      '아파트이름',
+                      DongModel.apartNamePredict,
                       style: TextStyle(
                         fontSize: 50,
                         color: Colors.transparent,
