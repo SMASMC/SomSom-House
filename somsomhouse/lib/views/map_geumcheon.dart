@@ -78,7 +78,7 @@ class _GeumcheonState extends State<Geumcheon> {
     List<Widget> widgetList = [];
 
     for (var apartNameModel in apartNameListModel.apartNameListModel) {
-      widgetList.add(Text(apartNameModel.apartName));
+      widgetList.add(Center(child: Text(apartNameModel.apartName)));
       nameList.add(apartNameModel.apartName);
     }
 
