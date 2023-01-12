@@ -6,7 +6,6 @@ import 'package:somsomhouse/models/apartname_predict_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
 import 'package:somsomhouse/views/charter_value_prediction.dart';
-import 'package:somsomhouse/views/chartpage.dart';
 
 class Geumcheon extends StatefulWidget {
   const Geumcheon({super.key});
@@ -39,7 +38,11 @@ class _GeumcheonState extends State<Geumcheon> {
             _handleTapDown(
                 context, details.localPosition.dx, details.localPosition.dy);
           },
-          child: Image.asset('images/금천구.png'),
+          child: Image.asset(
+            'images/금천구.png',
+            width: 400,
+            height: 300,
+          ),
         ),
       ),
     );
@@ -47,13 +50,13 @@ class _GeumcheonState extends State<Geumcheon> {
 
   //-----function-------
   _handleTapDown(BuildContext context, var dx, var dy) async {
-    if ((dx > 171 && dx < 208 && dy > 171 && dy < 297) ||
-        (dx > 215 && dx < 263 && dy > 120 && dy < 294) ||
-        (dx > 272 && dx < 332 && dy > 176 && dy < 261)) {
+    if ((dx > 173 && dx < 205 && dy > 160 && dy < 284) ||
+        (dx > 202 && dx < 260 && dy > 116 && dy < 275) ||
+        (dx > 269 && dx < 309 && dy > 157 && dy < 256)) {
       DongModel.dongName = '시흥동';
+      widgetList = await selectApartName();
+      showPicker(context, widgetList);
     }
-    widgetList = await selectApartName();
-    showPicker(context, widgetList);
   }
 
   /// 아래쪽 스낵바에 선택한 동의 아파트 이름을 가져오기 위해서 DB 서비스와 연결하는 함수
@@ -62,7 +65,7 @@ class _GeumcheonState extends State<Geumcheon> {
   Future<List<Widget>> selectApartName() async {
     DBServices dbServices = DBServices();
     ApartNameListModel apartNameListModel =
-        await dbServices.callapartName(DongModel.dongName);
+        await dbServices.callapartName(DongModel.dongName, DongModel.guName);
 
     List<Widget> widgetList = [];
 
@@ -101,9 +104,8 @@ class _GeumcheonState extends State<Geumcheon> {
                     ),
                   ),
                   CupertinoButton(
-                    child: Text('OK'),
+                    child: const Text('OK'),
                     onPressed: () {
-                      print(ApartNamePredict.apartNamePredict);
                       Navigator.of(context).pop();
                       Navigator.push(
                           context,

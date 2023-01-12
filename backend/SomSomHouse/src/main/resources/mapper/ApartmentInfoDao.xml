@@ -19,7 +19,7 @@
 			
 	
 	<select id="getApartName" resultType="com.somsomhouse.backend.dto.ApartmentInfoDto">
-	select name from apartment_info where dong=#{dong}
+	select name from apartment_info where dong=#{dong} and gu=#{gu}
 	
 	
 	</select>		

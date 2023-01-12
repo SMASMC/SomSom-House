@@ -4,7 +4,7 @@ import 'package:somsomhouse/models/apartname_list_model.dart';
 import 'package:somsomhouse/models/apartname_predict_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-import 'package:somsomhouse/views/test.dart';
+import 'package:somsomhouse/views/charter_value_prediction.dart';
 
 class Yangcheon extends StatefulWidget {
   const Yangcheon({super.key});
@@ -40,7 +40,11 @@ class _YangcheonState extends State<Yangcheon> {
                 _handleTapDown(context, details.localPosition.dx,
                     details.localPosition.dy);
               },
-              child: Image.asset('images/양천구.png'),
+              child: Image.asset(
+                'images/양천구.png',
+                width: 400,
+                height: 300,
+              ),
             ),
           ),
         );
@@ -50,13 +54,14 @@ class _YangcheonState extends State<Yangcheon> {
 
   //-----function-------
   _handleTapDown(BuildContext context, var dx, var dy) async {
-    if ((dx > 116 && dx < 196 && dy > 176 && dy < 233) ||
-        (dx > 199 && dx < 254 && dy > 116 && dy < 209) ||
-        (dx > 265 && dx < 315 && dy > 140 && dy < 230)) {
+    if ((dx > 118 && dx < 193 && dy > 220 && dy < 258) ||
+        (dx > 204 && dx < 254 && dy > 148 && dy < 240) ||
+        (dx > 267 && dx < 313 && dy > 173 && dy < 252)) {
       DongModel.dongName = '신정동';
+
+      widgetList = await selectApartName();
+      showPicker(context, widgetList);
     }
-    widgetList = await selectApartName();
-    showPicker(context, widgetList);
   }
 
   /// 아래쪽 스낵바에 선택한 동의 아파트 이름을 가져오기 위해서 DB 서비스와 연결하는 함수
@@ -65,7 +70,7 @@ class _YangcheonState extends State<Yangcheon> {
   Future<List<Widget>> selectApartName() async {
     DBServices dbServices = DBServices();
     ApartNameListModel apartNameListModel =
-        await dbServices.callapartName(DongModel.dongName);
+        await dbServices.callapartName(DongModel.dongName, DongModel.guName);
 
     List<Widget> widgetList = [];
 
@@ -102,15 +107,14 @@ class _YangcheonState extends State<Yangcheon> {
                     ),
                   ),
                   CupertinoButton(
-                    child: Text('OK'),
+                    child: const Text('OK'),
                     onPressed: () {
-                      print(ApartNamePredict.apartNamePredict);
                       Navigator.of(context).pop();
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: ((context) =>
-                                  const Test()))); // 테스트니까 나중에 꼭 바꾸기
+                                  const CharterPrediction()))); // 테스트니까 나중에 꼭 바꾸기
                     },
                   ),
                 ],

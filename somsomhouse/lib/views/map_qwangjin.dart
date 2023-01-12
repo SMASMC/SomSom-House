@@ -40,7 +40,11 @@ class _QwangjinState extends State<Qwangjin> {
                 _handleTapDown(context, details.localPosition.dx,
                     details.localPosition.dy);
               },
-              child: Image.asset('images/광진구.png'),
+              child: Image.asset(
+                'images/광진구.png',
+                width: 400,
+                height: 300,
+              ),
             ),
           ),
         );
@@ -50,13 +54,13 @@ class _QwangjinState extends State<Qwangjin> {
 
   //-----function-------
   _handleTapDown(BuildContext context, var dx, var dy) async {
-    if ((dx > 200 && dx < 285 && dy > 197 && dy < 229) ||
-        (dx > 224 && dx < 296 && dy > 151 && dy < 188) ||
-        (dx > 255 && dx < 306 && dy > 102 && dy < 153)) {
+    if ((dx > 218 && dx < 298 && dy > 177 && dy < 202) ||
+        (dx > 242 && dx < 308 && dy > 125 && dy < 170) ||
+        (dx > 267 && dx < 311 && dy > 88 && dy < 150)) {
       DongModel.dongName = '광장동';
+      widgetList = await selectApartName();
+      showPicker(context, widgetList);
     }
-    widgetList = await selectApartName();
-    showPicker(context, widgetList);
   }
 
   /// 아래쪽 스낵바에 선택한 동의 아파트 이름을 가져오기 위해서 DB 서비스와 연결하는 함수
@@ -65,7 +69,7 @@ class _QwangjinState extends State<Qwangjin> {
   Future<List<Widget>> selectApartName() async {
     DBServices dbServices = DBServices();
     ApartNameListModel apartNameListModel =
-        await dbServices.callapartName(DongModel.dongName);
+        await dbServices.callapartName(DongModel.dongName, DongModel.guName);
 
     List<Widget> widgetList = [];
 
@@ -102,9 +106,8 @@ class _QwangjinState extends State<Qwangjin> {
                     ),
                   ),
                   CupertinoButton(
-                    child: Text('OK'),
+                    child: const Text('OK'),
                     onPressed: () {
-                      print(ApartNamePredict.apartNamePredict);
                       Navigator.of(context).pop();
                       Navigator.push(
                           context,
