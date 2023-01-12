@@ -35,7 +35,7 @@ class _QwangjinState extends State<Qwangjin> {
           ),
           body: Center(
             child: InkWell(
-              splashColor: Colors.orange,
+              splashColor: Color.fromARGB(255, 121, 119, 166),
               onTapDown: (TapDownDetails details) {
                 _handleTapDown(context, details.localPosition.dx,
                     details.localPosition.dy);
