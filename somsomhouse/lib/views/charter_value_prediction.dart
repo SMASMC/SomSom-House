@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:somsomhouse/models/apartname_predict_model.dart';
 
 class CharterPrediction extends StatefulWidget {
   const CharterPrediction({super.key});
@@ -30,10 +31,10 @@ class _CharterPredictionState extends State<CharterPrediction> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(bottom: 50),
+                  padding: const EdgeInsets.only(bottom: 50),
                   child: Text(
-                    '아파트이름',
-                    style: TextStyle(
+                    ApartNamePredict.apartNamePredict,
+                    style: const TextStyle(
                       fontSize: 50,
                       color: Colors.transparent,
                       shadows: [
@@ -91,7 +92,7 @@ class _CharterPredictionState extends State<CharterPrediction> {
                         items: dropdownList.map((String item) {
                           return DropdownMenuItem<String>(
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(30, 5, 0, 0),
+                              padding: EdgeInsets.fromLTRB(30, 5, 0, 0),
                               child: Text('$item'),
                             ),
                             value: item,
@@ -117,7 +118,6 @@ class _CharterPredictionState extends State<CharterPrediction> {
             ),
           ),
         ),
-        // body: Text(Provider.of<FinalViewModel>(context).apartName,),
       ),
     );
   }

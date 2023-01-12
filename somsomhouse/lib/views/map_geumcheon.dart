@@ -6,6 +6,14 @@ import 'package:somsomhouse/models/apartname_predict_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
 import 'package:somsomhouse/views/charter_value_prediction.dart';
+import 'package:somsomhouse/views/dorimdong_prediction.dart';
+import 'package:somsomhouse/views/garakdong_prediction.dart';
+import 'package:somsomhouse/views/gwangjangdong_prediction.dart';
+import 'package:somsomhouse/views/ohgeumdong_prediction.dart';
+import 'package:somsomhouse/views/pungnabdong_prediction.dart';
+import 'package:somsomhouse/views/siheungdong_prediction.dart';
+import 'package:somsomhouse/views/sinchundong_prediction.dart';
+import 'package:somsomhouse/views/sinjungdong_prediction.dart';
 
 class Geumcheon extends StatefulWidget {
   const Geumcheon({super.key});
@@ -107,15 +115,66 @@ class _GeumcheonState extends State<Geumcheon> {
                     child: const Text('OK'),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) =>
-                                  const CharterPrediction()))); // 테스트니까 나중에 꼭 바꾸기
+                      goDongPage();
                     },
                   ),
                 ],
               ),
             ));
+  }
+
+  //선택된 아파트에 해당되는 동으로 각각 다른 예측페이지로 이동하게 함
+  //만든날짜 : 2023.01.12
+  //만든이 : 노현석
+  goDongPage() {
+    if (DongModel.dongName == '도림동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const DorimdongPrediction(),
+          ));
+    } else if (DongModel.dongName == '가락동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const GarakdongPrediction(),
+          ));
+    } else if (DongModel.dongName == '광장동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const GwangjangdongPrediction(),
+          ));
+    } else if (DongModel.dongName == '오금동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const OgmdongPrediction(),
+          ));
+    } else if (DongModel.dongName == '풍납동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const PunabdongPrediction(),
+          ));
+    } else if (DongModel.dongName == '시흥동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SiheungdongPrediction(),
+          ));
+    } else if (DongModel.dongName == '신천동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SinchundongPrediction(),
+          ));
+    } else if (DongModel.dongName == '신정동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SinjungdongPrediction(),
+          ));
+    }
   }
 }//end
