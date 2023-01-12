@@ -1,6 +1,5 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:somsomhouse/models/apartname_predict_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 
 class GarakdongPrediction extends StatefulWidget {
@@ -62,9 +61,6 @@ class _GarakdongPredictionState extends State<GarakdongPrediction> {
                         shadows: [
                           Shadow(offset: Offset(0, -20), color: Colors.black54)
                         ],
-                        decoration: TextDecoration.underline,
-                        decorationStyle: TextDecorationStyle.dashed,
-                        decorationColor: Colors.orange,
                       ),
                     ),
                   ),

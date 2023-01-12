@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_list_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-import 'package:somsomhouse/views/sinchundong_prediction.dart';
+import 'package:somsomhouse/views/sinjungdong_prediction.dart';
 
 class Yangcheon extends StatefulWidget {
   const Yangcheon({super.key});
@@ -63,6 +63,8 @@ class _YangcheonState extends State<Yangcheon> {
 
       widgetList = await selectApartName();
       showPicker(widgetList);
+      DongModel.apartNamePredict = nameList[1];
+      //시작할때 CupertinoPicker의 initialItem이랑 동일하게 넣어준다.
     }
   }
 
@@ -77,7 +79,7 @@ class _YangcheonState extends State<Yangcheon> {
     List<Widget> widgetList = [];
 
     for (var apartNameModel in apartNameListModel.apartNameListModel) {
-      widgetList.add(Text(apartNameModel.apartName));
+      widgetList.add(Center(child: Text(apartNameModel.apartName)));
       nameList.add(apartNameModel.apartName);
     }
 
@@ -112,15 +114,21 @@ class _YangcheonState extends State<Yangcheon> {
                     child: const Text('OK'),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) =>
-                                  const SinchundongPrediction()))); // 테스트니까 나중에 꼭 바꾸기
+                      goDongPage();
                     },
                   ),
                 ],
               ),
             ));
+  }
+
+  goDongPage() {
+    if (DongModel.dongName == '신정동') {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SinjungdongPrediction(),
+          ));
+    }
   }
 }//end

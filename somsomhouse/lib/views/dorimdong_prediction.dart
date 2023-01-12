@@ -1,6 +1,5 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:somsomhouse/models/apartname_predict_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/rservcies.dart';
 
@@ -63,9 +62,6 @@ class _DorimdongPredictionState extends State<DorimdongPrediction> {
                         shadows: [
                           Shadow(offset: Offset(0, -20), color: Colors.black54)
                         ],
-                        decoration: TextDecoration.underline,
-                        decorationStyle: TextDecorationStyle.dashed,
-                        decorationColor: Colors.orange,
                       ),
                     ),
                   ),
@@ -132,7 +128,6 @@ class _DorimdongPredictionState extends State<DorimdongPrediction> {
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton2(
-                          // icon: Icon(Icons.park),
                           hint: const Text('계절'),
                           isExpanded: true,
                           value:
@@ -160,7 +155,9 @@ class _DorimdongPredictionState extends State<DorimdongPrediction> {
                     padding: const EdgeInsets.all(25.0),
                     child: ElevatedButton(
                         onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
+                          if (selectedDropdown == '') {
+                            _showErrorDialog();
+                          } else if (_formKey.currentState!.validate()) {
                             String result = await connectR();
                             _showDialog(context, result);
                           }
@@ -196,6 +193,19 @@ class _DorimdongPredictionState extends State<DorimdongPrediction> {
                   child: const Text('나가기'))
             ],
           );
+        });
+  }
+
+  /// 계절 선택하지 않을 시 오류메시지 뜨게하기
+  /// 만든날짜 : 2023.1.12
+  /// 만든이 : 노현석
+  _showErrorDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+              title: const Text('예측 결과'), content: Text('계절을 선택해주십시오.'));
         });
   }
 
