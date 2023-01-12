@@ -18,7 +18,7 @@ class Predict extends StatelessWidget {
       ),
       body: Center(
         child: InkWell(
-          splashColor: Colors.orange,
+          splashColor: Color.fromARGB(255, 121, 119, 166),
           mouseCursor: MaterialStateMouseCursor.clickable,
           child: Image.asset(
             'images/서울시.png',
