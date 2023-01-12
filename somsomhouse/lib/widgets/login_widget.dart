@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/views/comment.dart';
-import 'package:somsomhouse/widgets/addimage.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
@@ -23,7 +22,6 @@ class _LoginWidgetState extends State<LoginWidget> {
   String userEmail = '';
   String userPassword = '';
   String userPasswordCheck = '';
-  File? userPickedImage;
 
   @override
   Widget build(BuildContext context) {
@@ -226,14 +224,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     keyboardType: TextInputType
                                         .emailAddress, //email을 입력할 수 있도록 키보드에서 @버튼을 추가해줌
                                     key: ValueKey(2), //key값을 가져옴.
-                                    validator: (value) {
-                                      //사용자가 입력한 유효성 검사를 하는 validation 기능을 구현
-                                      if (value!.isEmpty ||
-                                          !value.contains('@')) {
-                                        return 'Email 양식에 맞춰 작성해주세요!';
-                                      }
-                                      return null;
-                                    },
                                     onSaved: (newValue) {
                                       userEmail = newValue!;
                                     },
@@ -255,7 +245,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           Radius.circular(35),
                                         ),
                                       ),
-                                      hintText: 'Email을 입력하세요',
+                                      hintText: 'ID를 입력하세요',
                                       hintStyle: TextStyle(fontSize: 14),
                                       contentPadding: EdgeInsets.all(
                                           10), //텍스트 박스 전체 사이즈르 padding으로 맞춤
@@ -307,7 +297,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   TextFormField(
                                     key: ValueKey(4), //key값을 가져옴.
                                     obscureText: true, //비밀번호 표시를 위한 선언
-                                    validator: (value) {},
                                     onSaved: (newValue) {
                                       userPasswordCheck = newValue!;
                                     },
@@ -335,37 +324,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           10), //텍스트 박스 전체 사이즈르 padding으로 맞춤
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  TextFormField(
-                                    onTap: () {
-                                      setState(() {
-                                        showAlert(context);
-                                      });
-                                    },
-                                    decoration: const InputDecoration(
-                                      prefixIcon: Icon(
-                                        Icons.image,
-                                        color:
-                                            Color.fromARGB(255, 129, 129, 129),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color.fromARGB(
-                                              255, 129, 129, 129),
-                                        ),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(35),
-                                        ),
-                                      ),
-                                      hintText: '이미지를 추가해주세요',
-                                      hintStyle: TextStyle(fontSize: 14),
-                                      contentPadding: EdgeInsets.all(
-                                          10), //텍스트 박스 전체 사이즈르 padding으로 맞춤
-                                    ),
-                                    keyboardType: TextInputType.none,
-                                  ),
                                 ],
                               )),
                         ),
@@ -378,13 +336,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                               children: [
                                 TextFormField(
                                   key: ValueKey(5), //key값을 가져옴.
-                                  validator: (value) {
-                                    if (value!.isEmpty ||
-                                        !value.contains('@')) {
-                                      return 'Email 양식에 맞게 입력하세요!';
-                                    }
-                                    return null;
-                                  },
                                   onSaved: (newValue) {
                                     userEmail = newValue!;
                                   },
@@ -405,7 +356,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         Radius.circular(35),
                                       ),
                                     ),
-                                    hintText: 'Email을 입력하세요',
+                                    hintText: 'ID를 입력하세요',
                                     hintStyle: TextStyle(fontSize: 14),
                                     contentPadding: EdgeInsets.all(
                                         10), //텍스트 박스 전체 사이즈르 padding으로 맞춤
@@ -472,17 +423,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                     child: GestureDetector(
                       onTap: () async {
                         if (!isLoginScreen) {
-                          if (userPickedImage == null) {
-                            // print('오류입니다.');
-                            setState(() {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text('이미지를 확인해 주세요!'),
-                                backgroundColor: Colors.grey,
-                              ));
-                            });
-                            return;
-                          }
                           _tryValidation(); //값을 넘겨주는 함수
                           try {
                             final addUser = await _authentication
@@ -491,18 +431,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                               password: userPassword,
                             );
 
-                            final refImage = FirebaseStorage.instance
-                                .ref()
-                                .child('pickedimage')
-                                .child(addUser.user!.uid +
-                                    '.png'); //storage경로에 접근할 수 있도록 해주는 역할을 함.
-                            //storage경로에 접근함과 동시에 .png형식으로 파일을 저장함.
-
-                            await refImage.putFile(
-                                userPickedImage!); //file upload를 하는 역할을 함
-
-                            final url = await refImage
-                                .getDownloadURL(); //Future 형식이기에 await를 달아줌.
                             await FirebaseFirestore.instance
                                 .collection('user')
                                 .doc(addUser.user!.uid)
@@ -510,8 +438,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                               'userName': userName,
                               'email': userEmail,
                               'password': userPassword,
-                              'image': url,
-                              // 'userImage':userPickedImage,
                             });
                             //collection의 역할은 바로 firebase에 컬렉션을 생성해준다.
                             //doc은 데이터를 전달하는 역할을 한다.
@@ -595,21 +521,5 @@ class _LoginWidgetState extends State<LoginWidget> {
       _formKey.currentState!.save(); // form키의 value값을 가져온 뒤에 save를 해주는 역할을 한다.
       //모든 onSaved 메소드를 불러옴
     }
-  }
-
-  void pickedImage(File image) {
-    userPickedImage = image;
-  }
-
-  void showAlert(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          backgroundColor: Colors.white,
-          child: AddImage(pickedImage),
-        );
-      },
-    );
   }
 }//End

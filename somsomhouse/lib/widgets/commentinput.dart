@@ -58,6 +58,7 @@ class _CommentInputState extends State<CommentInput> {
         .collection('user')
         .doc(user!.uid)
         .get(); //user 컬렉션에 저장되어있는 필드를 가져온다.
+
     String apartmentname = '';
     apartmentname = ChartModel
         .apartName; //ChartModel값에저장된 아파트 이름을 collection(문서)로 넘겨서 문서이름을 변경하여 저장한다.
@@ -66,7 +67,6 @@ class _CommentInputState extends State<CommentInput> {
           .now(), //지금시간을 firebase에 add될수 있도록 함. TimeStamp는 cloud_firestore패키지에서 제공
       'userID': user.uid,
       'userName': userData.data()!['userName'], //user이름과 이미지를 저장해줌 comment에
-      'image': userData.data()!['image'], //image url 을 가져옴.
       'text': _userEnterComment,
     }); //Map형식으로 저장됨
     _contoller.clear(); //댓글 내용을 입력하고 나서 지워지도록 하는 선언
