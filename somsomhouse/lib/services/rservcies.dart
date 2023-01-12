@@ -19,7 +19,7 @@ class RServices {
   Future<String> connectGwangjangdong(
     String name, String area, String floor, String season) async {
       String googleLocationsURL = 
-          'http://localhost:8080/gwangjang?name=$name&area=$area&floor=$floor&weather$season';
+          'http://localhost:8080/quangjang?name=$name&area=$area&floor=$floor&weather$season';
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConverted = json.decode(utf8.decode(response.bodyBytes));
@@ -28,7 +28,7 @@ class RServices {
   Future<String> connectGarakdong(
       String name, String area, String floor, String season) async {
     String googleLocationsURL =
-        'http://localhost:8080/garak?name=$name&area=$area&floor=$floor&weather=$season';
+        'http://localhost:8080/galock?name=$name&area=$area&floor=$floor&weather=$season';
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConverted = json.decode(utf8.decode(response.bodyBytes));
@@ -37,7 +37,7 @@ class RServices {
   Future<String> connectOhguemdong(
       String name, String area, String floor, String season) async {
     String googleLocationsURL =
-        'http://localhost:8080/ohguem?name=$name&area=$area&floor=$floor&weather=$season';
+        'http://localhost:8080/ogum?name=$name&area=$area&floor=$floor&weather=$season';
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConverted = json.decode(utf8.decode(response.bodyBytes));
@@ -46,7 +46,7 @@ class RServices {
   Future<String> connectPungnabdong(
       String name, String area, String floor, String season) async {
     String googleLocationsURL =
-        'http://localhost:8080/pungnab?name=$name&area=$area&floor=$floor&weather=$season';
+        'http://localhost:8080/pungnap?name=$name&area=$area&floor=$floor&weather=$season';
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConverted = json.decode(utf8.decode(response.bodyBytes));
@@ -61,10 +61,10 @@ class RServices {
     var dataConverted = json.decode(utf8.decode(response.bodyBytes));
     return dataConverted;
   }
-  Future<String> connectSinchundong(
+  Future<String> connectSincheondong(
       String name, String area, String floor, String season) async {
     String googleLocationsURL =
-        'http://localhost:8080/sinchun?name=$name&area=$area&floor=$floor&weather=$season';
+        'http://localhost:8080/sincheon?name=$name&area=$area&floor=$floor&weather=$season';
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConverted = json.decode(utf8.decode(response.bodyBytes));
