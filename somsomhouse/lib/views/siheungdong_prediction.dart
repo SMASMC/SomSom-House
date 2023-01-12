@@ -40,6 +40,7 @@ class _SiheungdongPredictionState extends State<SiheungdongPrediction> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 121, 119, 166),
           title: const Text('전세값 예측해 보기'),
         ),
         body: Center(
@@ -51,10 +52,10 @@ class _SiheungdongPredictionState extends State<SiheungdongPrediction> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 50),
+                    padding: EdgeInsets.only(bottom: 50),
                     child: Text(
-                      ApartNamePredict.apartNamePredict,
-                      style: const TextStyle(
+                      '아파트이름',
+                      style: TextStyle(
                         fontSize: 50,
                         color: Colors.transparent,
                         shadows: [

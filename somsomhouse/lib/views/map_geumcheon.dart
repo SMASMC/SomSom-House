@@ -37,6 +37,7 @@ class _GeumcheonState extends State<Geumcheon> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 121, 119, 166),
         title: const Text('금천구 지도'),
       ),
       body: Center(

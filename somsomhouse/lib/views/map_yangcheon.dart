@@ -31,6 +31,7 @@ class _YangcheonState extends State<Yangcheon> {
       builder: (context, snapshot) {
         return Scaffold(
           appBar: AppBar(
+            backgroundColor: Color.fromARGB(255, 121, 119, 166),
             title: const Text('양천구 지도'),
           ),
           body: Center(
