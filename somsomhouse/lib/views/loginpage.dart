@@ -18,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
       final userUser = _authentication.currentUser;
       if (userUser != null) {
         loggedUser = userUser;
-        print(loggedUser!.email);
       }
     } catch (e) {
       print(e);
@@ -27,13 +26,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: ListView(
-          children: [
-            LoginWidget(),
-          ],
-        ),
+    return Card(
+      child: Center(
+        child: LoginWidget(),
       ),
     );
   }

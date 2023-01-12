@@ -32,10 +32,8 @@ class _LoginWidgetState extends State<LoginWidget> {
         FocusScope.of(context).unfocus(); //화면을 눌렀을 경우에 키보드릴 내리게 하는 역할을 함
       },
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(
-            height: 60,
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
@@ -49,6 +47,9 @@ class _LoginWidgetState extends State<LoginWidget> {
             ],
           ),
           //메인 텍스트 명
+          SizedBox(
+            height: 15,
+          ),
           Row(
             children: [
               Container(
