@@ -13,16 +13,13 @@ class CommentDign extends StatelessWidget {
   Widget build(BuildContext context) {
     final _contoller = TextEditingController();
     var _userEnterComment = '';
-    return Stack(
+    return Column(
       children: [
         Row(
           children: [
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: yesme
-                      ? Color.fromARGB(255, 121, 119, 166)
-                      : Colors.grey[300],
                   borderRadius: BorderRadius.circular(12),
                 ),
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
@@ -32,38 +29,50 @@ class CommentDign extends StatelessWidget {
                   children: [
                     Row(
                       children: [
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(userImage),
+                        ),
+                        SizedBox(
+                          width: 19,
+                        ),
                         Text(
                           username,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
-                        )
+                        ),
                       ],
                     ),
                     const SizedBox(
-                      height: 23,
+                      height: 15,
                     ),
-                    Text(
-                      comment,
-                      style: TextStyle(
-                        color: yesme ? Colors.white : Colors.black,
-                      ),
+                    Column(
+                      children: [
+                        Text(
+                          comment,
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 1.0,
+                      width: MediaQuery.of(context).size.width -
+                          50, //화면이 돌아가도 자동으로 양옆의 길이를 조절해주는 역할
+                      color: Colors.black,
+                    )
                   ],
                 ),
               ),
             ),
           ],
         ),
-        Positioned(
-          top: 20,
-          left: 100,
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(userImage),
-          ),
-        ),
       ],
     );
   }
-}//End
+} //End

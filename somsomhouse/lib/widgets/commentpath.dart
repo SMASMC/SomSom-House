@@ -43,12 +43,16 @@ class _CommentPathState extends State<CommentPath> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                return CommentDign(
-                  commentdocs[index]['text'], //index 번호, text형식
-                  commentdocs[index]['userID'].toString() ==
-                      user!.uid, //uid를 가져옴.
-                  commentdocs[index]['userName'], //uid를 가져옴.
-                  commentdocs[index]['image'],
+                return Column(
+                  children: [
+                    CommentDign(
+                      commentdocs[index]['text'], //index 번호, text형식
+                      commentdocs[index]['userID'].toString() ==
+                          user!.uid, //uid를 가져옴.
+                      commentdocs[index]['userName'], //uid를 가져옴.
+                      commentdocs[index]['image'],
+                    ),
+                  ],
                 );
               },
             ),

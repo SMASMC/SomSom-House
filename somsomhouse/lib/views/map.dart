@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/widgets/google_map.dart';
-import 'package:somsomhouse/widgets/mypagedrawer.dart';
 
 class Map extends StatelessWidget {
   const Map({super.key});
@@ -28,7 +27,6 @@ class Map extends StatelessWidget {
         // 검색창
         // 검색아이콘버튼
       ),
-      drawer: MypageDrawer(), //drawer mypage로 이용
       body: Stack(
         children: [
           // 구글맵
