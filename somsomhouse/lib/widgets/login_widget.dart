@@ -597,7 +597,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     );
   }
 
-//-------------------function
+//-------------------function 2023-01-11
   void _tryValidation() {
     final isValid = _formKey.currentState!
         .validate(); //이 method로 인해 폼필드 validator를 작동시킬 수 있다.

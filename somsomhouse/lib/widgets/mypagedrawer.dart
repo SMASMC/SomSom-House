@@ -1,54 +1,48 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:somsomhouse/models/chart_model.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
-class CommentInput extends StatefulWidget {
-  const CommentInput({super.key});
+class MypageDrawer extends StatefulWidget {
+  const MypageDrawer({super.key});
 
   @override
-  State<CommentInput> createState() => _CommentInputState();
+  State<MypageDrawer> createState() => _MypageDrawerState();
 }
 
-class _CommentInputState extends State<CommentInput> {
-  final _contoller = TextEditingController();
-  var _userEnterComment = '';
+class _MypageDrawerState extends State<MypageDrawer> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // margin: EdgeInsets.only(top: 8), //margin은 위치 지정이라 생각
-      padding: EdgeInsets.all(8),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              maxLines: null, //글자입력의 한계를 없애준다.
-              controller: _contoller,
-              decoration: InputDecoration(
-                labelText: '댓글 달기',
-              ),
-              onChanged: (value) {
-                setState(() {
-                  _userEnterComment = value;
-                });
-              },
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero, //상단바까지 색을 채우겠다.
+        children: const [
+          UserAccountsDrawerHeader(
+            accountName: Text('Pikachu'),
+            accountEmail: Text('pikachu@naver.com'),
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 121, 119, 166),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(40),
+                bottomRight: Radius.circular(40),
+              ), //only는 방향을 주는 역할을 함.
             ),
           ),
-          IconButton(
-            onPressed: _userEnterComment.trim().isEmpty
-                ? null
-                : _sendComment, //메서드 뒤에 괄호가 없는 경우는
-            // onpressed 메서드가 _sendComment메서드의 위치를 참조한다.
-
-            icon: Icon(Icons.send),
-            color: Colors.black,
+          ListTile(
+            leading: Icon(
+              Icons.home,
+              color: Colors.black,
+            ),
+            title: Text('Home'),
+            trailing: Icon(
+              Icons.add,
+            ),
           )
         ],
       ),
     );
   }
-
-//-------------------------------------Function 2023-01-12
+//-------------------Function 2023.01.12
+/*
   void _sendComment() async {
     final user =
         FirebaseAuth.instance.currentUser; //firebase에서 해당되는 유저의 값을 가져올 수 있도록 함
@@ -71,4 +65,8 @@ class _CommentInputState extends State<CommentInput> {
     }); //Map형식으로 저장됨
     _contoller.clear(); //댓글 내용을 입력하고 나서 지워지도록 하는 선언
   }
+
+
+*/
+
 }//End

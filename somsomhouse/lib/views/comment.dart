@@ -18,13 +18,11 @@ class _CommentState extends State<Comment> {
       FirebaseAuth.instance; //firebaseauth로 firebase에 값을 저장하는 역할을 함.
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          CommentInput(),
-          CommentPath(), //listview가 모든 공간을 확보하기 때문에, Expanded 위젯으로 감싸줘야함.
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        CommentInput(),
+        CommentPath(), //listview가 모든 공간을 확보하기 때문에, Expanded 위젯으로 감싸줘야함.
+      ],
     );
   }
 }
