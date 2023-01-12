@@ -11,6 +11,7 @@ class Map extends StatelessWidget {
         FirebaseAuth.instance; //firebaseauth로 firebase에 값을 저장하는 역할을 함.
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 121, 119, 166),
         title: const Text('Map'),
         actions: [
           IconButton(

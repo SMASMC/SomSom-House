@@ -24,25 +24,25 @@ public class MlController {
 		
 		
 		String[] apartNameArr = {"광장힐스테이트", "신동아파밀리에","워커힐푸르지오","현대3","현대홈타운12차"};
-		List<Boolean> nameOneHot = new ArrayList();
+		List<String> nameOneHot = new ArrayList();
 		
 		for(String apartName : apartNameArr) {
 			if(apartName == name) {
-				nameOneHot.add(true);
+				nameOneHot.add("TRUE");
 			}else {
-				nameOneHot.add(false);
+				nameOneHot.add("FALSE");
 			}
 		}
 		
 		
 		String[] apartWeatherArr = {"봄", "여름","가을","겨울"};
-		List<Boolean> WeatherOneHot = new ArrayList();
+		List<String> WeatherOneHot = new ArrayList();
 		
 		for(String apartweather : apartWeatherArr) {
 			if(apartweather == weather) {
-				WeatherOneHot.add(true);
+				WeatherOneHot.add("TRUE");
 			}else {
-				WeatherOneHot.add(false);
+				WeatherOneHot.add("FALSE");
 			}
 		}
 		
@@ -87,7 +87,11 @@ public class MlController {
 		
 		+ "))))");
 
-		String result = conn.eval("result").asString();
+		conn.voidEval("for (i in 1:ncol(result)) {" + 
+				"if(result[i] == max(result)){" + 
+				" ans <- colnames(result)[i] }}");
+		
+		String result = conn.eval("ans").asString();
 		return result;
 	}
 	
@@ -103,68 +107,60 @@ public class MlController {
 		
 		
 		String[] apartNameArr = {"도림청구", "동아에코빌","영등포아트자이"};
-		List<Boolean> nameOneHot = new ArrayList();
+		List<String> nameOneHot = new ArrayList();
 		
 		for(String apartName : apartNameArr) {
 			if(apartName == name) {
-				nameOneHot.add(true);
+				nameOneHot.add("TRUE");
 			}else {
-				nameOneHot.add(false);
+				nameOneHot.add("FALSE");
 			}
 		}
 		
 		
 		String[] apartWeatherArr = {"봄", "여름","가을","겨울"};
-		List<Boolean> WeatherOneHot = new ArrayList();
+		List<String> WeatherOneHot = new ArrayList();
 		
 		for(String apartweather : apartWeatherArr) {
 			if(apartweather == weather) {
-				WeatherOneHot.add(true);
+				WeatherOneHot.add("TRUE");
 			}else {
-				WeatherOneHot.add(false);
+				WeatherOneHot.add("FALSE");
 			}
 		}
 		
-					
 		RConnection conn = new RConnection();
 		
-
-
-		conn.voidEval("scaleAreaMat <- scale("+area+",center= 36.44,scale = 143.59 -36.44");
+		conn.voidEval("scaleAreaMat <- scale("+area+",center= 36.44,scale = 143.59 -36.44)");
 		
 		conn.voidEval("scaleArea<- scaleAreaMat[1,1]");
 		
-		conn.voidEval("scaleFloorMat <- scale("+floor+",center= 1,scale = 29 - 1");
+		conn.voidEval("scaleFloorMat <- scale("+floor+",center= 1,scale = 29 - 1)");
 		
 		conn.voidEval("scaleFloor<- scaleFloorMat[1,1]");
 		
-
 		conn.voidEval("library(nnet)");
-		
-		
 		
 		conn.voidEval("model.nnet <- readRDS(url('http://localhost:8080/show_rds?name=ml_dorimdong.rds','rb'))");
 
 		
-		conn.voidEval("result <- as.character(predict(model.nnet, (list("
+		conn.voidEval("result <- predict(model.nnet, (list("
 				+ "도림청구=" + nameOneHot.get(0)
 				+ ", 동아에코빌=" + nameOneHot.get(1)
 				+ ", 영등포아트자이=" + nameOneHot.get(2)
-				
-				
-				
-				
 				+ ", v2=" + conn.eval("scaleArea").asDouble() + ","
 		+ "v1=" + conn.eval("scaleFloor").asDouble() 
 		+", 봄=" + WeatherOneHot.get(0) 
 		+", 여름=" + WeatherOneHot.get(1) 
 		+", 가을=" + WeatherOneHot.get(2) 
 		+", 겨울=" + WeatherOneHot.get(3) 
+		+ ")))");
 		
+		conn.voidEval("for (i in 1:ncol(result)) {" + 
+				"if(result[i] == max(result)){" + 
+				" ans <- colnames(result)[i] }}");
 		
-		+ "))))");
-
-		String result = conn.eval("result").asString();
+		String result = conn.eval("ans").asString();
 		return result;
 	}
 	

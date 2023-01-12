@@ -28,6 +28,7 @@ class _SongpaState extends State<Songpa> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 121, 119, 166),
         title: const Text('송파구 지도'),
       ),
       body: Center(

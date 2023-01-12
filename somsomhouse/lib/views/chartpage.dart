@@ -12,6 +12,7 @@ class ChartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 121, 119, 166),
         centerTitle: true,
         title: Text(ChartModel.apartName),
       ),

@@ -13,7 +13,7 @@ class DBServices {
   Future<GoogleMapModel> getApartments(
       double lat, double lng, double zoomLevel) async {
     String googleLocationsURL =
-        'http://10.0.2.2:8080/get_location?lat=$lat&lng=$lng&zoomlevel=$zoomLevel';
+        'http://localhost:8080/get_location?lat=$lat&lng=$lng&zoomlevel=$zoomLevel';
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -30,7 +30,8 @@ class DBServices {
     for (var num in nameList) {
       decodeData += '%${num.toRadixString(16)}';
     }
-    String url = 'http://10.0.2.2:8080/get_end_index?name=$decodeData';
+
+    String url = 'http://localhost:8080/get_end_index?name=$decodeData';
 
     final response = await http.get(Uri.parse(url));
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -47,7 +48,8 @@ class DBServices {
     for (var num in nameList) {
       decodeData += '%${num.toRadixString(16)}';
     }
-    String url = 'http://10.0.2.2:8080/apartment_info?name=$decodeData';
+
+    String url = 'http://localhost:8080/apartment_info?name=$decodeData';
 
     final response = await http.get(Uri.parse(url));
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -61,7 +63,7 @@ class DBServices {
 
   Future<ApartNameListModel> callapartName(
       String dongName, String guName) async {
-    String url = 'http://10.0.2.2:8080/getApartName?dong=$dongName&gu=$guName';
+    String url = 'http://localhost:8080/getApartName?dong=$dongName&gu=$guName';
 
     final response = await http.get(Uri.parse(url));
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));

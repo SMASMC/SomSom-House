@@ -5,6 +5,7 @@ import 'package:somsomhouse/models/apartname_predict_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
 import 'package:somsomhouse/views/charter_value_prediction.dart';
+import 'package:somsomhouse/views/dorimdong_prediction.dart';
 
 class Yeongdeungpo extends StatefulWidget {
   const Yeongdeungpo({super.key});
@@ -31,6 +32,7 @@ class _YeongdeungpoState extends State<Yeongdeungpo> {
       builder: (context, snapshot) {
         return Scaffold(
           appBar: AppBar(
+            backgroundColor: Color.fromARGB(255, 121, 119, 166),
             title: const Text('영등포구 지도'),
           ),
           body: Center(
@@ -112,7 +114,7 @@ class _YeongdeungpoState extends State<Yeongdeungpo> {
                           context,
                           MaterialPageRoute(
                               builder: ((context) =>
-                                  const CharterPrediction()))); // 테스트니까 나중에 꼭 바꾸기
+                                  const DorimdongPrediction()))); // 테스트니까 나중에 꼭 바꾸기
                     },
                   ),
                 ],
