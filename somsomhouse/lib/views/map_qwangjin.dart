@@ -31,6 +31,7 @@ class _QwangjinState extends State<Qwangjin> {
       builder: (context, snapshot) {
         return Scaffold(
           appBar: AppBar(
+            backgroundColor: Color.fromARGB(255, 121, 119, 166),
             title: const Text('광진구 지도'),
           ),
           body: Center(

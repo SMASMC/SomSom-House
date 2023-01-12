@@ -31,6 +31,7 @@ class _YeongdeungpoState extends State<Yeongdeungpo> {
       builder: (context, snapshot) {
         return Scaffold(
           appBar: AppBar(
+            backgroundColor: Color.fromARGB(255, 121, 119, 166),
             title: const Text('영등포구 지도'),
           ),
           body: Center(

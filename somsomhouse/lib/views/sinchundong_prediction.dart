@@ -40,6 +40,7 @@ class _SinchundongPredictionState extends State<SinchundongPrediction> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 121, 119, 166),
         title: const Text('전세값 예측해 보기'),
       ),
       body: Center(
