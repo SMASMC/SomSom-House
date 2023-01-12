@@ -92,7 +92,7 @@ flutter:
   fonts:
     - family: Jua
       fonts:
-        - asset: fonts/Jua-Regular.ttf
+        - asset: asset/fonts/Jua-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
