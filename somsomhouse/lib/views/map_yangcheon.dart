@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_list_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
 import 'package:somsomhouse/views/sincheondong_prediction.dart';
+import 'package:somsomhouse/views/sinjungdong_prediction.dart';
 
 class Yangcheon extends StatefulWidget {
   const Yangcheon({super.key});
@@ -27,6 +29,7 @@ class _YangcheonState extends State<Yangcheon> {
 
   @override
   Widget build(BuildContext context) {
+    final _authentication = FirebaseAuth.instance;
     return FutureBuilder(
       future: selectApartName(),
       builder: (context, snapshot) {
@@ -34,6 +37,17 @@ class _YangcheonState extends State<Yangcheon> {
           appBar: AppBar(
             backgroundColor: Color.fromARGB(255, 121, 119, 166),
             title: const Text('양천구 지도'),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.exit_to_app_sharp,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  _authentication.signOut();
+                },
+              ),
+            ],
           ),
           body: Center(
             child: InkWell(
@@ -63,6 +77,8 @@ class _YangcheonState extends State<Yangcheon> {
 
       widgetList = await selectApartName();
       showPicker(widgetList);
+      DongModel.apartNamePredict = nameList[1];
+      //시작할때 CupertinoPicker의 initialItem이랑 동일하게 넣어준다.
     }
   }
 
@@ -77,7 +93,7 @@ class _YangcheonState extends State<Yangcheon> {
     List<Widget> widgetList = [];
 
     for (var apartNameModel in apartNameListModel.apartNameListModel) {
-      widgetList.add(Text(apartNameModel.apartName));
+      widgetList.add(Center(child: Text(apartNameModel.apartName)));
       nameList.add(apartNameModel.apartName);
     }
 
@@ -112,15 +128,19 @@ class _YangcheonState extends State<Yangcheon> {
                     child: const Text('OK'),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) =>
-                                  const SincheondongPrediction()))); // 테스트니까 나중에 꼭 바꾸기
+                      goDongPage();
                     },
                   ),
                 ],
               ),
             ));
+  }
+
+  goDongPage() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SinjungdongPrediction(),
+        ));
   }
 }//end

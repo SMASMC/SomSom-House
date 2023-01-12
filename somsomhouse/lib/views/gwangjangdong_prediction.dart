@@ -1,4 +1,5 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/rservcies.dart';
@@ -36,6 +37,7 @@ class _GwangjangdongPredictionState extends State<GwangjangdongPrediction> {
 
   @override
   Widget build(BuildContext context) {
+    final _authentication = FirebaseAuth.instance;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -44,6 +46,17 @@ class _GwangjangdongPredictionState extends State<GwangjangdongPrediction> {
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 121, 119, 166),
           title: const Text('전세값 예측해 보기'),
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.exit_to_app_sharp,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                _authentication.signOut();
+              },
+            ),
+          ],
         ),
         body: Center(
           child: Form(
@@ -63,9 +76,6 @@ class _GwangjangdongPredictionState extends State<GwangjangdongPrediction> {
                         shadows: [
                           Shadow(offset: Offset(0, -20), color: Colors.black54)
                         ],
-                        decoration: TextDecoration.underline,
-                        decorationStyle: TextDecorationStyle.dashed,
-                        decorationColor: Colors.orange,
                       ),
                     ),
                   ),
