@@ -61,7 +61,7 @@ class DBServices {
 
   Future<ApartNameListModel> callapartName(
       String dongName, String guName) async {
-    String url = 'http://10.0.2.2:8080/getApartName?dong=$dongName&gu=$guName';
+    String url = 'http://127.0.0.1:8080/getApartName?dong=$dongName&gu=$guName';
 
     final response = await http.get(Uri.parse(url));
     var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));

@@ -37,10 +37,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => const SplashScreen(),
         '/login': (context) => StreamBuilder(
             stream: FirebaseAuth.instance
-                .authStateChanges(), //사용자가 발급받았던 토큰(인증)을 없애줌.
+                .authStateChanges(), //사용자가 발급받았던 토큰(인증) 여부를 확인.
             builder: ((context, snapshot) {
               if (snapshot.hasData) {
-                // return Comment(); //값을 지니고 있을경우 댓글 페이지로 이동
                 return Home();
               }
               return LoginPage(); //값을 지니고 있지 않을 경우 login페이지로 이동
