@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/views/map_geumcheon.dart';
@@ -11,10 +12,22 @@ class Predict extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _authentication = FirebaseAuth.instance;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 121, 119, 166),
-        title: const Text('Predict'),
+        title: const Text('서울시 전세 예측'),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.exit_to_app_sharp,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              _authentication.signOut();
+            },
+          ),
+        ],
       ),
       body: Center(
         child: InkWell(

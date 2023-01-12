@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_list_model.dart';
@@ -27,6 +28,7 @@ class _YeongdeungpoState extends State<Yeongdeungpo> {
 
   @override
   Widget build(BuildContext context) {
+    final _authentication = FirebaseAuth.instance;
     return FutureBuilder(
       future: selectApartName(),
       builder: (context, snapshot) {
@@ -34,6 +36,17 @@ class _YeongdeungpoState extends State<Yeongdeungpo> {
           appBar: AppBar(
             backgroundColor: Color.fromARGB(255, 121, 119, 166),
             title: const Text('영등포구 지도'),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.exit_to_app_sharp,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  _authentication.signOut();
+                },
+              ),
+            ],
           ),
           body: Center(
             child: InkWell(

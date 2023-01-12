@@ -1,4 +1,5 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/rservcies.dart';
@@ -35,6 +36,7 @@ class _DorimdongPredictionState extends State<DorimdongPrediction> {
 
   @override
   Widget build(BuildContext context) {
+    final _authentication = FirebaseAuth.instance;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -43,6 +45,17 @@ class _DorimdongPredictionState extends State<DorimdongPrediction> {
         appBar: AppBar(
           title: const Text('전세값 예측해 보기'),
           backgroundColor: Color.fromARGB(255, 121, 119, 166),
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.exit_to_app_sharp,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                _authentication.signOut();
+              },
+            ),
+          ],
         ),
         body: Center(
           child: Form(
