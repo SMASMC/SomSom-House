@@ -27,11 +27,13 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListView(
-        children: [
-          LoginWidget(),
-        ],
+    return Center(
+      child: Card(
+        child: ListView(
+          children: [
+            LoginWidget(),
+          ],
+        ),
       ),
     );
   }
