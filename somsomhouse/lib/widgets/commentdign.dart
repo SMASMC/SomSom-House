@@ -1,18 +1,19 @@
+import 'dart:ffi';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CommentDign extends StatelessWidget {
-  const CommentDign(this.comment, this.yesme, this.username, this.userImage,
+  const CommentDign(this.comment, this.yesme, this.username, this.userTime,
       {super.key}); //받은 값을 바인드해줌.
 //model느낌으로 사용하면서 model로 받아낸 값들을 바로 build에 적용시키는 흐름을 지닌 page이다.
   final String comment;
   final bool yesme;
   final String username;
-  final String userImage;
+  final Timestamp userTime;
 
   @override
   Widget build(BuildContext context) {
-    final _contoller = TextEditingController();
-    var _userEnterComment = '';
     return Column(
       children: [
         Row(
@@ -28,15 +29,19 @@ class CommentDign extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(userImage),
-                        ),
-                        SizedBox(
-                          width: 19,
-                        ),
                         Text(
                           username,
+                          textScaleFactor: 1.5, //기기마다 폰트 사이즈 맞춰주는 역할을 함.
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          '${userTime.toDate().year}년 ${userTime.toDate().month}월 ${userTime.toDate().day}일 ${userTime.toDate().hour}시 ${userTime.toDate().minute}분',
+                          textScaleFactor: 1, //기기마다 폰트 사이즈 맞춰주는 역할을 함.
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -51,6 +56,7 @@ class CommentDign extends StatelessWidget {
                       children: [
                         Text(
                           comment,
+                          textScaleFactor: 1, //기기마다 폰트 사이즈 맞춰주는 역할을 함.
                           style: TextStyle(
                             color: Colors.black,
                           ),

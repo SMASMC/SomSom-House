@@ -36,6 +36,7 @@ class _CommentPathState extends State<CommentPath> {
             );
           } //데이터가 없을 경우를 대비해서 선언을 해줘야함.
           final commentdocs = snapshot.data!.docs;
+
           return Expanded(
             child: ListView.builder(
               // reverse: true,//list가 보여지는 위치가 아래에서 위로 보여질 수 있도록 하는 선언
@@ -50,7 +51,7 @@ class _CommentPathState extends State<CommentPath> {
                       commentdocs[index]['userID'].toString() ==
                           user!.uid, //uid를 가져옴.
                       commentdocs[index]['userName'], //uid를 가져옴.
-                      commentdocs[index]['image'],
+                      commentdocs[index]['time'] ?? Timestamp(0, 0),
                     ),
                   ],
                 );
