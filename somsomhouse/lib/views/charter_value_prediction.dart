@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:somsomhouse/models/apartname_predict_model.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class CharterPrediction extends StatefulWidget {
   const CharterPrediction({super.key});
@@ -9,20 +9,9 @@ class CharterPrediction extends StatefulWidget {
 }
 
 class _CharterPredictionState extends State<CharterPrediction> {
-  late String name;
-  late TextEditingController size;
-  late TextEditingController floor;
-  late TextEditingController weather;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    name = '';
-    size = TextEditingController();
-    floor = TextEditingController();
-    weather = TextEditingController();
-  }
+  // 계약 계절 드롭박스로 부르기 위해 리스트 작성
+  List<String> dropdownList = ['봄', '여름', '가을', '겨울'];
+  String? selectedDropdown = '';
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +30,10 @@ class _CharterPredictionState extends State<CharterPrediction> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 50),
+                  padding: EdgeInsets.only(bottom: 50),
                   child: Text(
-                    ApartNamePredict.apartNamePredict, //앞 페이지에서 선택한 아파트 이름 나옴
-                    style: const TextStyle(
+                    '아파트이름',
+                    style: TextStyle(
                       fontSize: 50,
                       color: Colors.transparent,
                       shadows: [
@@ -57,7 +46,6 @@ class _CharterPredictionState extends State<CharterPrediction> {
                   ),
                 ),
                 TextField(
-                  controller: size,
                   decoration: InputDecoration(
                     hintText: '임대 면적',
                     labelText: '임대 면적',
@@ -70,7 +58,6 @@ class _CharterPredictionState extends State<CharterPrediction> {
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: TextField(
-                    controller: floor,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: '층 수',
@@ -85,34 +72,73 @@ class _CharterPredictionState extends State<CharterPrediction> {
                 const SizedBox(
                   height: 20,
                 ),
-                TextField(
-                  controller: weather,
-                  decoration: InputDecoration(
-                    hintText: '계약 계절',
-                    labelText: '계약 계절',
-                    prefixIcon: const Icon(Icons.sunny_snowing),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
+                Container(
+                  width: 450,
+                  height: 58,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                        color: Colors.black45,
+                        style: BorderStyle.solid,
+                        width: 0.8),
                   ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton2(
+                        // icon: Icon(Icons.park),
+                        hint: Text('계절'),
+                        isExpanded: true,
+                        value: selectedDropdown == '' ? null : selectedDropdown,
+                        items: dropdownList.map((String item) {
+                          return DropdownMenuItem<String>(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(30, 5, 0, 0),
+                              child: Text('$item'),
+                            ),
+                            value: item,
+                          );
+                        }).toList(),
+                        onChanged: (dynamic value) {
+                          setState(() {
+                            selectedDropdown = value;
+                          });
+                        }),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(25.0),
                   child: ElevatedButton(
-                      onPressed: () {
-                        name = ApartNamePredict.apartNamePredict;
-                        size;
-                        floor;
-                        weather;
-                        //이 4개의 값을 넘겨주면 됨.
-                      },
+                      onPressed: () => _showDialog(context),
                       child: const Text('시세 예측해 보기')),
                 ),
               ],
             ),
           ),
         ),
+        // body: Text(Provider.of<FinalViewModel>(context).apartName,),
       ),
     );
+  }
+
+  // 입련된 내용을 바탕으로 예측화면 보여주기 위한 함수
+  // 만든 날짜 : 2022.01.11
+  // 만든 사람 : 임은빈
+  _showDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: const Text('예측'),
+            content: Text('전세값은 ?입니다.'),
+            actions: [
+              ElevatedButton(
+                  onPressed: () => Navigator.of(ctx).pop(),
+                  child: const Text('나가기'))
+            ],
+          );
+        });
   }
 }
