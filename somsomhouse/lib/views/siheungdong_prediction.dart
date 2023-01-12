@@ -169,7 +169,9 @@ class _SiheungdongPredictionState extends State<SiheungdongPrediction> {
                     padding: const EdgeInsets.all(25.0),
                     child: ElevatedButton(
                         onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
+                          if (selectedDropdown == '') {
+                            _showErrorDialog();
+                          } else if (_formKey.currentState!.validate()) {
                             String result = await connectR();
                             _showDialog(context, result);
                           }
@@ -219,4 +221,24 @@ class _SiheungdongPredictionState extends State<SiheungdongPrediction> {
 
     return result;
   }
-}
+
+  /// 계절 선택하지 않을 시 오류메시지 뜨게하기
+  /// 만든날짜 : 2023.1.12
+  /// 만든이 : 노현석
+  _showErrorDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: const Text('오류'),
+            content: Text('계절을 선택해주십시오.'),
+            actions: [
+              ElevatedButton(
+                  onPressed: () => Navigator.of(ctx).pop(),
+                  child: const Center(child: Text('돌아가기')))
+            ],
+          );
+        });
+  }
+}//end

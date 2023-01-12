@@ -215,10 +215,17 @@ class _DorimdongPredictionState extends State<DorimdongPrediction> {
   _showErrorDialog() {
     showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (BuildContext ctx) {
           return AlertDialog(
-              title: const Text('예측 결과'), content: Text('계절을 선택해주십시오.'));
+            title: const Text('오류'),
+            content: Text('계절을 선택해주십시오.'),
+            actions: [
+              ElevatedButton(
+                  onPressed: () => Navigator.of(ctx).pop(),
+                  child: const Center(child: Text('돌아가기')))
+            ],
+          );
         });
   }
 
