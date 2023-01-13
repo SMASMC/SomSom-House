@@ -20,6 +20,7 @@ class _CommentPathState extends State<CommentPath> {
     final user = FirebaseAuth.instance.currentUser;
     String apartmentname = '';
     apartmentname = ChartModel.apartName;
+
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: StreamBuilder(
@@ -36,9 +37,8 @@ class _CommentPathState extends State<CommentPath> {
               child: CircularProgressIndicator(),
             );
           } //데이터가 없을 경우를 대비해서 선언을 해줘야함.
-
-          return Expanded(
-            child: ListView.builder(
+          else {
+            return ListView.builder(
               // reverse: true,//list가 보여지는 위치가 아래에서 위로 보여질 수 있도록 하는 선언
               itemCount: snapshot.data!.docs.length,
               shrinkWrap: true,
@@ -52,8 +52,8 @@ class _CommentPathState extends State<CommentPath> {
                 CommentModel.userTime = commentdocs[index]['time'];
                 return CommentDign();
               },
-            ),
-          );
+            );
+          }
         },
       ),
     );
