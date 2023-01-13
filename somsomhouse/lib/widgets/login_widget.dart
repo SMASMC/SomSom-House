@@ -18,6 +18,8 @@ class _LoginWidgetState extends State<LoginWidget> {
   bool isLoginScreen = true;
   final _formKey = GlobalKey<FormState>();
   static String passwordcheck = '';
+  FocusNode rentalFocusNode = FocusNode();
+  FocusNode floorFocusNode = FocusNode();
 //전체적으로 form안에 있는 값을 넘겨주는 역할을 함.
   String userName = '';
   String userEmail = '';
@@ -177,162 +179,134 @@ class _LoginWidgetState extends State<LoginWidget> {
                         Container(
                           margin: const EdgeInsets.only(top: 15),
                           child: Form(
-                              key: _formKey,
-                              child: Column(
-                                children: [
-                                  TextFormField(
-                                    key: ValueKey(
-                                        1), //Status가 뒤엉키지 않게 key값을 가져옴.
-                                    validator: (value) {
-                                      //사용자가 입력한 유효성 검사를 하는 validation 기능을 구현
-                                      if (value!.isEmpty || value.length > 4) {
-                                        return '이름 입력은 5글자 이내로 해주세요!';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (newValue) {
-                                      userName = newValue!;
-                                    },
-                                    onChanged: (value) {
-                                      //value 값을 가져오는 역할을 함.
-                                      userName = value;
-                                    },
-                                    decoration: const InputDecoration(
-                                      prefixIcon: Icon(
-                                        Icons.account_circle,
-                                        color:
-                                            Color.fromARGB(255, 129, 129, 129),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color.fromARGB(
-                                              255, 129, 129, 129),
-                                        ),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(35),
-                                        ),
-                                      ),
-                                      hintText: '사용자 명을 입력하세요',
-                                      hintStyle: TextStyle(fontSize: 14),
-                                      contentPadding: EdgeInsets.all(
-                                          10), //텍스트 박스 전체 사이즈르 padding으로 맞춤
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  key: ValueKey(1), //Status가 뒤엉키지 않게 key값을 가져옴.
+                                  validator: (value) {
+                                    //사용자가 입력한 유효성 검사를 하는 validation 기능을 구현
+                                    if (value!.isEmpty || value.length > 4) {
+                                      return '이름 입력은 5글자 이내로 해주세요!';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (newValue) {
+                                    userName = newValue!;
+                                  },
+                                  onChanged: (value) {
+                                    //value 값을 가져오는 역할을 함.
+                                    userName = value;
+                                  },
+                                  decoration: InputDecoration(
+                                    prefixIcon: Icon(
+                                      Icons.account_circle,
+                                      color: Color.fromARGB(255, 129, 129, 129),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  TextFormField(
-                                    keyboardType: TextInputType
-                                        .emailAddress, //email을 입력할 수 있도록 키보드에서 @버튼을 추가해줌
-                                    key: ValueKey(2), //key값을 가져옴.
-                                    onSaved: (newValue) {
-                                      userEmail = newValue!;
-                                    },
-                                    onChanged: (value) {
-                                      userEmail = value; //값을 전달할 수 있는 역할을 해줌.
-                                    },
-                                    decoration: const InputDecoration(
-                                      prefixIcon: Icon(
-                                        Icons.mail,
-                                        color:
-                                            Color.fromARGB(255, 129, 129, 129),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color.fromARGB(
-                                              255, 129, 129, 129),
-                                        ),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(35),
-                                        ),
-                                      ),
-                                      hintText: 'ID를 입력하세요',
-                                      hintStyle: TextStyle(fontSize: 14),
-                                      contentPadding: EdgeInsets.all(
-                                          10), //텍스트 박스 전체 사이즈르 padding으로 맞춤
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
                                     ),
+                                    hintText: '사용자 명을 입력하세요',
+                                    hintStyle: TextStyle(fontSize: 14),
+                                    contentPadding: EdgeInsets.all(
+                                        10), //텍스트 박스 전체 사이즈르 padding으로 맞춤
                                   ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  TextFormField(
-                                    key: ValueKey(3), //key값을 가져옴.
-                                    obscureText: true, //비밀번호 표시를 위한 선언
-                                    validator: (value) {
-                                      if (value!.isEmpty || value.length < 6) {
-                                        return '비밀번호는 6글자 이상으로 해주세요!';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (newValue) {
-                                      userPassword = newValue!;
-                                    },
-                                    onChanged: (value) {
-                                      userPassword =
-                                          value; //값을 전달할 수 있는 역할을 해줌.
-                                    },
-                                    decoration: const InputDecoration(
-                                      prefixIcon: Icon(
-                                        Icons.key,
-                                        color:
-                                            Color.fromARGB(255, 129, 129, 129),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color.fromARGB(
-                                              255, 129, 129, 129),
-                                        ),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(35),
-                                        ),
-                                      ),
-                                      hintText: '비밀번호를 입력하세요',
-                                      hintStyle: TextStyle(fontSize: 14),
-                                      contentPadding: EdgeInsets.all(
-                                          10), //텍스트 박스 전체 사이즈르 padding으로 맞춤
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                TextFormField(
+                                  keyboardType: TextInputType
+                                      .emailAddress, //email을 입력할 수 있도록 키보드에서 @버튼을 추가해줌
+                                  key: ValueKey(2), //key값을 가져옴.
+                                  onSaved: (newValue) {
+                                    userEmail = newValue!;
+                                  },
+                                  onChanged: (value) {
+                                    userEmail = value; //값을 전달할 수 있는 역할을 해줌.
+                                  },
+                                  decoration: InputDecoration(
+                                    prefixIcon: Icon(
+                                      Icons.mail,
+                                      color: Color.fromARGB(255, 129, 129, 129),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  TextFormField(
-                                    key: ValueKey(4), //key값을 가져옴.
-                                    obscureText: true, //비밀번호 표시를 위한 선언
-                                    validator: (value) {
-                                      if (value != userPassword) {
-                                        return '비밀번호가 서로 다릅니다!';
-                                      }
-                                      return null;
-                                    },
-                                    onSaved: (newValue) {
-                                      userPasswordCheck = newValue!;
-                                    },
-                                    onChanged: (value) {
-                                      userPasswordCheck = value;
-                                    },
-                                    decoration: const InputDecoration(
-                                      prefixIcon: Icon(
-                                        Icons.key,
-                                        color:
-                                            Color.fromARGB(255, 129, 129, 129),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color.fromARGB(
-                                              255, 129, 129, 129),
-                                        ),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(35),
-                                        ),
-                                      ),
-                                      hintText: '비밀번호를 다시 입력하세요',
-                                      hintStyle: TextStyle(fontSize: 14),
-                                      contentPadding: EdgeInsets.all(
-                                          10), //텍스트 박스 전체 사이즈르 padding으로 맞춤
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
                                     ),
+                                    hintText: 'ID를 입력하세요',
+                                    hintStyle: TextStyle(fontSize: 14),
+                                    contentPadding: EdgeInsets.all(
+                                        10), //텍스트 박스 전체 사이즈르 padding으로 맞춤
                                   ),
-                                ],
-                              )),
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                TextFormField(
+                                  key: ValueKey(3), //key값을 가져옴.
+                                  obscureText: true, //비밀번호 표시를 위한 선언
+                                  validator: (value) {
+                                    if (value!.isEmpty || value.length < 6) {
+                                      return '비밀번호는 6글자 이상으로 해주세요!';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (newValue) {
+                                    userPassword = newValue!;
+                                  },
+                                  onChanged: (value) {
+                                    userPassword = value; //값을 전달할 수 있는 역할을 해줌.
+                                  },
+                                  decoration: InputDecoration(
+                                    prefixIcon: Icon(
+                                      Icons.key,
+                                      color: Color.fromARGB(255, 129, 129, 129),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    hintText: '비밀번호를 입력하세요',
+                                    hintStyle: TextStyle(fontSize: 14),
+                                    contentPadding: EdgeInsets.all(
+                                        10), //텍스트 박스 전체 사이즈르 padding으로 맞춤
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                TextFormField(
+                                  key: ValueKey(4), //key값을 가져옴.
+                                  obscureText: true, //비밀번호 표시를 위한 선언
+                                  focusNode: floorFocusNode,
+                                  validator: (value) {
+                                    if (value != userPassword) {
+                                      return '비밀번호가 서로 다릅니다!';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (newValue) {
+                                    userPasswordCheck = newValue!;
+                                  },
+                                  onChanged: (value) {
+                                    userPasswordCheck = value;
+                                  },
+                                  decoration: InputDecoration(
+                                    prefixIcon: const Icon(
+                                      Icons.key,
+                                      color: Color.fromARGB(255, 129, 129, 129),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    hintText: '비밀번호를 다시 입력하세요',
+                                    hintStyle: TextStyle(fontSize: 14),
+                                    contentPadding: EdgeInsets.all(
+                                        10), //텍스트 박스 전체 사이즈르 padding으로 맞춤
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       if (isLoginScreen) //로그인 버튼일 경우
                         Container(
@@ -349,19 +323,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   onChanged: (value) {
                                     userEmail = value;
                                   },
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     prefixIcon: Icon(
                                       Icons.mail,
                                       color: Color.fromARGB(255, 129, 129, 129),
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 129, 129, 129),
-                                      ),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(35),
-                                      ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
                                     ),
                                     hintText: 'ID를 입력하세요',
                                     hintStyle: TextStyle(fontSize: 14),
@@ -370,7 +338,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   ),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 15,
                                 ),
                                 TextFormField(
                                   key: ValueKey(6), //key값을 가져옴.
@@ -381,19 +349,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   onChanged: (value) {
                                     userPassword = value;
                                   },
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     prefixIcon: Icon(
                                       Icons.key,
                                       color: Color.fromARGB(255, 129, 129, 129),
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 129, 129, 129),
-                                      ),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(35),
-                                      ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
                                     ),
 
                                     hintText: '비밀번호를 입력하세요',
@@ -444,19 +406,20 @@ class _LoginWidgetState extends State<LoginWidget> {
                               'email': userEmail,
                               'password': userPassword,
                             });
+
                             //collection의 역할은 바로 firebase에 컬렉션을 생성해준다.
                             //doc은 데이터를 전달하는 역할을 한다.
                             //set은 엑스트라 데이터를 생성해주는 역할을 한다.
-                            if (addUser.user != null) {
-                              // firebase에 user가 있다면 다음페이지로 이동
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return Comment();
-                                },
-                              ));
-                            }
+                            // if (addUser.user != null) {
+                            //   // firebase에 user가 있다면 다음페이지로 이동
+                            //   Navigator.push(context, MaterialPageRoute(
+                            //     builder: (context) {
+                            //       return Comment();
+                            //     },
+                            //   ));
+                            // }
                           } catch (e) {
-                            print(e);
+                            _showDialogsignup(context);
                           }
                         } //isLoginScreen이 false일경우 이메일과 비밀번호를 firebase에 넣어준다.
                         if (isLoginScreen) {
@@ -467,28 +430,31 @@ class _LoginWidgetState extends State<LoginWidget> {
                               email: userEmail,
                               password: userPassword,
                             );
-                          } catch (e) {
-                            print('object');
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Hello world'),
-                                backgroundColor: Colors.teal,
-                                duration: Duration(milliseconds: 1000),
-                                behavior: SnackBarBehavior.floating,
-                                action: SnackBarAction(
-                                  label: 'Undo',
-                                  textColor: Colors.white,
-                                  onPressed: () => print('Pressed'),
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  side: BorderSide(
-                                    color: Colors.red,
-                                    width: 2,
+                            if (addUser.user != null) {
+                              // firebase에 user가 있다면 다음페이지로 이동
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Hello world'),
+                                  backgroundColor: Colors.teal,
+                                  duration: Duration(milliseconds: 1000),
+                                  behavior: SnackBarBehavior.floating,
+                                  action: SnackBarAction(
+                                    label: 'Undo',
+                                    textColor: Colors.white,
+                                    onPressed: () => print('Pressed'),
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                    side: BorderSide(
+                                      color: Colors.red,
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
+                          } catch (e) {
+                            _showDialoglogin(context);
                           }
                         }
                       },
@@ -543,5 +509,51 @@ class _LoginWidgetState extends State<LoginWidget> {
       _formKey.currentState!.save(); // form키의 value값을 가져온 뒤에 save를 해주는 역할을 한다.
       //모든 onSaved 메소드를 불러옴
     }
+  }
+
+  //회원가입 완료시 로그인 창으로 이동하도록 생성한 Dialog 2023.01.13
+  _showDialoglogin(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, //user must tap the button!
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: const Text('로그인 실패!'),
+          content: const Text('아이디 혹은 비밀번호를 확인해 주세요'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+                child: const Text('이전'))
+          ],
+        );
+      },
+    );
+  }
+
+  //회원가입이 완료되지 않았을 경우 팝업창
+  _showDialogsignup(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, //user must tap the button!
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: const Text('회원가입 불가!'),
+          content: const Text('입력사항을 다시 한번 확인해 주세요!'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+                child: const Text('이전'))
+          ],
+        );
+      },
+    );
   }
 }//End
