@@ -194,14 +194,34 @@ class _SincheondongPredictionState extends State<SincheondongPrediction> {
   // 만든 날짜 : 2022.01.11
   // 만든 사람 : 임은빈
   _showDialog(BuildContext context, String result) {
+    int Num1 = 0;
+    int Num2 = 0;
+    String printMessage = '';
+
+    List<String> num = result.split('~');
+    //숫자,숫자 이렇게 나뉠거임
+    Num1 = int.parse(num[0]);
+    Num2 = int.parse(num[1]);
+    //시작 숫자는 Num1에 끝 숫자는 Num2에 저장
+
+    int Num1Neck = Num1 ~/ 10000;
+    int Num1Trash = Num1 % 10000;
+    int Num2Neck = Num2 ~/ 10000;
+    int Num2Trash = Num2 % 10000;
+
+    String num1NeckStr = Num1Neck != 0 ? '$Num1Neck억 ' : '';
+    String num1TrashStr = Num1Trash != 0 ? '$Num1Trash천만원' : '';
+    String num2NeckStr = Num2Neck != 0 ? '$Num2Neck억 ' : '';
+    String num2TrashStr = Num2Trash != 0 ? '$Num2Trash천만원' : '';
+
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext ctx) {
           return AlertDialog(
             title: const Text('예측 결과'),
-            content:
-                Text('전세값은 $result입니다.\n \n데이터 분석을 통한 예측값으로 실제와 다를 수 있습니다.'),
+            content: Text(
+                '전세값은 $num1NeckStr$num1TrashStr ~ $num2NeckStr$num2TrashStr \n \n데이터 분석을 통한 예측값으로 실제와 다를 수 있습니다.'),
             actions: [
               ElevatedButton(
                   onPressed: () => Navigator.of(ctx).pop(),
