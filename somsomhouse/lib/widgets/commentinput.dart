@@ -15,9 +15,8 @@ class _CommentInputState extends State<CommentInput> {
   var _userEnterComment = '';
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // margin: EdgeInsets.only(top: 8), //margin은 위치 지정이라 생각
-      padding: const EdgeInsets.all(8),
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
       child: Row(
         children: [
           Expanded(

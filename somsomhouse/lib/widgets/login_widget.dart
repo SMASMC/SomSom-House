@@ -140,7 +140,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           ),
           Container(
             padding: const EdgeInsets.all(10.0),
-            height: isLoginScreen ? 210 : 300,
+            height: isLoginScreen ? 210 : 350,
             width: MediaQuery.of(context).size.width -
                 50, //화면이 돌아가도 자동으로 양옆의 길이를 조절해주는 역할
             margin: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -353,7 +353,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 Icons.key,
                                 color: Color.fromARGB(255, 129, 129, 129),
                               ),
-                              enabledBorder: OutlineInputBorder(
+                              border: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Color.fromARGB(255, 129, 129, 129),
                                 ),
@@ -383,90 +383,87 @@ class _LoginWidgetState extends State<LoginWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Positioned(
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () async {
-                        if (!isLoginScreen) {
-                          _tryValidation(); //값을 넘겨주는 함수
-                          try {
-                            final addUser = await _authentication
-                                .createUserWithEmailAndPassword(
-                              email: userEmail.trim(), //email형식에 공백이 들어가면 안됨
-                              password: userPassword,
-                            );
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () async {
+                      if (!isLoginScreen) {
+                        _tryValidation(); //값을 넘겨주는 함수
+                        try {
+                          final addUser = await _authentication
+                              .createUserWithEmailAndPassword(
+                            email: userEmail.trim(), //email형식에 공백이 들어가면 안됨
+                            password: userPassword,
+                          );
 
-                            await FirebaseFirestore.instance
-                                .collection('user')
-                                .doc(addUser.user!.uid)
-                                .set({
-                              'userName': userName,
-                              'email': userEmail,
-                              'password': userPassword,
-                            });
-                            //collection의 역할은 바로 firebase에 컬렉션을 생성해준다.
-                            //doc은 데이터를 전달하는 역할을 한다.
-                            //set은 엑스트라 데이터를 생성해주는 역할을 한다.
-                            if (addUser.user != null) {
-                              // firebase에 user가 있다면 다음페이지로 이동
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return Comment();
-                                },
-                              ));
-                            }
-                          } catch (e) {
-                            print(e);
+                          await FirebaseFirestore.instance
+                              .collection('user')
+                              .doc(addUser.user!.uid)
+                              .set({
+                            'userName': userName,
+                            'email': userEmail,
+                            'password': userPassword,
+                          });
+                          //collection의 역할은 바로 firebase에 컬렉션을 생성해준다.
+                          //doc은 데이터를 전달하는 역할을 한다.
+                          //set은 엑스트라 데이터를 생성해주는 역할을 한다.
+                          if (addUser.user != null) {
+                            // firebase에 user가 있다면 다음페이지로 이동
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return Comment();
+                              },
+                            ));
                           }
-                        } //isLoginScreen이 false일경우 이메일과 비밀번호를 firebase에 넣어준다.
-                        if (isLoginScreen) {
-                          _tryValidation();
-                          try {
-                            final addUser = await _authentication
-                                .signInWithEmailAndPassword(
-                              email: userEmail,
-                              password: userPassword,
-                            );
-                          } catch (e) {
-                            print(e);
-                            if (mounted) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text('정보 입력을 확인해 주세요!'),
-                                backgroundColor: Colors.grey,
-                              ));
-                            }
+                        } catch (e) {
+                          print(e);
+                        }
+                      } //isLoginScreen이 false일경우 이메일과 비밀번호를 firebase에 넣어준다.
+                      if (isLoginScreen) {
+                        _tryValidation();
+                        try {
+                          final addUser =
+                              await _authentication.signInWithEmailAndPassword(
+                            email: userEmail,
+                            password: userPassword,
+                          );
+                        } catch (e) {
+                          print(e);
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text('정보 입력을 확인해 주세요!'),
+                              backgroundColor: Colors.grey,
+                            ));
                           }
                         }
-                      },
-                      child: Container(
-                        height: 70,
-                        width: 70,
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color.fromARGB(255, 214, 163, 255),
-                              Color.fromARGB(232, 105, 183, 255),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight, //그라데이션의 위치 같은거
-                          ),
-                          borderRadius: BorderRadius.circular(50),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.6),
-                              spreadRadius: 1,
-                              blurRadius: 1,
-                              offset: Offset(0, 1),
-                            ),
+                      }
+                    },
+                    child: Container(
+                      height: 70,
+                      width: 70,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color.fromARGB(255, 214, 163, 255),
+                            Color.fromARGB(232, 105, 183, 255),
                           ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight, //그라데이션의 위치 같은거
                         ),
-                        child: const Icon(
-                          Icons.login,
-                          color: Colors.white,
-                        ),
+                        borderRadius: BorderRadius.circular(50),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.6),
+                            spreadRadius: 1,
+                            blurRadius: 1,
+                            offset: Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.login,
+                        color: Colors.white,
                       ),
                     ),
                   ),

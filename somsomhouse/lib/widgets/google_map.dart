@@ -16,14 +16,19 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   final Map<String, Marker> _markers = {};
   late GoogleMapController mapController;
   late int count;
-  late String bouttoncolors;
-  late Color _color;
+  late Color modeBgColor;
+  late Color modeTxtColor;
+  late bool isDark;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     count = 0;
-    _color = Colors.white;
+
+    modeBgColor = Colors.black;
+    modeTxtColor = Colors.white;
+    isDark = false;
   }
 
   @override
@@ -51,10 +56,33 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
           },
         ),
         Positioned(
-          top: MediaQuery.of(context).size.height * 0.6,
+          top: MediaQuery.of(context).size.height * 0.53,
           left: MediaQuery.of(context).size.width * 0.78,
           child: Column(
             children: [
+              MaterialButton(
+                onPressed: () async {
+                  changeColor(mapController);
+                  isDark = !isDark;
+                  isDark
+                      ? setState(() {
+                          modeBgColor = Colors.white;
+                          modeTxtColor = Colors.black;
+                        })
+                      : setState(() {
+                          modeBgColor = Colors.black;
+                          modeTxtColor = Colors.white;
+                        });
+                },
+                color: modeBgColor,
+                textColor: modeTxtColor,
+                padding: const EdgeInsets.all(16),
+                shape: const CircleBorder(),
+                child: const Icon(Icons.light_rounded),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               MaterialButton(
                 onPressed: () async {
                   var zoomLevel = await mapController.getZoomLevel();
@@ -101,19 +129,6 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
                 child: const Icon(Icons.remove),
               ),
             ],
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.all(10.0),
-          child: FloatingActionButton(
-            onPressed: () {
-              changeColor(mapController);
-            },
-            backgroundColor: Colors.black,
-            child: Icon(
-              Icons.light_rounded,
-              color: _color,
-            ),
           ),
         ),
       ],
