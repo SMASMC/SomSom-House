@@ -34,7 +34,7 @@ class _SongpaWidgetState extends State<SongpaWidget> {
     final _authentication = FirebaseAuth.instance;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 121, 119, 166),
+        backgroundColor: Color.fromARGB(232, 105, 183, 255),
         title: const Text('송파구 지도'),
         actions: [
           IconButton(

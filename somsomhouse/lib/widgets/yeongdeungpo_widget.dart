@@ -32,7 +32,7 @@ class _YeongdeungpoWidgetState extends State<YeongdeungpoWidget> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 121, 119, 166),
+        backgroundColor: Color.fromARGB(232, 105, 183, 255),
         title: const Text('영등포구 지도'),
         actions: [
           IconButton(

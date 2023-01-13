@@ -20,7 +20,8 @@ class _PredictWidgetState extends State<PredictWidget> {
     final _authentication = FirebaseAuth.instance;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 121, 119, 166),
+        backgroundColor: Color.fromARGB(232, 105, 183, 255),
+        leading: const Icon(null),
         title: const Text('서울시 전세 예측'),
         actions: [
           IconButton(
