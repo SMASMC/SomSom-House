@@ -186,18 +186,52 @@ class _GarakdongPredictionState extends State<GarakdongPrediction> {
     );
   }
 
+  // ----------------------------------------------------------------
+
   // 입련된 내용을 바탕으로 예측화면 보여주기 위한 함수
   // 만든 날짜 : 2022.01.11
   // 만든 사람 : 임은빈
+
+  //결과값 받아와서 ~억~천만원으로 범위를 보기 좋게 수정
+  //수정 날짜 : 2022.01.13
+  //수정한 사람 : 노현석
   _showDialog(BuildContext context, String result) {
+    double Num1 = 0;
+    double Num2 = 0;
+    String printMessage = '';
+
+    List<String> num = result.split('~');
+    //숫자,숫자 이렇게 나뉠거임
+    Num1 = double.parse(num[0]);
+    Num2 = double.parse(num[1]);
+    //시작 숫자는 Num1에 끝 숫자는 Num2에 저장
+
+    if ((Num1 / 10000 < 1) && (Num2.toString().substring(2, 3) == '0')) {
+      printMessage =
+          '${Num1.toString().substring(1, 1)}천만원 ~ ${Num2.toString().substring(1, 2)}억';
+    } else if ((Num1 / 10000 < 1) && (Num2.toString().substring(2, 3) != '0')) {
+      printMessage =
+          '${Num1.toString().substring(1, 1)}천만원 ~ ${Num2.toString().substring(1, 2)}억 ${Num2.toString().substring(2, 3)}천만원';
+    } else if ((Num1.toString().substring(2, 3) == '0') &&
+        (Num2.toString().substring(2, 3) == '0')) {
+      printMessage =
+          '${Num1.toString().substring(1, 2)}억 ~ ${Num2.toString().substring(1, 2)}억';
+    } else if ((Num1.toString().substring(2, 3) == '0') &&
+        (Num2.toString().substring(2, 3) != '0')) {
+      printMessage =
+          '${Num1.toString().substring(1, 2)}억 ~ ${Num2.toString().substring(1, 2)}억 ${Num2.toString().substring(2, 3)}천만원';
+    } else
+      (printMessage =
+          '${Num1.toString().substring(1, 2)}억 ${Num2.toString().substring(2, 3)}천만원 ~ ${Num2.toString().substring(1, 2)}억 ${Num2.toString().substring(2, 3)}천만원');
+
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext ctx) {
           return AlertDialog(
             title: const Text('예측 결과'),
-            content:
-                Text('전세값은 $result입니다.\n \n데이터 분석을 통한 예측값으로 실제와 다를 수 있습니다.'),
+            content: Text(
+                '전세값은 $printMessage입니다.\n \n데이터 분석을 통한 예측값으로 실제와 다를 수 있습니다.'),
             actions: [
               ElevatedButton(
                   onPressed: () => Navigator.of(ctx).pop(),
