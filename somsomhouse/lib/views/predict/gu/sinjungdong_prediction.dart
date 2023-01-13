@@ -1,17 +1,16 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/rservcies.dart';
 
-class GarakdongPrediction extends StatefulWidget {
-  const GarakdongPrediction({super.key});
+class SinjungdongPrediction extends StatefulWidget {
+  const SinjungdongPrediction({super.key});
 
   @override
-  State<GarakdongPrediction> createState() => _GarakdongPredictionState();
+  State<SinjungdongPrediction> createState() => _SinjungdongPredictionState();
 }
 
-class _GarakdongPredictionState extends State<GarakdongPrediction> {
+class _SinjungdongPredictionState extends State<SinjungdongPrediction> {
   // 임대 면적, 층 수 겂 범위 정하기 위해 변수 및 컨트롤러 작성
   late TextEditingController apartRentalController;
   late TextEditingController apartFloorController;
@@ -36,26 +35,15 @@ class _GarakdongPredictionState extends State<GarakdongPrediction> {
 
   @override
   Widget build(BuildContext context) {
-    final _authentication = FirebaseAuth.instance;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
         appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 121, 119, 166),
-            title: const Text('전세값 예측해 보기'),
-            actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.exit_to_app_sharp,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  _authentication.signOut();
-                },
-              ),
-            ]),
+          backgroundColor: const Color.fromARGB(232, 105, 183, 255),
+          title: const Text('전세값 예측해 보기'),
+        ),
         body: Center(
           child: Form(
             key: _formKey,
@@ -65,15 +53,17 @@ class _GarakdongPredictionState extends State<GarakdongPrediction> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(bottom: 50),
-                    child: Text(
-                      DongModel.apartNamePredict,
-                      style: TextStyle(
-                        fontSize: 50,
-                        color: Colors.transparent,
-                        shadows: [
-                          Shadow(offset: Offset(0, -20), color: Colors.black54)
-                        ],
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        hintText: DongModel.apartNamePredict,
+                        labelText: DongModel.apartNamePredict,
+                        prefixIcon: const Icon(Icons.apartment),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                       ),
                     ),
                   ),
@@ -94,8 +84,8 @@ class _GarakdongPredictionState extends State<GarakdongPrediction> {
                     validator: (rental) {
                       rental = rental == '' || rental == null ? '0' : rental;
                       apartRental = int.parse(rental);
-                      if (apartRental < 25.32 || apartRental > 180.52) {
-                        return '25.32m²부터 180.52m²까지만 입력해 주세요';
+                      if (apartRental < 32.76 || apartRental > 131.49) {
+                        return '32.76m²부터 131.49m²까지만 입력해 주세요';
                       }
                       return null;
                     },
@@ -118,8 +108,8 @@ class _GarakdongPredictionState extends State<GarakdongPrediction> {
                       validator: (floor) {
                         floor = floor == '' || floor == null ? '0' : floor;
                         apartFloor = int.parse(floor);
-                        if (apartFloor < 2 || apartFloor > 22) {
-                          return '2층부터 22층까지만 입력해 주세요';
+                        if (apartFloor < 1 || apartFloor > 22) {
+                          return '1층부터 22층까지만 입력해 주세요';
                         }
                         return null;
                       },
@@ -140,7 +130,6 @@ class _GarakdongPredictionState extends State<GarakdongPrediction> {
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton2(
-                          // icon: Icon(Icons.park),
                           hint: const Text('계절'),
                           isExpanded: true,
                           value:
@@ -148,7 +137,7 @@ class _GarakdongPredictionState extends State<GarakdongPrediction> {
                           items: dropdownList.map((String item) {
                             return DropdownMenuItem<String>(
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(30, 5, 0, 0),
+                                padding: EdgeInsets.fromLTRB(30, 5, 0, 0),
                                 child: Text('$item'),
                               ),
                               value: item,
@@ -164,16 +153,32 @@ class _GarakdongPredictionState extends State<GarakdongPrediction> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(25.0),
-                    child: ElevatedButton(
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            String result = await connectR();
-                            _showDialog(context, result);
-                          }
-                        },
-                        child: const Text('시세 예측해 보기')),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    const Color.fromARGB(232, 105, 183, 255)),
+                            onPressed: () async {
+                              if (selectedDropdown == '') {
+                                _showErrorDialog();
+                              } else if (_formKey.currentState!.validate()) {
+                                String result = await connectR();
+                                _showDialog(context, result);
+                              }
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(12.0),
+                              child: Text(
+                                '시세 예측해 보기',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                ),
+                              ),
+                            )),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -205,15 +210,35 @@ class _GarakdongPredictionState extends State<GarakdongPrediction> {
         });
   }
 
-  // ---
+  /// R과 연결하기 위해서 만든 함수 (기본틀 만들기)
+  /// 만든날짜 : 2023.1.12
+  /// 만든이 : 권순형
   Future<String> connectR() async {
     RServices rservices = RServices();
-    String result = await rservices.connectGarakdong(
+    String result = await rservices.connectSinjungdong(
         DongModel.apartNamePredict,
         apartRentalController.text.trim(),
         apartFloorController.text.trim(),
         selectedDropdown!.trim());
 
     return result;
+  }
+
+  _showErrorDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: const Text('예측 결과'),
+            content: const Text('계절을 선택해주십시오.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('확인'),
+              ),
+            ],
+          );
+        });
   }
 }

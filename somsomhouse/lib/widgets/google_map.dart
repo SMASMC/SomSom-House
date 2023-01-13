@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:somsomhouse/models/chart_model.dart';
 import 'package:somsomhouse/models/map_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-import 'package:somsomhouse/views/chartpage.dart';
+import 'package:somsomhouse/views/map/chartpage.dart';
 
 class GoogleMapWidget extends StatefulWidget {
   const GoogleMapWidget({super.key});
@@ -46,7 +46,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
         ),
         Positioned(
           top: MediaQuery.of(context).size.height * 0.6,
-          left: MediaQuery.of(context).size.width * 0.76,
+          left: MediaQuery.of(context).size.width * 0.78,
           child: Column(
             children: [
               MaterialButton(
@@ -64,7 +64,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
                     ),
                   );
                 },
-                color: Colors.blue,
+                color: Color.fromARGB(246, 105, 183, 255),
                 textColor: Colors.white,
                 padding: const EdgeInsets.all(16),
                 shape: const CircleBorder(),
@@ -88,7 +88,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
                     ),
                   );
                 },
-                color: Colors.blue,
+                color: Color.fromARGB(246, 105, 183, 255),
                 textColor: Colors.white,
                 padding: const EdgeInsets.all(16),
                 shape: const CircleBorder(),

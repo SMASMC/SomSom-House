@@ -1,20 +1,18 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_list_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
+import 'package:somsomhouse/views/predict/gu/dorimdong_prediction.dart';
 
-import 'package:somsomhouse/views/gwangjangdong_prediction.dart';
-
-class Qwangjin extends StatefulWidget {
-  const Qwangjin({super.key});
+class Yeongdeungpo extends StatefulWidget {
+  const Yeongdeungpo({super.key});
 
   @override
-  State<Qwangjin> createState() => _QwangjinState();
+  State<Yeongdeungpo> createState() => _YeongdeungpoState();
 }
 
-class _QwangjinState extends State<Qwangjin> {
+class _YeongdeungpoState extends State<Yeongdeungpo> {
   late List<Widget> widgetList;
   late List<String> nameList;
 
@@ -29,25 +27,13 @@ class _QwangjinState extends State<Qwangjin> {
 
   @override
   Widget build(BuildContext context) {
-    final _authentication = FirebaseAuth.instance;
     return FutureBuilder(
       future: selectApartName(),
       builder: (context, snapshot) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 121, 119, 166),
-            title: const Text('광진구 지도'),
-            actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.exit_to_app_sharp,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  _authentication.signOut();
-                },
-              ),
-            ],
+            backgroundColor: const Color.fromARGB(232, 105, 183, 255),
+            title: const Text('영등포구 지도'),
           ),
           body: Center(
             child: InkWell(
@@ -57,9 +43,9 @@ class _QwangjinState extends State<Qwangjin> {
                     details.localPosition.dy);
               },
               child: Image.asset(
-                'images/광진구.png',
-                width: 400,
-                height: 300,
+                'images/영등포구.png',
+                height: 350,
+                width: 300,
               ),
             ),
           ),
@@ -68,12 +54,11 @@ class _QwangjinState extends State<Qwangjin> {
     );
   }
 
-  //-----function-------
+//-----function-------
   _handleTapDown(BuildContext context, var dx, var dy) async {
-    if ((dx > 218 && dx < 298 && dy > 177 && dy < 202) ||
-        (dx > 242 && dx < 308 && dy > 125 && dy < 170) ||
-        (dx > 267 && dx < 311 && dy > 88 && dy < 150)) {
-      DongModel.dongName = '광장동';
+    if ((dx > 70 && dx < 107 && dy > 205 && dy < 230) ||
+        (dx > 107 && dx < 148 && dy > 197 && dy < 220)) {
+      DongModel.dongName = '도림동';
       widgetList = await selectApartName();
       showPicker(widgetList);
       DongModel.apartNamePredict = nameList[1];
@@ -99,7 +84,6 @@ class _QwangjinState extends State<Qwangjin> {
     return widgetList;
   }
 
-  // --------------------------------------
   //모달팝업창을 뜨게 하고 버튼을 누르면 다음 페이지로 이동한다.
   showPicker(List<Widget> widgetList) {
     showCupertinoModalPopup(
@@ -145,7 +129,7 @@ class _QwangjinState extends State<Qwangjin> {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const GwangjangdongPrediction(),
+          builder: (context) => const DorimdongPrediction(),
         ));
   }
 }//end

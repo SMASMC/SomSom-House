@@ -1,11 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_list_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-import 'package:somsomhouse/views/sincheondong_prediction.dart';
-import 'package:somsomhouse/views/sinjungdong_prediction.dart';
+import 'package:somsomhouse/views/predict/gu/sinjungdong_prediction.dart';
 
 class Yangcheon extends StatefulWidget {
   const Yangcheon({super.key});
@@ -29,25 +27,13 @@ class _YangcheonState extends State<Yangcheon> {
 
   @override
   Widget build(BuildContext context) {
-    final _authentication = FirebaseAuth.instance;
     return FutureBuilder(
       future: selectApartName(),
       builder: (context, snapshot) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 121, 119, 166),
+            backgroundColor: const Color.fromARGB(232, 105, 183, 255),
             title: const Text('양천구 지도'),
-            actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.exit_to_app_sharp,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  _authentication.signOut();
-                },
-              ),
-            ],
           ),
           body: Center(
             child: InkWell(

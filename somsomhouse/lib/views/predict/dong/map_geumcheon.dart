@@ -1,22 +1,18 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_list_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-import 'package:somsomhouse/views/garakdong_prediction.dart';
-import 'package:somsomhouse/views/ohgeumdong_prediction.dart';
-import 'package:somsomhouse/views/pungnabdong_prediction.dart';
-import 'package:somsomhouse/views/sincheondong_prediction.dart';
+import 'package:somsomhouse/views/predict/gu/siheungdong_prediction.dart';
 
-class Songpa extends StatefulWidget {
-  const Songpa({super.key});
+class Geumcheon extends StatefulWidget {
+  const Geumcheon({super.key});
 
   @override
-  State<Songpa> createState() => _SongpaState();
+  State<Geumcheon> createState() => _GeumcheonState();
 }
 
-class _SongpaState extends State<Songpa> {
+class _GeumcheonState extends State<Geumcheon> {
   late List<Widget> widgetList;
   late List<String> nameList;
 
@@ -31,32 +27,20 @@ class _SongpaState extends State<Songpa> {
 
   @override
   Widget build(BuildContext context) {
-    final _authentication = FirebaseAuth.instance;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 121, 119, 166),
-        title: const Text('송파구 지도'),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.exit_to_app_sharp,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              _authentication.signOut();
-            },
-          ),
-        ],
+        backgroundColor: const Color.fromARGB(232, 105, 183, 255),
+        title: const Text('금천구 지도'),
       ),
       body: Center(
         child: InkWell(
-          splashColor: Color.fromARGB(255, 121, 119, 166),
+          splashColor: const Color.fromARGB(255, 121, 119, 166),
           onTapDown: (TapDownDetails details) {
             _handleTapDown(
                 context, details.localPosition.dx, details.localPosition.dy);
           },
           child: Image.asset(
-            'images/송파구.png',
+            'images/금천구.png',
             width: 400,
             height: 300,
           ),
@@ -67,24 +51,15 @@ class _SongpaState extends State<Songpa> {
 
   //-----function-------
   _handleTapDown(BuildContext context, var dx, var dy) async {
-    if ((dx > 187 && dx < 211 && dy > 62 && dy < 98) ||
-        (dx > 172 && dx < 208 && dy > 80 && dy < 101)) {
-      DongModel.dongName = '풍납동';
-    } else if ((dx > 161 && dx < 197 && dy > 110 && dy < 132) ||
-        (dx > 151 && dx < 167 && dy > 99 && dy < 129)) {
-      DongModel.dongName = '신천동';
-    } else if ((dx > 236 && dx < 251 && dy > 143 && dy < 161) ||
-        (dx > 219 && dx < 237 && dy > 140 && dy < 158)) {
-      DongModel.dongName = '오금동';
-    } else if ((dx > 166 && dx < 195 && dy > 167 && dy < 182) ||
-        (dx > 198 && dx < 224 && dy > 160 && dy < 179) ||
-        (dx > 208 && dx < 236 && dy > 170 && dy < 179)) {
-      DongModel.dongName = '가락동';
+    if ((dx > 173 && dx < 205 && dy > 160 && dy < 284) ||
+        (dx > 202 && dx < 260 && dy > 116 && dy < 275) ||
+        (dx > 269 && dx < 309 && dy > 157 && dy < 256)) {
+      DongModel.dongName = '시흥동';
+      widgetList = await selectApartName();
+      showPicker(widgetList);
+      DongModel.apartNamePredict = nameList[1];
+      //시작할때 CupertinoPicker의 initialItem이랑 동일하게 넣어준다.
     }
-    widgetList = await selectApartName();
-    showPicker(widgetList);
-    DongModel.apartNamePredict = nameList[1];
-    //시작할때 CupertinoPicker의 initialItem이랑 동일하게 넣어준다.
   }
 
   /// 아래쪽 스낵바에 선택한 동의 아파트 이름을 가져오기 위해서 DB 서비스와 연결하는 함수
@@ -147,30 +122,10 @@ class _SongpaState extends State<Songpa> {
   //만든날짜 : 2023.01.12
   //만든이 : 노현석
   goDongPage() {
-    if (DongModel.dongName == '가락동') {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const GarakdongPrediction(),
-          ));
-    } else if (DongModel.dongName == '오금동') {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const OgmdongPrediction(),
-          ));
-    } else if (DongModel.dongName == '풍납동') {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const PunabdongPrediction(),
-          ));
-    } else if (DongModel.dongName == '신천동') {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const SincheondongPrediction(),
-          ));
-    }
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SiheungdongPrediction(),
+        ));
   }
 }//end

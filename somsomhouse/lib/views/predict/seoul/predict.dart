@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
-import 'package:somsomhouse/views/map_geumcheon.dart';
-import 'package:somsomhouse/views/map_qwangjin.dart';
-import 'package:somsomhouse/views/map_songpa.dart';
-import 'package:somsomhouse/views/map_yangcheon.dart';
-import 'package:somsomhouse/views/map_yeongdeungpo.dart';
+import 'package:somsomhouse/views/predict/dong/map_geumcheon.dart';
+import 'package:somsomhouse/views/predict/dong/map_qwangjin.dart';
+import 'package:somsomhouse/views/predict/dong/map_songpa.dart';
+import 'package:somsomhouse/views/predict/dong/map_yangcheon.dart';
+import 'package:somsomhouse/views/predict/dong/map_yeongdeungpo.dart';
 
 class Predict extends StatelessWidget {
   const Predict({super.key});
@@ -15,8 +15,9 @@ class Predict extends StatelessWidget {
     final _authentication = FirebaseAuth.instance;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 121, 119, 166),
+        backgroundColor: const Color.fromARGB(232, 105, 183, 255),
         title: const Text('서울시 전세 예측'),
+        leading: const Icon(null),
         actions: [
           IconButton(
             icon: Icon(
