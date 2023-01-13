@@ -8,8 +8,6 @@ class Geumcheon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GeumcheonWidget();
+    return const GeumcheonWidget();
   }
 }
-
-//end

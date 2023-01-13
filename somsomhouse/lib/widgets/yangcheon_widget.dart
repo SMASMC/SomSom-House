@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_list_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-import 'package:somsomhouse/views/sinjungdong_prediction.dart';
+import 'package:somsomhouse/views/predict/gu/sinjungdong_prediction.dart';
 
 class YangcheonWidget extends StatefulWidget {
   const YangcheonWidget({super.key});

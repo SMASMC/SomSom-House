@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_list_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-import 'package:somsomhouse/views/dorimdong_prediction.dart';
+import 'package:somsomhouse/views/predict/gu/dorimdong_prediction.dart';
 
 class YeongdeungpoWidget extends StatefulWidget {
   const YeongdeungpoWidget({super.key});

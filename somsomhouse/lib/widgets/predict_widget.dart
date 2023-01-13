@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
-import 'package:somsomhouse/views/map_geumcheon.dart';
-import 'package:somsomhouse/views/map_qwangjin.dart';
-import 'package:somsomhouse/views/map_songpa.dart';
-import 'package:somsomhouse/views/map_yangcheon.dart';
-import 'package:somsomhouse/views/map_yeongdeungpo.dart';
+import 'package:somsomhouse/views/predict/dong/map_geumcheon.dart';
+import 'package:somsomhouse/views/predict/dong/map_qwangjin.dart';
+import 'package:somsomhouse/views/predict/dong/map_songpa.dart';
+import 'package:somsomhouse/views/predict/dong/map_yangcheon.dart';
+import 'package:somsomhouse/views/predict/dong/map_yeongdeungpo.dart';
 
 class PredictWidget extends StatefulWidget {
   const PredictWidget({super.key});

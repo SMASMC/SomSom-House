@@ -40,19 +40,11 @@ class _AvgTableState extends State<AvgTable> {
         },
       ),
       builder: (context, snapshot) {
-        if (snapshot.hasData == false) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const SizedBox(
-            height: 376,
+            height: 274,
             child: SpinKitThreeBounce(
               color: Colors.lightBlue,
-            ),
-          );
-        } else if (snapshot.hasError) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Error: ${snapshot.error}',
-              style: const TextStyle(fontSize: 15),
             ),
           );
         } else {

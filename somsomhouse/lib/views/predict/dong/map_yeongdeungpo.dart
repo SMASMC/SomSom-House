@@ -11,5 +11,3 @@ class Yeongdeungpo extends StatelessWidget {
     return YeongdeungpoWidget();
   }
 }
-
-//end
