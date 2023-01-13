@@ -15,9 +15,15 @@ class GoogleMapWidget extends StatefulWidget {
 class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   final Map<String, Marker> _markers = {};
   late GoogleMapController mapController;
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+  late int count;
+  late String bouttoncolors;
+  late Color _color;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    count = 0;
+    _color = Colors.white;
   }
 
   @override
@@ -97,6 +103,19 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
             ],
           ),
         ),
+        Padding(
+          padding: EdgeInsets.all(10.0),
+          child: FloatingActionButton(
+            onPressed: () {
+              changeColor(mapController);
+            },
+            backgroundColor: Colors.black,
+            child: Icon(
+              Icons.light_rounded,
+              color: _color,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -143,4 +162,25 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
 
     return locations;
   }
-}
+
+//Map dark mode
+  void changeColor(GoogleMapController controller) async {
+    count++;
+    if (count % 2 == 0) {
+      String value = await DefaultAssetBundle.of(context)
+          .loadString('json/map_style_white.json');
+      mapController.setMapStyle(value);
+    } else {
+      String value = await DefaultAssetBundle.of(context)
+          .loadString('json/map_style_black.json');
+      mapController.setMapStyle(value);
+    }
+  }
+
+  void _onMapCreated(GoogleMapController controller) async {
+    mapController = controller;
+    String value = await DefaultAssetBundle.of(context)
+        .loadString('json/map_style_white.json');
+    mapController.setMapStyle(value);
+  }
+}//End

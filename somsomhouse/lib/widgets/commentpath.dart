@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/chart_model.dart';
+import 'package:somsomhouse/models/comment_model.dart';
 import 'package:somsomhouse/widgets/commentdign.dart';
 
 class CommentPath extends StatefulWidget {
@@ -35,29 +36,26 @@ class _CommentPathState extends State<CommentPath> {
               child: CircularProgressIndicator(),
             );
           } //데이터가 없을 경우를 대비해서 선언을 해줘야함.
-          final commentdocs = snapshot.data!.docs;
 
-          return ListView.builder(
-            // reverse: true,//list가 보여지는 위치가 아래에서 위로 보여질 수 있도록 하는 선언
-            itemCount: snapshot.data!.docs.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  CommentDign(
-                    commentdocs[index]['text'], //index 번호, text형식
-                    commentdocs[index]['userID'].toString() ==
-                        user!.uid, //uid를 가져옴.
-                    commentdocs[index]['userName'], //uid를 가져옴.
-                    commentdocs[index]['time'] ?? Timestamp(0, 0),
-                  ),
-                ],
-              );
-            },
+          return Expanded(
+            child: ListView.builder(
+              // reverse: true,//list가 보여지는 위치가 아래에서 위로 보여질 수 있도록 하는 선언
+              itemCount: snapshot.data!.docs.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final commentdocs = snapshot.data!.docs;
+                CommentModel.comment = commentdocs[index]['text'];
+                // CommentModel.yesme = commentdocs[index]['userID'] as String; //uid를 가져옴.
+                CommentModel.username =
+                    commentdocs[index]['userName']; //uid를 가져옴.
+                CommentModel.userTime = commentdocs[index]['time'];
+                return CommentDign();
+              },
+            ),
           );
         },
       ),
     );
   }
-}
+}//End

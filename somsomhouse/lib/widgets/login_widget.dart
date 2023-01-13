@@ -15,6 +15,9 @@ class _LoginWidgetState extends State<LoginWidget> {
       FirebaseAuth.instance; //firebaseauth로 firebase에 값을 저장하는 역할을 함.
   bool isLoginScreen = true;
   final _formKey = GlobalKey<FormState>();
+  static String passwordcheck = '';
+  FocusNode rentalFocusNode = FocusNode();
+  FocusNode floorFocusNode = FocusNode();
 //전체적으로 form안에 있는 값을 넘겨주는 역할을 함.
   String userName = '';
   String userEmail = '';
@@ -350,7 +353,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 Icons.key,
                                 color: Color.fromARGB(255, 129, 129, 129),
                               ),
-                              border: OutlineInputBorder(
+                              enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Color.fromARGB(255, 129, 129, 129),
                                 ),
@@ -380,87 +383,90 @@ class _LoginWidgetState extends State<LoginWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    onTap: () async {
-                      if (!isLoginScreen) {
-                        _tryValidation(); //값을 넘겨주는 함수
-                        try {
-                          final addUser = await _authentication
-                              .createUserWithEmailAndPassword(
-                            email: userEmail.trim(), //email형식에 공백이 들어가면 안됨
-                            password: userPassword,
-                          );
+              Positioned(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () async {
+                        if (!isLoginScreen) {
+                          _tryValidation(); //값을 넘겨주는 함수
+                          try {
+                            final addUser = await _authentication
+                                .createUserWithEmailAndPassword(
+                              email: userEmail.trim(), //email형식에 공백이 들어가면 안됨
+                              password: userPassword,
+                            );
 
-                          await FirebaseFirestore.instance
-                              .collection('user')
-                              .doc(addUser.user!.uid)
-                              .set({
-                            'userName': userName,
-                            'email': userEmail,
-                            'password': userPassword,
-                          });
-                          //collection의 역할은 바로 firebase에 컬렉션을 생성해준다.
-                          //doc은 데이터를 전달하는 역할을 한다.
-                          //set은 엑스트라 데이터를 생성해주는 역할을 한다.
-                          if (addUser.user != null) {
-                            // firebase에 user가 있다면 다음페이지로 이동
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return Comment();
-                              },
-                            ));
+                            await FirebaseFirestore.instance
+                                .collection('user')
+                                .doc(addUser.user!.uid)
+                                .set({
+                              'userName': userName,
+                              'email': userEmail,
+                              'password': userPassword,
+                            });
+                            //collection의 역할은 바로 firebase에 컬렉션을 생성해준다.
+                            //doc은 데이터를 전달하는 역할을 한다.
+                            //set은 엑스트라 데이터를 생성해주는 역할을 한다.
+                            if (addUser.user != null) {
+                              // firebase에 user가 있다면 다음페이지로 이동
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return Comment();
+                                },
+                              ));
+                            }
+                          } catch (e) {
+                            print(e);
                           }
-                        } catch (e) {
-                          print(e);
-                        }
-                      } //isLoginScreen이 false일경우 이메일과 비밀번호를 firebase에 넣어준다.
-                      if (isLoginScreen) {
-                        _tryValidation();
-                        try {
-                          final addUser =
-                              await _authentication.signInWithEmailAndPassword(
-                            email: userEmail,
-                            password: userPassword,
-                          );
-                        } catch (e) {
-                          print(e);
-                          if (mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text('정보 입력을 확인해 주세요!'),
-                              backgroundColor: Colors.grey,
-                            ));
+                        } //isLoginScreen이 false일경우 이메일과 비밀번호를 firebase에 넣어준다.
+                        if (isLoginScreen) {
+                          _tryValidation();
+                          try {
+                            final addUser = await _authentication
+                                .signInWithEmailAndPassword(
+                              email: userEmail,
+                              password: userPassword,
+                            );
+                          } catch (e) {
+                            print(e);
+                            if (mounted) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text('정보 입력을 확인해 주세요!'),
+                                backgroundColor: Colors.grey,
+                              ));
+                            }
                           }
                         }
-                      }
-                    },
-                    child: Container(
-                      height: 70,
-                      width: 70,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color.fromARGB(255, 214, 163, 255),
-                            Color.fromARGB(232, 105, 183, 255),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight, //그라데이션의 위치 같은거
-                        ),
-                        borderRadius: BorderRadius.circular(50),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.6),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            offset: const Offset(0, 1),
+                      },
+                      child: Container(
+                        height: 70,
+                        width: 70,
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [
+                              Color.fromARGB(255, 214, 163, 255),
+                              Color.fromARGB(232, 105, 183, 255),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight, //그라데이션의 위치 같은거
                           ),
-                        ],
-                      ),
-                      child: const Icon(
-                        Icons.login,
-                        color: Colors.white,
+                          borderRadius: BorderRadius.circular(50),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.6),
+                              spreadRadius: 1,
+                              blurRadius: 1,
+                              offset: Offset(0, 1),
+                            ),
+                          ],
+                        ),
+                        child: const Icon(
+                          Icons.login,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
@@ -468,12 +474,16 @@ class _LoginWidgetState extends State<LoginWidget> {
               ),
             ],
           ),
+          //값을 넘겨주는 버튼
         ],
       ),
     );
   }
 
-//-------------------function 2023-01-11
+  // ----------------------------------------------------------------
+  /// form 키의 value값을 가져온 뒤에 save해주는 함수
+  /// 만든 날짜 : 2023.1.11
+  /// 만든이 : 송명철
   void _tryValidation() {
     final isValid = _formKey.currentState!
         .validate(); //이 method로 인해 폼필드 validator를 작동시킬 수 있다.
@@ -482,5 +492,51 @@ class _LoginWidgetState extends State<LoginWidget> {
       _formKey.currentState!.save(); // form키의 value값을 가져온 뒤에 save를 해주는 역할을 한다.
       //모든 onSaved 메소드를 불러옴
     }
+  }
+
+  //회원가입 완료시 로그인 창으로 이동하도록 생성한 Dialog 2023.01.13
+  _showDialoglogin(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, //user must tap the button!
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: const Text('로그인 실패!'),
+          content: const Text('아이디 혹은 비밀번호를 확인해 주세요'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+                child: const Text('이전'))
+          ],
+        );
+      },
+    );
+  }
+
+  //회원가입이 완료되지 않았을 경우 팝업창
+  _showDialogsignup(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, //user must tap the button!
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: const Text('회원가입 불가!'),
+          content: const Text('입력사항을 다시 한번 확인해 주세요!'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+                child: const Text('이전'))
+          ],
+        );
+      },
+    );
   }
 }//End
