@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_list_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-import 'package:somsomhouse/views/dorimdong_prediction.dart';
+import 'package:somsomhouse/views/predict/gu/dorimdong_prediction.dart';
 
 class YeongdeungpoWidget extends StatefulWidget {
   const YeongdeungpoWidget({super.key});
@@ -32,7 +32,7 @@ class _YeongdeungpoWidgetState extends State<YeongdeungpoWidget> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 121, 119, 166),
+        backgroundColor: Color.fromARGB(232, 105, 183, 255),
         title: const Text('영등포구 지도'),
         actions: [
           IconButton(

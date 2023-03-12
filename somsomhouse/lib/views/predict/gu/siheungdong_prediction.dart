@@ -1,18 +1,16 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/rservcies.dart';
 
-class GwangjangdongPrediction extends StatefulWidget {
-  const GwangjangdongPrediction({super.key});
+class SiheungdongPrediction extends StatefulWidget {
+  const SiheungdongPrediction({super.key});
 
   @override
-  State<GwangjangdongPrediction> createState() =>
-      _GwangjangdongPredictionState();
+  State<SiheungdongPrediction> createState() => _SiheungdongPredictionState();
 }
 
-class _GwangjangdongPredictionState extends State<GwangjangdongPrediction> {
+class _SiheungdongPredictionState extends State<SiheungdongPrediction> {
   // 임대 면적, 층 수 겂 범위 정하기 위해 변수 및 컨트롤러 작성
   late TextEditingController apartRentalController;
   late TextEditingController apartFloorController;
@@ -31,32 +29,20 @@ class _GwangjangdongPredictionState extends State<GwangjangdongPrediction> {
   FocusNode rentalFocusNode = FocusNode();
   FocusNode floorFocusNode = FocusNode();
 
-// 계약 계절 드롭다운을 위한 리스트
+  // 계약 계절 드롭다운을 위한 리스트
   List<String> dropdownList = ['봄', '여름', '가을', '겨울'];
   String? selectedDropdown = '';
 
   @override
   Widget build(BuildContext context) {
-    final _authentication = FirebaseAuth.instance;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 121, 119, 166),
+          backgroundColor: const Color.fromARGB(232, 105, 183, 255),
           title: const Text('전세값 예측해 보기'),
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.exit_to_app_sharp,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                _authentication.signOut();
-              },
-            ),
-          ],
         ),
         body: Center(
           child: Form(
@@ -67,15 +53,17 @@ class _GwangjangdongPredictionState extends State<GwangjangdongPrediction> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 50),
-                    child: Text(
-                      DongModel.apartNamePredict,
-                      style: TextStyle(
-                        fontSize: 50,
-                        color: Colors.transparent,
-                        shadows: [
-                          Shadow(offset: Offset(0, -20), color: Colors.black54)
-                        ],
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        hintText: DongModel.apartNamePredict,
+                        labelText: DongModel.apartNamePredict,
+                        prefixIcon: const Icon(Icons.apartment),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                       ),
                     ),
                   ),
@@ -96,8 +84,8 @@ class _GwangjangdongPredictionState extends State<GwangjangdongPrediction> {
                     validator: (rental) {
                       rental = rental == '' || rental == null ? '0' : rental;
                       apartRental = int.parse(rental);
-                      if (apartRental < 59.67 || apartRental > 147.23) {
-                        return '59.67m²부터 147.23m²까지만 입력해 주세요';
+                      if (apartRental < 53.39 || apartRental > 150.72) {
+                        return '53.39m²부터 150.72m²까지만 입력해 주세요';
                       }
                       return null;
                     },
@@ -120,8 +108,8 @@ class _GwangjangdongPredictionState extends State<GwangjangdongPrediction> {
                       validator: (floor) {
                         floor = floor == '' || floor == null ? '0' : floor;
                         apartFloor = int.parse(floor);
-                        if (apartFloor < 1 || apartFloor > 23) {
-                          return '1층부터 23층까지만 입력해 주세요';
+                        if (apartFloor < 1 || apartFloor > 26) {
+                          return '1층부터 26층까지만 입력해 주세요';
                         }
                         return null;
                       },
@@ -142,6 +130,7 @@ class _GwangjangdongPredictionState extends State<GwangjangdongPrediction> {
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton2(
+                          // icon: Icon(Icons.park),
                           hint: const Text('계절'),
                           isExpanded: true,
                           value:
@@ -165,18 +154,32 @@ class _GwangjangdongPredictionState extends State<GwangjangdongPrediction> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(25.0),
-                    child: ElevatedButton(
-                        onPressed: () async {
-                          if (selectedDropdown == '') {
-                            _showErrorDialog();
-                          } else if (_formKey.currentState!.validate()) {
-                            String result = await connectR();
-                            _showDialog(context, result);
-                          }
-                        },
-                        child: const Text('시세 예측해 보기')),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    const Color.fromARGB(232, 105, 183, 255)),
+                            onPressed: () async {
+                              if (selectedDropdown == '') {
+                                _showErrorDialog();
+                              } else if (_formKey.currentState!.validate()) {
+                                String result = await connectR();
+                                _showDialog(context, result);
+                              }
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(12.0),
+                              child: Text(
+                                '시세 예측해 보기',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                ),
+                              ),
+                            )),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -187,18 +190,38 @@ class _GwangjangdongPredictionState extends State<GwangjangdongPrediction> {
     );
   }
 
-  // 입련한 내용을 바탕으로 예측값 보여주기 위한 함수
+  // 입련된 내용을 바탕으로 예측화면 보여주기 위한 함수
   // 만든 날짜 : 2022.01.11
   // 만든 사람 : 임은빈
   _showDialog(BuildContext context, String result) {
+    int Num1 = 0;
+    int Num2 = 0;
+    String printMessage = '';
+
+    List<String> num = result.split('~');
+    //숫자,숫자 이렇게 나뉠거임
+    Num1 = int.parse(num[0]);
+    Num2 = int.parse(num[1]);
+    //시작 숫자는 Num1에 끝 숫자는 Num2에 저장
+
+    int Num1Neck = Num1 ~/ 10000;
+    int Num1Trash = Num1 % 10000;
+    int Num2Neck = Num2 ~/ 10000;
+    int Num2Trash = Num2 % 10000;
+
+    String num1NeckStr = Num1Neck != 0 ? '$Num1Neck억 ' : '';
+    String num1TrashStr = Num1Trash != 0 ? '$Num1Trash천만원' : '';
+    String num2NeckStr = Num2Neck != 0 ? '$Num2Neck억 ' : '';
+    String num2TrashStr = Num2Trash != 0 ? '$Num2Trash천만원' : '';
+
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext ctx) {
           return AlertDialog(
             title: const Text('예측 결과'),
-            content:
-                Text('전세값은 $result입니다.\n \n데이터 분석을 통한 예측값으로 실제와 다를 수 있습니다.'),
+            content: Text(
+                '전세값은 $num1NeckStr$num1TrashStr ~ $num2NeckStr$num2TrashStr \n \n데이터 분석을 통한 예측값으로 실제와 다를 수 있습니다.'),
             actions: [
               ElevatedButton(
                   onPressed: () => Navigator.of(ctx).pop(),
@@ -213,7 +236,7 @@ class _GwangjangdongPredictionState extends State<GwangjangdongPrediction> {
   /// 만든이 : 권순형
   Future<String> connectR() async {
     RServices rservices = RServices();
-    String result = await rservices.connectDorimdong(
+    String result = await rservices.connectSiheungdong(
         DongModel.apartNamePredict,
         apartRentalController.text.trim(),
         apartFloorController.text.trim(),
@@ -242,3 +265,4 @@ class _GwangjangdongPredictionState extends State<GwangjangdongPrediction> {
         });
   }
 }//end
+

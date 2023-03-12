@@ -1,73 +1,98 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:somsomhouse/views/map.dart';
-import 'package:somsomhouse/views/predict.dart';
+import 'package:somsomhouse/views/map/map.dart';
+import 'package:somsomhouse/views/mypage/likelist.dart';
+import 'package:somsomhouse/views/predict/seoul/predict.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    PersistentTabController _controller =
-        PersistentTabController(initialIndex: 0);
+  State<Home> createState() => _HomeState();
+}
 
-    return PersistentTabView(
-      context,
-      controller: _controller,
-      screens: _buildScreens(),
-      items: _navBarsItems(),
-      confineInSafeArea: true,
-      backgroundColor: Colors.white, // Default is Colors.white.
-      handleAndroidBackButtonPress: true, // Default is true.
-      resizeToAvoidBottomInset:
-          true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-      stateManagement: true, // Default is true.
-      hideNavigationBarWhenKeyboardShows:
-          true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-      decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(30.0),
-        colorBehindNavBar: Colors.white,
-      ),
-      popAllScreensOnTapOfSelectedTab: true,
-      popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: const ItemAnimationProperties(
-        // Navigation Bar's items animation properties.
-        duration: Duration(milliseconds: 200),
-        curve: Curves.ease,
-      ),
-      screenTransitionAnimation: const ScreenTransitionAnimation(
-        // Screen transition animation on change of selected tab.
-        animateTabTransition: true,
-        curve: Curves.ease,
-        duration: Duration(milliseconds: 200),
-      ),
-      navBarStyle:
-          NavBarStyle.style1, // Choose the nav bar style with this property.
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  // field
+  late TabController controller;
+
+// initState
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    // tabBar mapping을 하는 것이라고 보면 된다.
+    controller = TabController(
+      // tab의 갯수
+      length: 3,
+      // this는 tab의 요소들을 의미한다.
+      vsync: this,
     );
   }
 
-  List<Widget> _buildScreens() {
-    return [
-      const Map(),
-      const Predict(),
-    ];
-  }
-
-  List<PersistentBottomNavBarItem> _navBarsItems() {
-    return [
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.map),
-        title: ("부동산 지도"),
-        activeColorPrimary: CupertinoColors.activeBlue,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBody: true,
+      body: TabBarView(
+        controller: controller,
+        children: const [
+          Map(),
+          Predict(),
+          LikeList(),
+        ],
       ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.arrowtriangle_right_circle_fill),
-        title: ("전세가 예측"),
-        activeColorPrimary: CupertinoColors.activeBlue,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.fromLTRB(
+          MediaQuery.of(context).size.width * 0.04,
+          MediaQuery.of(context).size.height * 0,
+          MediaQuery.of(context).size.width * 0.04,
+          MediaQuery.of(context).size.height * 0.05,
+        ),
+        decoration: const BoxDecoration(
+          color: Color.fromARGB(246, 105, 183, 255),
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
+        ),
+        child: TabBar(
+          controller: controller,
+          indicatorColor: Colors.transparent,
+          labelColor: Colors.white,
+          unselectedLabelColor: const Color.fromARGB(159, 255, 255, 255),
+          tabs: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.07,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.apartment_rounded),
+                  Text('아파트 정보'),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.07,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.money),
+                  Text('보증금 예측'),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.07,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.list_alt_outlined),
+                  Text('관심 아파트'),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
-    ];
+    );
   }
 }

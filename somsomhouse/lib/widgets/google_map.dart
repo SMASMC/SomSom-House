@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:somsomhouse/models/chart_model.dart';
 import 'package:somsomhouse/models/map_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-import 'package:somsomhouse/views/chartpage.dart';
+import 'package:somsomhouse/views/map/chartpage.dart';
 
 class GoogleMapWidget extends StatefulWidget {
   const GoogleMapWidget({super.key});
@@ -15,9 +15,20 @@ class GoogleMapWidget extends StatefulWidget {
 class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   final Map<String, Marker> _markers = {};
   late GoogleMapController mapController;
+  late int count;
+  late Color modeBgColor;
+  late Color modeTxtColor;
+  late bool isDark;
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    count = 0;
+
+    modeBgColor = Colors.black;
+    modeTxtColor = Colors.white;
+    isDark = false;
   }
 
   @override
@@ -45,10 +56,33 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
           },
         ),
         Positioned(
-          top: MediaQuery.of(context).size.height * 0.6,
-          left: MediaQuery.of(context).size.width * 0.76,
+          top: MediaQuery.of(context).size.height * 0.53,
+          left: MediaQuery.of(context).size.width * 0.78,
           child: Column(
             children: [
+              MaterialButton(
+                onPressed: () async {
+                  changeColor(mapController);
+                  isDark = !isDark;
+                  isDark
+                      ? setState(() {
+                          modeBgColor = Colors.white;
+                          modeTxtColor = Colors.black;
+                        })
+                      : setState(() {
+                          modeBgColor = Colors.black;
+                          modeTxtColor = Colors.white;
+                        });
+                },
+                color: modeBgColor,
+                textColor: modeTxtColor,
+                padding: const EdgeInsets.all(16),
+                shape: const CircleBorder(),
+                child: const Icon(Icons.light_rounded),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               MaterialButton(
                 onPressed: () async {
                   var zoomLevel = await mapController.getZoomLevel();
@@ -64,7 +98,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
                     ),
                   );
                 },
-                color: Colors.blue,
+                color: Color.fromARGB(246, 105, 183, 255),
                 textColor: Colors.white,
                 padding: const EdgeInsets.all(16),
                 shape: const CircleBorder(),
@@ -88,7 +122,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
                     ),
                   );
                 },
-                color: Colors.blue,
+                color: Color.fromARGB(246, 105, 183, 255),
                 textColor: Colors.white,
                 padding: const EdgeInsets.all(16),
                 shape: const CircleBorder(),
@@ -143,4 +177,25 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
 
     return locations;
   }
-}
+
+//Map dark mode
+  void changeColor(GoogleMapController controller) async {
+    count++;
+    if (count % 2 == 0) {
+      String value = await DefaultAssetBundle.of(context)
+          .loadString('json/map_style_white.json');
+      mapController.setMapStyle(value);
+    } else {
+      String value = await DefaultAssetBundle.of(context)
+          .loadString('json/map_style_black.json');
+      mapController.setMapStyle(value);
+    }
+  }
+
+  void _onMapCreated(GoogleMapController controller) async {
+    mapController = controller;
+    String value = await DefaultAssetBundle.of(context)
+        .loadString('json/map_style_white.json');
+    mapController.setMapStyle(value);
+  }
+}//End

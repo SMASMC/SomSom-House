@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartinfo_model.dart';
 import 'package:somsomhouse/models/chart_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
+import 'package:somsomhouse/services/sqliteservices.dart';
 
 class ApartInfo extends StatefulWidget {
   const ApartInfo({super.key});
@@ -11,14 +12,42 @@ class ApartInfo extends StatefulWidget {
 }
 
 class _ApartInfoState extends State<ApartInfo> {
+  late IconData star;
+  late SqliteHandler handler;
+  late String apartName;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    star = Icons.thumb_up_outlined;
+
+    handler = SqliteHandler();
+
+    handler.initializeDB();
+    apartName = "";
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: selectApartmentInfo(),
+      future: Future.wait([
+        selectApartmentInfo(),
+        handler.isLike(ChartModel.apartName),
+      ]),
       builder: (context, snapshot) {
         if (snapshot.hasData == false) {
-          return Text('error');
+          return const Text('error');
         } else {
+          var apartInfoModel = snapshot.data![0] as ApartInfoModel;
+          List list = snapshot.data![1] as List;
+          int isLike = int.parse(list[0]);
+
+          if (isLike == 1) {
+            star = Icons.thumb_up;
+          }
+
           return Column(
             children: [
               Padding(
@@ -26,12 +55,39 @@ class _ApartInfoState extends State<ApartInfo> {
                 child: Column(
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          snapshot.data!.apartinfoname,
+                          apartInfoModel.apartinfoname,
                           textScaleFactor: 1.6,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            if (star == Icons.thumb_up_outlined) {
+                              setState(() {
+                                star = Icons.thumb_up;
+                              });
+                              handler.insert(ChartModel.apartName);
+                            } else {
+                              setState(() {
+                                star = Icons.thumb_up_outlined;
+                              });
+                              handler.delete(ChartModel.apartName);
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 20,
+                              right: 30,
+                            ),
+                            child: Icon(
+                              star,
+                              color: Color.fromARGB(255, 44, 124, 244),
+                              size: 35,
+                            ),
                           ),
                         ),
                       ],
@@ -40,7 +96,7 @@ class _ApartInfoState extends State<ApartInfo> {
                       padding: const EdgeInsets.all(5.0),
                       child: Row(
                         children: [
-                          Text(snapshot.data!.apartinfogu,
+                          Text(apartInfoModel.apartinfogu,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromARGB(134, 42, 37, 37))),
@@ -48,7 +104,7 @@ class _ApartInfoState extends State<ApartInfo> {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromARGB(134, 42, 37, 37))),
-                          Text(snapshot.data!.apartinfodong,
+                          Text(apartInfoModel.apartinfodong,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromARGB(134, 42, 37, 37))),
@@ -97,7 +153,7 @@ class _ApartInfoState extends State<ApartInfo> {
                               ),
                             ),
                             Text(
-                              snapshot.data!.apartinfoheating,
+                              apartInfoModel.apartinfoheating,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -122,7 +178,7 @@ class _ApartInfoState extends State<ApartInfo> {
                         Column(
                           children: [
                             Text(
-                              snapshot.data!.apartinfoparking
+                              apartInfoModel.apartinfoparking
                                   .toStringAsFixed(2),
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,

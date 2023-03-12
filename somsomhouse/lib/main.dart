@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:somsomhouse/views/home.dart';
-import 'package:somsomhouse/views/loginpage.dart';
+import 'package:somsomhouse/views/login/loginpage.dart';
 import 'package:somsomhouse/views/splash.dart';
 import 'firebase_options.dart';
 
@@ -36,14 +36,15 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const SplashScreen(),
         '/login': (context) => StreamBuilder(
-            stream: FirebaseAuth.instance
-                .authStateChanges(), //사용자가 발급받았던 토큰(인증) 여부를 확인.
-            builder: ((context, snapshot) {
-              if (snapshot.hasData) {
-                return Home();
-              }
-              return LoginPage(); //값을 지니고 있지 않을 경우 login페이지로 이동
-            })),
+              stream: FirebaseAuth.instance
+                  .authStateChanges(), //사용자가 발급받았던 토큰(인증) 여부를 확인.
+              builder: ((context, snapshot) {
+                if (snapshot.hasData) {
+                  return const Home();
+                }
+                return const LoginPage(); //값을 지니고 있지 않을 경우 login페이지로 이동
+              }),
+            ),
       },
     );
   }

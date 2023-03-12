@@ -8,8 +8,6 @@ class Qwangjin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return QwangjinWidget();
+    return const QwangjinWidget();
   }
 }
-
-//end

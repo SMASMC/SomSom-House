@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_list_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-import 'package:somsomhouse/views/garakdong_prediction.dart';
-import 'package:somsomhouse/views/ohgeumdong_prediction.dart';
-import 'package:somsomhouse/views/pungnabdong_prediction.dart';
-import 'package:somsomhouse/views/sincheondong_prediction.dart';
+import 'package:somsomhouse/views/predict/gu/garakdong_prediction.dart';
+import 'package:somsomhouse/views/predict/gu/ohgeumdong_prediction.dart';
+import 'package:somsomhouse/views/predict/gu/pungnabdong_prediction.dart';
+import 'package:somsomhouse/views/predict/gu/sincheondong_prediction.dart';
 
 class SongpaWidget extends StatefulWidget {
   const SongpaWidget({super.key});
@@ -34,7 +34,7 @@ class _SongpaWidgetState extends State<SongpaWidget> {
     final _authentication = FirebaseAuth.instance;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 121, 119, 166),
+        backgroundColor: Color.fromARGB(232, 105, 183, 255),
         title: const Text('송파구 지도'),
         actions: [
           IconButton(

@@ -28,7 +28,7 @@ class _ApartLineChartState extends State<ApartLineChart> {
   late bool changeType;
   late double range;
   List<Color> gradientColors = [
-    Color.fromARGB(255, 181, 145, 255),
+    Color.fromARGB(255, 94, 177, 255),
     Color.fromARGB(255, 255, 255, 255),
   ];
 
@@ -63,19 +63,11 @@ class _ApartLineChartState extends State<ApartLineChart> {
         return true;
       }),
       builder: (context, snapshot) {
-        if (snapshot.hasData == false) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const SizedBox(
             height: 376,
             child: SpinKitThreeBounce(
               color: Colors.lightBlue,
-            ),
-          );
-        } else if (snapshot.hasError) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Error: ${snapshot.error}',
-              style: const TextStyle(fontSize: 15),
             ),
           );
         } else {
@@ -192,7 +184,7 @@ class _ApartLineChartState extends State<ApartLineChart> {
                             ),
                           ),
                           barWidth: 2.8,
-                          color: Color.fromARGB(255, 143, 131, 255),
+                          color: Color.fromARGB(255, 55, 158, 255),
                         ),
                       ],
                       gridData: FlGridData(

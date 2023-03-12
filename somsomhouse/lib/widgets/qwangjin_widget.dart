@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/apartname_list_model.dart';
 import 'package:somsomhouse/models/dongname_model.dart';
 import 'package:somsomhouse/services/dbservices.dart';
-
-import 'package:somsomhouse/views/gwangjangdong_prediction.dart';
+import 'package:somsomhouse/views/predict/gu/gwangjangdong_prediction.dart';
 
 class QwangjinWidget extends StatefulWidget {
   const QwangjinWidget({super.key});
@@ -33,7 +32,7 @@ class _QwangjinWidgetState extends State<QwangjinWidget> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 121, 119, 166),
+        backgroundColor: Color.fromARGB(232, 105, 183, 255),
         title: const Text('광진구 지도'),
         actions: [
           IconButton(
