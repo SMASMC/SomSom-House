@@ -15,16 +15,15 @@ class _CommentInputState extends State<CommentInput> {
   var _userEnterComment = '';
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // margin: EdgeInsets.only(top: 8), //margin은 위치 지정이라 생각
-      padding: EdgeInsets.all(8),
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
       child: Row(
         children: [
           Expanded(
             child: TextField(
               maxLines: null, //글자입력의 한계를 없애준다.
               controller: _contoller,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: '댓글 달기',
               ),
               onChanged: (value) {
@@ -40,7 +39,7 @@ class _CommentInputState extends State<CommentInput> {
                 : _sendComment, //메서드 뒤에 괄호가 없는 경우는
             // onpressed 메서드가 _sendComment메서드의 위치를 참조한다.
 
-            icon: Icon(Icons.send),
+            icon: const Icon(Icons.send),
             color: Colors.black,
           )
         ],

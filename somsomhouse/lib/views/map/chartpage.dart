@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:somsomhouse/models/chart_model.dart';
 import 'package:somsomhouse/widgets/avg_table.dart';
 import 'package:somsomhouse/widgets/chart.dart';
-import 'package:somsomhouse/views/comment.dart';
+import 'package:somsomhouse/views/map/comment.dart';
 import 'package:somsomhouse/widgets/apart_info.dart';
 
 class ChartPage extends StatelessWidget {
@@ -12,7 +12,7 @@ class ChartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 121, 119, 166),
+        backgroundColor: const Color.fromARGB(232, 105, 183, 255),
         centerTitle: true,
         title: Text(ChartModel.apartName),
       ),

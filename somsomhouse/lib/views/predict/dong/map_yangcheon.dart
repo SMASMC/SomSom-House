@@ -11,5 +11,3 @@ class Yangcheon extends StatelessWidget {
     return YangcheonWidget();
   }
 }
-
-//end

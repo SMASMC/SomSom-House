@@ -13,18 +13,19 @@ class RServices {
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConverted = json.decode(utf8.decode(response.bodyBytes));
-    print(dataConverted);
-    return dataConverted;
+    return dataConverted['result'];
   }
+
   Future<String> connectGwangjangdong(
-    String name, String area, String floor, String season) async {
-      String googleLocationsURL = 
-          'http://localhost:8080/quangjang?name=$name&area=$area&floor=$floor&weather$season';
+      String name, String area, String floor, String season) async {
+    String googleLocationsURL =
+        'http://localhost:8080/quangjang?name=$name&area=$area&floor=$floor&weather$season';
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConverted = json.decode(utf8.decode(response.bodyBytes));
-    return dataConverted;
-    }
+    return dataConverted['result'];
+  }
+
   Future<String> connectGarakdong(
       String name, String area, String floor, String season) async {
     String googleLocationsURL =
@@ -32,8 +33,9 @@ class RServices {
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConverted = json.decode(utf8.decode(response.bodyBytes));
-    return dataConverted;
+    return dataConverted['result'];
   }
+
   Future<String> connectOhguemdong(
       String name, String area, String floor, String season) async {
     String googleLocationsURL =
@@ -41,8 +43,9 @@ class RServices {
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConverted = json.decode(utf8.decode(response.bodyBytes));
-    return dataConverted;
+    return dataConverted['result'];
   }
+
   Future<String> connectPungnabdong(
       String name, String area, String floor, String season) async {
     String googleLocationsURL =
@@ -50,8 +53,9 @@ class RServices {
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConverted = json.decode(utf8.decode(response.bodyBytes));
-    return dataConverted;
+    return dataConverted['result'];
   }
+
   Future<String> connectSiheungdong(
       String name, String area, String floor, String season) async {
     String googleLocationsURL =
@@ -59,8 +63,9 @@ class RServices {
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConverted = json.decode(utf8.decode(response.bodyBytes));
-    return dataConverted;
+    return dataConverted['result'];
   }
+
   Future<String> connectSincheondong(
       String name, String area, String floor, String season) async {
     String googleLocationsURL =
@@ -68,8 +73,9 @@ class RServices {
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConverted = json.decode(utf8.decode(response.bodyBytes));
-    return dataConverted;
+    return dataConverted['result'];
   }
+
   Future<String> connectSinjungdong(
       String name, String area, String floor, String season) async {
     String googleLocationsURL =
@@ -77,6 +83,6 @@ class RServices {
 
     final response = await http.get(Uri.parse(googleLocationsURL));
     var dataConverted = json.decode(utf8.decode(response.bodyBytes));
-    return dataConverted;
+    return dataConverted['result'];
   }
 }

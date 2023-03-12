@@ -42,19 +42,11 @@ class _ApartBarChartState extends State<ApartBarChart> {
         return true;
       }),
       builder: (context, snapshot) {
-        if (snapshot.hasData == false) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const SizedBox(
             height: 376,
             child: SpinKitThreeBounce(
               color: Colors.lightBlue,
-            ),
-          );
-        } else if (snapshot.hasError) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Error: ${snapshot.error}',
-              style: const TextStyle(fontSize: 15),
             ),
           );
         } else {
@@ -176,8 +168,8 @@ class _ApartBarChartState extends State<ApartBarChart> {
               width: 25,
               gradient: const LinearGradient(
                 colors: [
-                  Color.fromARGB(255, 176, 191, 237),
-                  Color.fromARGB(255, 176, 168, 246),
+                  Color.fromARGB(255, 200, 186, 255),
+                  Color.fromARGB(255, 94, 177, 255),
                 ],
                 begin: Alignment(0, 1),
                 end: Alignment(0.0, -1),
